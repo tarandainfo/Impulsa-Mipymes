@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="description"
+        content="Ficha de Mipyme | Infonegocios, Impulsa Mipymes.">
+
+    <title>Mipyme | Infonegocios</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="./css/styles.css?v=20260811-15">
+</head>
+
+<body>
+
+    <!-- =========================
+         HEADER
+    ========================== -->
+
+    <header class="header">
+
+        <div class="container header-container">
+
+            <a href="https://infonegocios.com.py/" target="_blank" rel="noopener" class="logo">
+                <img src="./assets/img/logo-infonegocios.png" alt="Infonegocios | Impulsa Mipymes">
+            </a>
+
+            <nav class="nav">
+
+                <a href="./index.html#mipymes">Mipymes</a>
+
+                <a href="./index.html#participar">Quiero aparecer</a>
+
+                <a href="./index.html#cedula">Cédula Mipymes</a>
+
+            </nav>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <section class="ficha-section">
+
+            <div class="container ficha-container">
+
+                <a href="./index.html#mipymes" class="ficha-volver">
+                    ← Volver a Mipymes
+                </a>
+
+                <!-- Encabezado de la mipyme: se completa con JS -->
+                <div class="ficha-header" id="ficha-header"></div>
+
+                <!-- Carrusel de fotos del producto -->
+                <div class="carrusel" id="carrusel">
+
+                    <div class="carrusel-track" id="carrusel-track"></div>
+
+                    <button class="carrusel-flecha carrusel-flecha-izq" id="flecha-izq" aria-label="Foto anterior">
+                        ‹
+                    </button>
+
+                    <button class="carrusel-flecha carrusel-flecha-der" id="flecha-der" aria-label="Foto siguiente">
+                        ›
+                    </button>
+
+                    <div class="carrusel-puntos" id="carrusel-puntos"></div>
+
+                </div>
+
+                <!-- Descripción (2 párrafos) -->
+                <div class="ficha-descripcion" id="ficha-descripcion"></div>
+
+                <!-- Link a la nota periodística (se oculta si no tiene) -->
+                <a href="#" id="ficha-nota" target="_blank" rel="noopener" class="ficha-nota-link">
+                    Leer la nota completa →
+                </a>
+
+                <!-- Contacto -->
+                <div class="ficha-contacto">
+
+                    <h3>Contactar a esta Mipyme</h3>
+
+                    <div class="mipyme-actions" id="ficha-actions"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer class="footer">
+
+        <div class="container footer-container">
+
+            <div class="footer-brand">
+
+                <a href="https://infonegocios.com.py/" target="_blank" rel="noopener">
+                    <img
+                        src="./assets/img/logo-infonegocios-footer.png"
+                        alt="Infonegocios | Impulsa Mipymes"
+                        class="footer-logo">
+                </a>
+
+            </div>
+
+            <div class="footer-right">
+
+                <p>
+                    © 2026 Infonegocios.
+                    Todos los derechos reservados.
+                </p>
+
+                <div class="footer-social">
+
+                    <a href="https://www.instagram.com/infonegociospy/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>
+                    </a>
+
+                    <a href="https://www.facebook.com/infonegociospy" target="_blank" rel="noopener" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24"><path d="M15 3h-2.3C10.4 3 9 4.4 9 6.9V9H6.2v3.4H9V21h3.5v-8.6h2.9l.5-3.4h-3.4V7.2c0-.9.3-1.3 1.3-1.3H15V3z" fill="currentColor"/></svg>
+                    </a>
+
+                    <a href="https://x.com/InfoNegocios_PY" target="_blank" rel="noopener" aria-label="X">
+                        <svg viewBox="0 0 24 24"><rect x="10.6" y="1.5" width="2.8" height="21" rx="1.4" transform="rotate(45 12 12)"/><rect x="10.6" y="1.5" width="2.8" height="21" rx="1.4" transform="rotate(-45 12 12)"/></svg>
+                    </a>
+
+                    <a href="https://www.linkedin.com/company/infonegociospy/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <svg viewBox="0 0 24 24"><circle cx="6.3" cy="7" r="1.7" fill="currentColor"/><rect x="4.7" y="10" width="3.2" height="9.3" fill="currentColor"/><path d="M11 10h3.1v1.7c.7-1.2 2-2 3.6-2 3.1 0 4.3 2 4.3 5.2v6.4h-3.2v-5.9c0-1.4-.5-2.4-1.8-2.4-1 0-1.6.7-1.9 1.4-.1.3-.1.6-.1 1v5.9H11V10z" fill="currentColor"/></svg>
+                    </a>
+
+                    <a href="https://www.youtube.com/@InfoNegociosParaguay" target="_blank" rel="noopener" aria-label="YouTube">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 9l6 3-6 3V9z" fill="currentColor"/></svg>
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <script src="./js/config.js?v=20260811-15" defer></script>
+    <script src="./js/mipymes-data.js?v=20260811-15" defer></script>
+    <script src="./js/ficha.js?v=20260811-15" defer></script>
+    <script src="./js/chatbot-preguntas.js?v=20260811-15" defer></script>
+    <script src="./js/chatbot.js?v=20260811-15" defer></script>
+
+</body>
+
+</html>
