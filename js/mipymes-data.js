@@ -36,40 +36,39 @@
 const MIPYMES_DATA = [
 
     {
-        nombre: "Dulce Paraguay",
+        nombre: "Pedacitos de Luna",
         categoria: "Gastronomía",
 
         descripcion:
-            "Emprendimiento dedicado a la elaboración de productos dulces y artesanales.",
+            "Emprendimiento gastronómico dedicado a la elaboración y venta de productos dulces y salados en el microcentro de Asunción.",
 
         descripcionLarga: [
-            "Dulce Paraguay nació en 2019 en la cocina de la familia Ortiz, en Asunción, con la idea de rescatar recetas tradicionales paraguayas y darles una vuelta más artesanal. Hoy elaboran dulces, alfeñiques y conservas con frutas de estación, trabajando con productores locales de la zona.",
-            "Además de la venta directa, participan de ferias de emprendedores y ya despachan pedidos a todo Gran Asunción. Su objetivo a corto plazo es abrir un local propio y sumar una línea de productos sin azúcar."
+            "Pedacitos de Luna nació en 2023 por Milagros Ríos y Ever Alfonso. Comenzaron con una inversión de apenas G. 150.000, con la que elaboraron 100 medialunas artesanales para una feria por el Día de los Enamorados. En menos de seis horas lograron vender toda la producción, dando inicio a un proyecto que continúa creciendo.",
+            "Las medialunas artesanales continúan siendo el producto insignia, pero con el tiempo ampliaron su propuesta con opciones dulces y saladas. Entre sus productos más reconocidos se encuentran los churrasquitos mixtos, preparados con carne y pollo desmechado en pan caliente. También realizan pedidos especiales para eventos."
         ],
 
         ubicacion: "Asunción, Paraguay",
 
         // Solo números, sin "+", formato 595 9XX XXXXXX
-        whatsapp: "595981000000",
+        whatsapp: "595991305649",
 
-        instagram: "https://instagram.com/",
+        instagram: "https://www.instagram.com/pedacitos_de_luna__/",
 
         productoImagen:
-            "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=800&q=80",
+            "./assets/img/Pedacitos de luna/Pedacitos de luna foto de presentación.jpeg",
 
         perfilImagen:
-            "https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=400&q=80",
+            "./assets/img/Pedacitos de luna/Pedacitos de luna foto de perfil.jpeg",
 
         fotosCarrusel: [
-            "https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1517686469429-8bdb88b9f907?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1481391319762-47dff72954d9?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1519996529931-28324d5a630e?auto=format&fit=crop&w=1200&q=80"
+            "./assets/img/Pedacitos de luna/Pedacitos de luna foto de presentación.jpeg",
+            "./assets/img/Pedacitos de luna/Pedacitos de luna pancho.jpeg",
+            "./assets/img/Pedacitos de luna/Pedacitos de luna empanada.jpeg",
+            "./assets/img/Pedacitos de luna/Pedacitos de luna medialuna.jpeg"
         ],
 
         promocion:
-            "10% de descuento para nuevos clientes.",
+            "No hay promociones activas actualmente.",
 
         notaPeriodistica: ""
 
@@ -77,39 +76,37 @@ const MIPYMES_DATA = [
 
 
     {
-        nombre: "Artesanías Guaraní",
-        categoria: "Artesanía",
+        nombre: "El Fogón del Patio",
+        categoria: "Decoración y productos para exteriores",
 
         descripcion:
-            "Productos artesanales paraguayos elaborados de manera independiente.",
+            "Emprendimiento dedicado a la fabricación y comercialización de fogoneros, parrillas y productos para disfrutar y decorar espacios exteriores.",
 
         descripcionLarga: [
-            "Artesanías Guaraní reúne el trabajo de un grupo de artesanos de Luque que elaboran piezas en madera, ñandutí y ao po'i, combinando técnicas heredadas de generación en generación con diseños pensados para el uso diario.",
-            "Cada pieza se hace por encargo o en pequeños lotes, lo que permite personalizar colores y tamaños. Actualmente envían a todo el Gran Asunción y están evaluando sumar envíos al interior del país."
+            "El Fogón del Patio, creado por Enrique Román Helbing durante la pandemia, nació a partir de una fogata improvisada en el patio de su casa. Tras fabricar un fogonero para uso personal y compartirlo en redes sociales, comenzó a recibir pedidos y decidió convertir la idea en un negocio.",
+            "Con el tiempo, amplió su propuesta a fogoneros, parrillas, mesas rústicas, espejos decorativos y accesorios para espacios exteriores. Actualmente comercializa principalmente de forma online, cuenta con puntos de venta aliados y realiza envíos a todo el país, buscando ofrecer no solo productos, sino una experiencia para compartir alrededor del fuego."
         ],
 
-        ubicacion: "Luque, Paraguay",
+        ubicacion: "Asunción, Paraguay",
 
-        whatsapp: "595982000000",
+        whatsapp: "595982754850",
 
-        instagram: "https://instagram.com/",
+        instagram: "https://www.instagram.com/elfogondelpatio?igsh=MXNydjhlNW5wNWxmeg%3D%3D",
 
         productoImagen:
-            "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=800&q=80",
+            "./assets/img/El fogón del patio/Portada y foto 1.PNG",
 
         perfilImagen:
-            "https://images.unsplash.com/photo-1529333166437-7750a6dd5a70?auto=format&fit=crop&w=400&q=80",
+            "./assets/img/El fogón del patio/Foto de perfil.jpg",
 
         fotosCarrusel: [
-            "https://images.unsplash.com/photo-1528698827591-e19ccd7bc23d?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1452860606245-08befc0ff44b?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1567696911980-2eed69a46042?auto=format&fit=crop&w=1200&q=80"
+            "./assets/img/El fogón del patio/Portada y foto 1.PNG",
+            "./assets/img/El fogón del patio/Foto 3.jpeg",
+            "./assets/img/El fogón del patio/Foto 4.PNG"
         ],
 
         promocion:
-            "Envíos disponibles dentro de Gran Asunción.",
+            "No hay promociones activas actualmente.",
 
         notaPeriodistica: ""
 
@@ -117,35 +114,35 @@ const MIPYMES_DATA = [
 
 
     {
-        nombre: "Diseño PY",
-        categoria: "Servicios",
+        nombre: "MAP Crochet",
+        categoria: "Moda y artesanía",
 
         descripcion:
-            "Servicios creativos y soluciones digitales para pequeños negocios.",
+            "Emprendimiento dedicado a la elaboración artesanal de prendas de crochet.",
 
         descripcionLarga: [
-            "Diseño PY es un estudio creativo de San Lorenzo formado por tres diseñadores que trabajan con pymes y emprendedores paraguayos: identidad visual, diseño de redes, sitios web simples y material para punto de venta.",
-            "Nacieron en 2021 ayudando a comercios de barrio a mejorar su presencia digital, y hoy ya trabajaron con más de 40 negocios en distintos rubros. Ofrecen paquetes mensuales pensados especialmente para mipymes que recién arrancan."
+            "MAP Crochet nació de la pasión de María Ávalos por el crochet, un conocimiento que aprendió de su madre y que comenzó a utilizar para generar ingresos mientras buscaba la forma de cumplir su sueño de estudiar cine. Con el tiempo, pasó de elaborar gorros y bufandas a especializarse en prendas de verano como bikinis, tops, faldas, pareos y vestidos.",
+            "En 2015, el emprendimiento le permitió solventar sus gastos mientras estudiaba Cine y Audiovisual en Brasil, carrera de la que se recibió en 2019. Actualmente, MAP Crochet está formalizado, cuenta con tienda online, trabaja con pedidos personalizados y mantiene prendas en stock, mientras busca ampliar su mercado y llegar a clientes del exterior."
         ],
 
-        ubicacion: "San Lorenzo, Paraguay",
+        ubicacion: "Asunción, Paraguay",
 
-        whatsapp: "595983000000",
+        whatsapp: "595971965636",
 
-        instagram: "https://instagram.com/",
+        instagram: "https://www.instagram.com/map_crochet/?hl=es",
 
         productoImagen:
-            "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=80",
+            "./assets/img/Map crochet/Portada y foto 1.jpeg",
 
         perfilImagen:
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=400&q=80",
+            "./assets/img/Map crochet/Perfil.jpeg",
 
         fotosCarrusel: [
-            "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1483058712412-4245e9b90334?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1522542550221-31fd19575a2d?auto=format&fit=crop&w=1200&q=80",
-            "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?auto=format&fit=crop&w=1200&q=80"
+            "./assets/img/Map crochet/Portada y foto 1.jpeg",
+            "./assets/img/Map crochet/Foto 2.jpg",
+            "./assets/img/Map crochet/Foto 3.jpeg",
+            "./assets/img/Map crochet/Foto 4.jpg",
+            "./assets/img/Map crochet/Foto 5.webp"
         ],
 
         promocion:
