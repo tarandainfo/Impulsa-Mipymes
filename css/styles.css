@@ -147,11 +147,96 @@ img {
 }
 
 
+.header-right {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+}
+
+
 .nav {
 
     display: flex;
 
     gap: 30px;
+
+}
+
+
+/* =========================
+   TOGGLE MODO OSCURO
+========================= */
+
+.theme-toggle {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 38px;
+
+    height: 38px;
+
+    border-radius: 50%;
+
+    border: 1px solid var(--gris);
+
+    background: none;
+
+    color: var(--texto);
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+
+    transition: 0.3s;
+
+}
+
+
+.theme-toggle:hover {
+
+    border-color: var(--rojo);
+
+    color: var(--rojo);
+
+    transform: translateY(-2px);
+
+}
+
+
+.theme-icon {
+
+    width: 18px;
+
+    height: 18px;
+
+}
+
+
+.theme-icon-sol {
+
+    display: none;
+
+}
+
+
+[data-theme="dark"] .theme-icon-sol {
+
+    display: block;
+
+}
+
+
+[data-theme="dark"] .theme-icon-luna {
+
+    display: none;
 
 }
 
@@ -2503,5 +2588,102 @@ img {
         width: 200px;
 
     }
+
+}
+
+
+/* =========================
+   MODO OSCURO
+========================= */
+/*
+   Estrategia: [data-theme="dark"] en <html>.
+   --texto y --gris-claro se pueden redefinir
+   directamente porque solo se usan en superficies
+   "claras" (nunca sobre fondos ya oscuros como el
+   hero o el footer). El resto de los ajustes se
+   hace por selector, para no romper elementos que
+   ya son oscuros en modo claro (hero, footer,
+   header del chatbot, etc).
+========================= */
+
+[data-theme="dark"] {
+
+    --texto: #E7ECF3;
+
+    --gris-claro: #0D1218;
+
+    --dm-superficie: #161C25;
+
+    --dm-borde: #2A323D;
+
+    --dm-texto-sec: #98A2B3;
+
+}
+
+
+[data-theme="dark"] body {
+
+    background-color: #0B0E13;
+
+}
+
+
+[data-theme="dark"] .header {
+
+    background-color: var(--dm-superficie);
+
+    border-bottom-color: var(--dm-borde);
+
+}
+
+
+[data-theme="dark"] .mipyme-card,
+[data-theme="dark"] .banner,
+[data-theme="dark"] .cedula-section,
+[data-theme="dark"] .chatbot-panel,
+[data-theme="dark"] .chatbot-burbuja-bot,
+[data-theme="dark"] .chatbot-pregunta-btn,
+[data-theme="dark"] .chatbot-teaser,
+[data-theme="dark"] .chatbot-icono-cerrar {
+
+    background-color: var(--dm-superficie);
+
+}
+
+
+[data-theme="dark"] .chatbot-teaser::after {
+
+    background-color: var(--dm-superficie);
+
+}
+
+
+[data-theme="dark"] .mipyme-card,
+[data-theme="dark"] .banner,
+[data-theme="dark"] .mipyme-profile-image,
+[data-theme="dark"] .ficha-perfil-img,
+[data-theme="dark"] .chatbot-preguntas,
+[data-theme="dark"] .chatbot-pregunta-btn,
+[data-theme="dark"] .ficha-contacto {
+
+    border-color: var(--dm-borde);
+
+}
+
+
+[data-theme="dark"] .mipyme-description,
+[data-theme="dark"] .mipyme-location,
+[data-theme="dark"] .banner-content p,
+[data-theme="dark"] .ficha-descripcion p,
+[data-theme="dark"] .ficha-no-encontrada {
+
+    color: var(--dm-texto-sec);
+
+}
+
+
+[data-theme="dark"] .mipyme-promotion {
+
+    background-color: rgba(254, 196, 70, 0.12);
 
 }

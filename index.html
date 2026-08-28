@@ -6,6 +6,25 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+    <!--
+        Aplica el tema ANTES de pintar la página,
+        para que no se vea un flash blanco al cargar
+        si el usuario ya eligió modo oscuro.
+    -->
+    <script>
+        (function () {
+            var tema = localStorage.getItem("tema");
+            if (!tema) {
+                tema = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)
+                    ? "dark"
+                    : "light";
+            }
+            if (tema === "dark") {
+                document.documentElement.setAttribute("data-theme", "dark");
+            }
+        })();
+    </script>
+
     <meta name="description"
         content="Infonegocios | Impulsa Mipymes. Descubrí emprendimientos y pequeñas empresas de Paraguay.">
 
@@ -17,7 +36,7 @@
 
     <link rel="preload" as="image" href="./assets/img/logo-infonegocios-hero.png">
 
-    <link rel="stylesheet" href="./css/styles.css?v=20260811-15">
+    <link rel="stylesheet" href="./css/styles.css?v=20260828-16">
 </head>
 
 <body>
@@ -34,15 +53,32 @@
                 <img src="./assets/img/logo-infonegocios.png" alt="Infonegocios | Impulsa Mipymes">
             </a>
 
-            <nav class="nav">
+            <div class="header-right">
 
-                <a href="#mipymes">Mipymes</a>
+                <nav class="nav">
 
-                <a href="#participar">Quiero ser parte</a>
+                    <a href="#mipymes">Mipymes</a>
 
-                <a href="#cedula">Cédula Mipymes</a>
+                    <a href="#participar">Quiero aparecer</a>
 
-            </nav>
+                    <a href="#cedula">Cédula Mipymes</a>
+
+                </nav>
+
+                <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Cambiar a modo oscuro">
+
+                    <svg class="theme-icon theme-icon-sol" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+                        <circle cx="12" cy="12" r="4.5"/>
+                        <path d="M12 2.5v2.5M12 19v2.5M4.6 4.6l1.8 1.8M17.6 17.6l1.8 1.8M2.5 12h2.5M19 12h2.5M4.6 19.4l1.8-1.8M17.6 6.4l1.8-1.8"/>
+                    </svg>
+
+                    <svg class="theme-icon theme-icon-luna" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                        <path d="M20.5 14.7A8.5 8.5 0 1 1 9.3 3.5a7 7 0 0 0 11.2 11.2z"/>
+                    </svg>
+
+                </button>
+
+            </div>
 
         </div>
 
@@ -356,7 +392,7 @@
     <script src="./js/config.js?v=20260811-15" defer></script>
     <script src="./js/mipymes-data.js?v=20260811-15" defer></script>
     <script src="./js/banners-data.js?v=20260811-15" defer></script>
-    <script src="./js/app.js?v=20260811-15" defer></script>
+    <script src="./js/app.js?v=20260828-16" defer></script>
     <script src="./js/chatbot-preguntas.js?v=20260811-15" defer></script>
     <script src="./js/chatbot.js?v=20260811-15" defer></script>
 
