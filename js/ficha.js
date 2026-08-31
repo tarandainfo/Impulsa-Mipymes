@@ -305,7 +305,51 @@ function activarCarrusel(totalFotos) {
 
 
 // ==========================================
+// MODO OSCURO
+// ==========================================
+//
+// El tema inicial ya se aplica en un script
+// dentro del <head> de ficha.html (para evitar
+// el flash blanco al cargar). Acá solo se
+// engancha el botón para poder cambiarlo.
+// Misma lógica que app.js (ficha.html no carga
+// app.js, así que se repite acá).
+// ==========================================
+
+function activarModoOscuro() {
+
+    const boton = document.getElementById("theme-toggle");
+
+    if (!boton) return;
+
+    function aplicarTema(tema) {
+
+        if (tema === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.removeAttribute("data-theme");
+        }
+
+        localStorage.setItem("tema", tema);
+
+    }
+
+    boton.addEventListener("click", function () {
+
+        const temaActual = document.documentElement.getAttribute("data-theme") === "dark"
+            ? "dark"
+            : "light";
+
+        aplicarTema(temaActual === "dark" ? "light" : "dark");
+
+    });
+
+}
+
+
+// ==========================================
 // EJECUTAR
 // ==========================================
 
 mostrarFicha();
+activarModoOscuro();
