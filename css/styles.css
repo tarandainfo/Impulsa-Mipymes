@@ -2597,6 +2597,10 @@ img {
 ========================= */
 /*
    Estrategia: [data-theme="dark"] en <html>.
+   Lo aplica js/theme-init.js (antes de pintar) y
+   lo cambia js/theme.js (con el botón), ambos
+   compartidos por index.html y ficha.html.
+
    --texto y --gris-claro se pueden redefinir
    directamente porque solo se usan en superficies
    "claras" (nunca sobre fondos ya oscuros como el

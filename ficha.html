@@ -7,23 +7,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!--
-        Aplica el tema ANTES de pintar la página,
-        para que no se vea un flash blanco al cargar
-        si el usuario ya eligió modo oscuro.
+        Aplica el tema guardado ANTES de pintar la
+        página (evita el flash blanco). Sin "defer":
+        tiene que correr antes que todo lo demás.
+        Este mismo archivo lo carga index.html.
     -->
-    <script>
-        (function () {
-            var tema = localStorage.getItem("tema");
-            if (!tema) {
-                tema = (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches)
-                    ? "dark"
-                    : "light";
-            }
-            if (tema === "dark") {
-                document.documentElement.setAttribute("data-theme", "dark");
-            }
-        })();
-    </script>
+    <script src="./js/theme-init.js?v=20260828-17"></script>
 
     <meta name="description"
         content="Ficha de Mipyme | Infonegocios, Impulsa Mipymes.">
@@ -34,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/styles.css?v=20260828-16">
+    <link rel="stylesheet" href="./css/styles.css?v=20260828-17">
 </head>
 
 <body>
@@ -195,7 +184,8 @@
 
     <script src="./js/config.js?v=20260811-15" defer></script>
     <script src="./js/mipymes-data.js?v=20260811-15" defer></script>
-    <script src="./js/ficha.js?v=20260828-16" defer></script>
+    <script src="./js/ficha.js?v=20260828-17" defer></script>
+    <script src="./js/theme.js?v=20260828-17" defer></script>
     <script src="./js/chatbot-preguntas.js?v=20260811-15" defer></script>
     <script src="./js/chatbot.js?v=20260811-15" defer></script>
 
