@@ -469,47 +469,6 @@ function activarHeroLogoGrande() {
 
 
 // ==========================================
-// MODO OSCURO
-// ==========================================
-//
-// El tema inicial ya se aplica en un script
-// dentro del <head> de index.html (para evitar
-// el flash blanco al cargar). Acá solo se
-// engancha el botón para poder cambiarlo.
-// ==========================================
-
-function activarModoOscuro() {
-
-    const boton = document.getElementById("theme-toggle");
-
-    if (!boton) return;
-
-    function aplicarTema(tema) {
-
-        if (tema === "dark") {
-            document.documentElement.setAttribute("data-theme", "dark");
-        } else {
-            document.documentElement.removeAttribute("data-theme");
-        }
-
-        localStorage.setItem("tema", tema);
-
-    }
-
-    boton.addEventListener("click", function () {
-
-        const temaActual = document.documentElement.getAttribute("data-theme") === "dark"
-            ? "dark"
-            : "light";
-
-        aplicarTema(temaActual === "dark" ? "light" : "dark");
-
-    });
-
-}
-
-
-// ==========================================
 // EJECUTAR
 // ==========================================
 
@@ -518,4 +477,3 @@ mostrarBanners();
 configurarBotonesContacto();
 activarScrollSuave();
 activarHeroLogoGrande();
-activarModoOscuro();
