@@ -864,6 +864,248 @@ img {
 
 
 /* =========================
+   ESQUELETO DE CARGA
+   (se ve un instante mientras
+   cargan los archivos .js con
+   los datos de mipymes/banners)
+========================= */
+
+.skeleton-image {
+
+    height: 100%;
+
+    min-height: 330px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background-color: var(--gris-claro);
+
+}
+
+
+.skeleton-banner .skeleton-image {
+
+    height: 130px;
+
+    min-height: 0;
+
+}
+
+
+.skeleton-logo {
+
+    width: 55%;
+
+    max-width: 130px;
+
+    height: auto;
+
+    animation: skeleton-pulso 1.8s ease-in-out infinite;
+
+}
+
+
+.skeleton-avatar {
+
+    width: 65px;
+
+    height: 65px;
+
+    flex-shrink: 0;
+
+    border-radius: 50%;
+
+    background-color: var(--gris);
+
+    animation: skeleton-brillo 1.8s ease-in-out infinite;
+
+}
+
+
+.skeleton-header-lines {
+
+    flex: 1;
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}
+
+
+.skeleton-line {
+
+    display: block;
+
+    height: 12px;
+
+    border-radius: 6px;
+
+    background-color: var(--gris);
+
+    animation: skeleton-brillo 1.8s ease-in-out infinite;
+
+}
+
+
+.mipyme-info .skeleton-line,
+.banner-content .skeleton-line {
+
+    margin-top: 12px;
+
+}
+
+
+.skeleton-header-lines .skeleton-line {
+
+    margin-top: 0;
+
+}
+
+
+.skeleton-line-tag {
+
+    width: 40%;
+
+    height: 9px;
+
+}
+
+
+.skeleton-line-title {
+
+    width: 70%;
+
+    height: 17px;
+
+}
+
+
+.skeleton-line-text.short {
+
+    width: 65%;
+
+}
+
+
+.skeleton-line-box {
+
+    height: 48px;
+
+    border-radius: 10px;
+
+}
+
+
+.skeleton-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    margin-top: 20px;
+
+}
+
+
+.skeleton-btn {
+
+    flex: 1;
+
+    height: 42px;
+
+    border-radius: 24px;
+
+    background-color: var(--gris);
+
+    animation: skeleton-brillo 1.8s ease-in-out infinite;
+
+}
+
+
+@keyframes skeleton-pulso {
+
+    0%, 100% { opacity: 0.30; }
+
+    50%      { opacity: 0.65; }
+
+}
+
+
+@keyframes skeleton-brillo {
+
+    0%, 100% { opacity: 0.55; }
+
+    50%      { opacity: 1; }
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .skeleton-logo,
+    .skeleton-avatar,
+    .skeleton-line,
+    .skeleton-btn {
+
+        animation: none;
+
+        opacity: 0.6;
+
+    }
+
+}
+
+
+/* =========================
+   REVEAL AL HACER SCROLL
+   (fade-in + slide-up suave
+   cuando el elemento entra
+   en pantalla)
+========================= */
+
+.reveal {
+
+    opacity: 0;
+
+    transform: translateY(18px);
+
+    transition: opacity 0.55s ease, transform 0.55s ease;
+
+}
+
+
+.reveal.reveal-visible {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .reveal {
+
+        opacity: 1;
+
+        transform: none;
+
+        transition: none;
+
+    }
+
+}
+
+
+/* =========================
    MIPYME CARD (foto + info en fila)
 ========================= */
 
@@ -2851,5 +3093,21 @@ img {
     background-color: var(--celeste);
 
     color: var(--azul-oscuro);
+
+}
+
+
+[data-theme="dark"] .skeleton-image {
+
+    background-color: var(--dm-superficie);
+
+}
+
+
+[data-theme="dark"] .skeleton-avatar,
+[data-theme="dark"] .skeleton-line,
+[data-theme="dark"] .skeleton-btn {
+
+    background-color: var(--dm-borde);
 
 }

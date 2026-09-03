@@ -32,8 +32,99 @@ function crearSlug(texto) {
 // ==========================================
 
 const mipymesList = document.getElementById("mipymes-list");
+const mipymesPaginacion = document.getElementById("mipymes-paginacion");
 const bannersList = document.getElementById("banners-list");
 const btnAparecer = document.getElementById("btn-aparecer");
+
+
+// ==========================================
+// PAGINACIÓN DE MIPYMES
+// ==========================================
+//
+// Se muestran de a MIPYMES_POR_PAGINA mipymes por
+// vez. Los anuncios (banners) NO se paginan: se
+// muestran siempre completos en su columna.
+// ==========================================
+
+const MIPYMES_POR_PAGINA = 3;
+
+let paginaActualMipymes = 1;
+
+
+// ==========================================
+// REVEAL AL HACER SCROLL
+// ==========================================
+//
+// Hace que las tarjetas (y algunos bloques
+// fijos) aparezcan con un fade-in + slide-up
+// suave cuando entran en pantalla, en vez de
+// mostrarse de golpe.
+//
+// Respeta "prefers-reduced-motion": si el
+// usuario tiene esa preferencia activada en
+// su sistema, no se anima nada (se muestra
+// todo directamente).
+// ==========================================
+
+const prefiereMovimientoReducido =
+    window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+let observadorReveal = null;
+
+function obtenerObservadorReveal() {
+
+    if (prefiereMovimientoReducido) return null;
+
+    if (!("IntersectionObserver" in window)) return null;
+
+    if (!observadorReveal) {
+
+        observadorReveal = new IntersectionObserver(function (entradas, observer) {
+
+            entradas.forEach(function (entrada) {
+
+                if (!entrada.isIntersecting) return;
+
+                entrada.target.classList.add("reveal-visible");
+                observer.unobserve(entrada.target);
+
+            });
+
+        }, {
+            threshold: 0.15,
+            rootMargin: "0px 0px -40px 0px"
+        });
+
+    }
+
+    return observadorReveal;
+
+}
+
+
+// activarReveal: agrega la animación a un elemento.
+// "retrasoMs" es opcional, para escalonar varias
+// tarjetas seguidas (que no aparezcan todas juntas).
+function activarReveal(elemento, retrasoMs) {
+
+    if (!elemento) return;
+
+    if (prefiereMovimientoReducido) return;
+
+    if (!("IntersectionObserver" in window)) return;
+
+    elemento.classList.add("reveal");
+
+    if (retrasoMs) {
+        elemento.style.transitionDelay = `${retrasoMs}ms`;
+    }
+
+    const observador = obtenerObservadorReveal();
+
+    if (observador) observador.observe(elemento);
+
+}
 
 
 // ==========================================
@@ -44,9 +135,24 @@ function mostrarMipymes() {
 
     if (!mipymesList) return;
 
+    const totalPaginas =
+        Math.ceil(MIPYMES_DATA.length / MIPYMES_POR_PAGINA) || 1;
+
+    // Por si la página guardada quedó fuera de rango
+    // (ej: se borró una mipyme y ya no existe esa página).
+    if (paginaActualMipymes > totalPaginas) paginaActualMipymes = totalPaginas;
+    if (paginaActualMipymes < 1) paginaActualMipymes = 1;
+
+    const inicio = (paginaActualMipymes - 1) * MIPYMES_POR_PAGINA;
+
+    const mipymesDeEstaPagina = MIPYMES_DATA.slice(
+        inicio,
+        inicio + MIPYMES_POR_PAGINA
+    );
+
     mipymesList.innerHTML = "";
 
-    MIPYMES_DATA.forEach(function (mipyme) {
+    mipymesDeEstaPagina.forEach(function (mipyme, indice) {
 
         const card = document.createElement("article");
 
@@ -166,7 +272,101 @@ function mostrarMipymes() {
 
         });
 
+        activarReveal(card, indice * 90);
+
     });
+
+    mostrarPaginacionMipymes(totalPaginas);
+
+}
+
+
+// ==========================================
+// PAGINACIÓN — DIBUJAR CONTROLES
+// ==========================================
+//
+// Estilo "Google": números de página en el centro
+// y un botón "Siguiente" al final. Si solo hay una
+// página, no se muestra nada.
+// ==========================================
+
+function mostrarPaginacionMipymes(totalPaginas) {
+
+    if (!mipymesPaginacion) return;
+
+    mipymesPaginacion.innerHTML = "";
+
+    if (totalPaginas <= 1) return;
+
+    const lista = document.createElement("ul");
+    lista.classList.add("paginacion-lista");
+
+    for (let numero = 1; numero <= totalPaginas; numero++) {
+
+        const item = document.createElement("li");
+
+        const boton = document.createElement("button");
+        boton.type = "button";
+        boton.classList.add("paginacion-num");
+        boton.textContent = numero;
+        boton.setAttribute("aria-label", `Ir a la página ${numero}`);
+
+        if (numero === paginaActualMipymes) {
+            boton.classList.add("activo");
+            boton.setAttribute("aria-current", "page");
+        }
+
+        boton.addEventListener("click", function () {
+            irAPaginaMipymes(numero);
+        });
+
+        item.appendChild(boton);
+        lista.appendChild(item);
+
+    }
+
+    const itemSiguiente = document.createElement("li");
+
+    const botonSiguiente = document.createElement("button");
+    botonSiguiente.type = "button";
+    botonSiguiente.classList.add("paginacion-siguiente");
+    botonSiguiente.innerHTML = `
+        Siguiente
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+    `;
+
+    const esUltimaPagina = paginaActualMipymes === totalPaginas;
+    botonSiguiente.disabled = esUltimaPagina;
+
+    botonSiguiente.addEventListener("click", function () {
+        if (!esUltimaPagina) irAPaginaMipymes(paginaActualMipymes + 1);
+    });
+
+    itemSiguiente.appendChild(botonSiguiente);
+    lista.appendChild(itemSiguiente);
+
+    mipymesPaginacion.appendChild(lista);
+
+}
+
+
+// ==========================================
+// PAGINACIÓN — CAMBIAR DE PÁGINA
+// ==========================================
+
+function irAPaginaMipymes(numero) {
+
+    if (numero === paginaActualMipymes) return;
+
+    paginaActualMipymes = numero;
+
+    mostrarMipymes();
+
+    // Sube el scroll al inicio del listado, para que
+    // se vea la mipyme #1 de la nueva página.
+    document
+        .getElementById("mipymes")
+        .scrollIntoView({ behavior: "smooth", block: "start" });
 
 }
 
@@ -181,7 +381,7 @@ function mostrarBanners() {
 
     bannersList.innerHTML = "";
 
-    BANNERS_DATA.forEach(function (banner) {
+    BANNERS_DATA.forEach(function (banner, indice) {
 
         const item = document.createElement("div");
 
@@ -218,6 +418,8 @@ function mostrarBanners() {
         `;
 
         bannersList.appendChild(item);
+
+        activarReveal(item, indice * 90);
 
     });
 
@@ -469,6 +671,25 @@ function activarHeroLogoGrande() {
 
 
 // ==========================================
+// REVEAL EN BLOQUES FIJOS
+// ==========================================
+//
+// Además de las tarjetas de mipymes/banners
+// (que se animan solas al crearse), estos
+// bloques del HTML también tienen el efecto
+// de aparición al hacer scroll.
+// ==========================================
+
+function activarRevealBloquesFijos() {
+
+    document.querySelectorAll("[data-reveal]").forEach(function (elemento) {
+        activarReveal(elemento);
+    });
+
+}
+
+
+// ==========================================
 // EJECUTAR
 // ==========================================
 
@@ -477,3 +698,4 @@ mostrarBanners();
 configurarBotonesContacto();
 activarScrollSuave();
 activarHeroLogoGrande();
+activarRevealBloquesFijos();

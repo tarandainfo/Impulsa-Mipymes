@@ -55,16 +55,16 @@ const MIPYMES_DATA = [
         instagram: "https://www.instagram.com/pedacitos_de_luna__/",
 
         productoImagen:
-            "./assets/img/Pedacitos de luna/Pedacitos de luna foto de presentación.jpeg",
+            "./assets/img/pedacitos-de-luna/pedacitos-de-luna-foto-de-presentacion.jpeg",
 
         perfilImagen:
-            "./assets/img/Pedacitos de luna/Pedacitos de luna foto de perfil.jpeg",
+            "./assets/img/pedacitos-de-luna/pedacitos-de-luna-foto-de-perfil.jpeg",
 
         fotosCarrusel: [
-            "./assets/img/Pedacitos de luna/Pedacitos de luna foto de presentación.jpeg",
-            "./assets/img/Pedacitos de luna/Pedacitos de luna pancho.jpeg",
-            "./assets/img/Pedacitos de luna/Pedacitos de luna empanada.jpeg",
-            "./assets/img/Pedacitos de luna/Pedacitos de luna medialuna.jpeg"
+            "./assets/img/pedacitos-de-luna/pedacitos-de-luna-foto-de-presentacion.jpeg",
+            "./assets/img/pedacitos-de-luna/pedacitos-de-luna-pancho.jpeg",
+            "./assets/img/pedacitos-de-luna/pedacitos-de-luna-empanada.jpeg",
+            "./assets/img/pedacitos-de-luna/pedacitos-de-luna-medialuna.jpeg"
         ],
 
         promocion:
@@ -94,15 +94,15 @@ const MIPYMES_DATA = [
         instagram: "https://www.instagram.com/elfogondelpatio?igsh=MXNydjhlNW5wNWxmeg%3D%3D",
 
         productoImagen:
-            "./assets/img/El fogón del patio/Portada y foto 1.PNG",
+            "./assets/img/el-fogon-del-patio/portada-y-foto-1.png",
 
         perfilImagen:
-            "./assets/img/El fogón del patio/Foto de perfil.jpg",
+            "./assets/img/el-fogon-del-patio/foto-de-perfil.jpg",
 
         fotosCarrusel: [
-            "./assets/img/El fogón del patio/Portada y foto 1.PNG",
-            "./assets/img/El fogón del patio/Foto 3.jpeg",
-            "./assets/img/El fogón del patio/Foto 4.PNG"
+            "./assets/img/el-fogon-del-patio/portada-y-foto-1.png",
+            "./assets/img/el-fogon-del-patio/foto-3.jpeg",
+            "./assets/img/el-fogon-del-patio/foto-4.png"
         ],
 
         promocion:
@@ -132,17 +132,17 @@ const MIPYMES_DATA = [
         instagram: "https://www.instagram.com/map_crochet/?hl=es",
 
         productoImagen:
-            "./assets/img/Map crochet/Portada y foto 1.jpeg",
+            "./assets/img/map-crochet/portada-y-foto-1.jpeg",
 
         perfilImagen:
-            "./assets/img/Map crochet/Perfil.jpeg",
+            "./assets/img/map-crochet/perfil.jpeg",
 
         fotosCarrusel: [
-            "./assets/img/Map crochet/Portada y foto 1.jpeg",
-            "./assets/img/Map crochet/Foto 2.jpg",
-            "./assets/img/Map crochet/Foto 3.jpeg",
-            "./assets/img/Map crochet/Foto 4.jpg",
-            "./assets/img/Map crochet/Foto 5.webp"
+            "./assets/img/map-crochet/portada-y-foto-1.jpeg",
+            "./assets/img/map-crochet/foto-2.jpg",
+            "./assets/img/map-crochet/foto-3.jpeg",
+            "./assets/img/map-crochet/foto-4.jpg",
+            "./assets/img/map-crochet/foto-5.webp"
         ],
 
         promocion:

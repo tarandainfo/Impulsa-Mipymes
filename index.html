@@ -167,7 +167,99 @@
                                 Las Mipymes se cargan automáticamente
                                 desde js/mipymes-data.js. Solo el
                                 administrador edita ese archivo.
+
+                                Mientras tanto (o si algo tarda en
+                                cargar), se ve este "esqueleto" de
+                                carga con el logo, para no mostrar
+                                la sección en blanco.
                             -->
+
+                            <article class="mipyme-card skeleton-card" aria-hidden="true">
+
+                                <div class="skeleton-image">
+                                    <img src="./assets/img/logo-infonegocios.png" alt="" class="skeleton-logo" loading="eager">
+                                </div>
+
+                                <div class="mipyme-info">
+
+                                    <div class="mipyme-header">
+                                        <div class="skeleton-avatar"></div>
+                                        <div class="skeleton-header-lines">
+                                            <span class="skeleton-line skeleton-line-tag"></span>
+                                            <span class="skeleton-line skeleton-line-title"></span>
+                                        </div>
+                                    </div>
+
+                                    <span class="skeleton-line skeleton-line-text"></span>
+                                    <span class="skeleton-line skeleton-line-text short"></span>
+                                    <span class="skeleton-line skeleton-line-box"></span>
+
+                                    <div class="skeleton-actions">
+                                        <span class="skeleton-btn"></span>
+                                        <span class="skeleton-btn"></span>
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                            <article class="mipyme-card skeleton-card" aria-hidden="true">
+
+                                <div class="skeleton-image">
+                                    <img src="./assets/img/logo-infonegocios.png" alt="" class="skeleton-logo" loading="eager">
+                                </div>
+
+                                <div class="mipyme-info">
+
+                                    <div class="mipyme-header">
+                                        <div class="skeleton-avatar"></div>
+                                        <div class="skeleton-header-lines">
+                                            <span class="skeleton-line skeleton-line-tag"></span>
+                                            <span class="skeleton-line skeleton-line-title"></span>
+                                        </div>
+                                    </div>
+
+                                    <span class="skeleton-line skeleton-line-text"></span>
+                                    <span class="skeleton-line skeleton-line-text short"></span>
+                                    <span class="skeleton-line skeleton-line-box"></span>
+
+                                    <div class="skeleton-actions">
+                                        <span class="skeleton-btn"></span>
+                                        <span class="skeleton-btn"></span>
+                                    </div>
+
+                                </div>
+
+                            </article>
+
+                            <article class="mipyme-card skeleton-card" aria-hidden="true">
+
+                                <div class="skeleton-image">
+                                    <img src="./assets/img/logo-infonegocios.png" alt="" class="skeleton-logo" loading="eager">
+                                </div>
+
+                                <div class="mipyme-info">
+
+                                    <div class="mipyme-header">
+                                        <div class="skeleton-avatar"></div>
+                                        <div class="skeleton-header-lines">
+                                            <span class="skeleton-line skeleton-line-tag"></span>
+                                            <span class="skeleton-line skeleton-line-title"></span>
+                                        </div>
+                                    </div>
+
+                                    <span class="skeleton-line skeleton-line-text"></span>
+                                    <span class="skeleton-line skeleton-line-text short"></span>
+                                    <span class="skeleton-line skeleton-line-box"></span>
+
+                                    <div class="skeleton-actions">
+                                        <span class="skeleton-btn"></span>
+                                        <span class="skeleton-btn"></span>
+                                    </div>
+
+                                </div>
+
+                            </article>
 
                         </div>
 
@@ -208,8 +300,40 @@
 
                             <!--
                                 Los banners se cargan automáticamente
-                                desde js/banners-data.js.
+                                desde js/banners-data.js. El esqueleto
+                                de carga de abajo se reemplaza apenas
+                                termina de cargar.
                             -->
+
+                            <div class="banner skeleton-banner" aria-hidden="true">
+
+                                <div class="skeleton-image">
+                                    <img src="./assets/img/logo-infonegocios.png" alt="" class="skeleton-logo" loading="eager">
+                                </div>
+
+                                <div class="banner-content">
+                                    <span class="skeleton-line skeleton-line-tag"></span>
+                                    <span class="skeleton-line skeleton-line-title"></span>
+                                    <span class="skeleton-line skeleton-line-text"></span>
+                                    <span class="skeleton-line skeleton-line-text short"></span>
+                                </div>
+
+                            </div>
+
+                            <div class="banner skeleton-banner" aria-hidden="true">
+
+                                <div class="skeleton-image">
+                                    <img src="./assets/img/logo-infonegocios.png" alt="" class="skeleton-logo" loading="eager">
+                                </div>
+
+                                <div class="banner-content">
+                                    <span class="skeleton-line skeleton-line-tag"></span>
+                                    <span class="skeleton-line skeleton-line-title"></span>
+                                    <span class="skeleton-line skeleton-line-text"></span>
+                                    <span class="skeleton-line skeleton-line-text short"></span>
+                                </div>
+
+                            </div>
 
                         </div>
 
@@ -230,7 +354,7 @@
 
             <div class="container">
 
-                <div class="participar-box">
+                <div class="participar-box" data-reveal>
 
                     <div>
 
@@ -270,7 +394,7 @@
 
             <div class="container">
 
-                <div class="cedula-content">
+                <div class="cedula-content" data-reveal>
 
                     <span class="section-tag">
                         MIC
