@@ -106,7 +106,11 @@ function obtenerObservadorReveal() {
 // activarReveal: agrega la animación a un elemento.
 // "retrasoMs" es opcional, para escalonar varias
 // tarjetas seguidas (que no aparezcan todas juntas).
-function activarReveal(elemento, retrasoMs) {
+// "claseBase" es opcional: "reveal" (fade + sube
+// desde abajo, por defecto) o "reveal-left" (entra
+// deslizándose desde la izquierda, usado en las
+// tarjetas de mipymes).
+function activarReveal(elemento, retrasoMs, claseBase) {
 
     if (!elemento) return;
 
@@ -114,7 +118,7 @@ function activarReveal(elemento, retrasoMs) {
 
     if (!("IntersectionObserver" in window)) return;
 
-    elemento.classList.add("reveal");
+    elemento.classList.add(claseBase || "reveal");
 
     if (retrasoMs) {
         elemento.style.transitionDelay = `${retrasoMs}ms`;
@@ -268,11 +272,17 @@ function mostrarMipymes() {
 
             if (e.target.closest(".mipyme-actions")) return;
 
-            window.location.href = `ficha.html?mipyme=${crearSlug(mipyme.nombre)}`;
+            const url = `ficha.html?mipyme=${crearSlug(mipyme.nombre)}`;
+
+            if (typeof window.transicionAPagina === "function") {
+                window.transicionAPagina(url);
+            } else {
+                window.location.href = url;
+            }
 
         });
 
-        activarReveal(card, indice * 90);
+        activarReveal(card, indice * 90, "reveal-left");
 
     });
 

@@ -1090,9 +1090,34 @@ img {
 }
 
 
+/* Variante para las tarjetas de mipymes:
+   entran deslizándose desde la izquierda
+   en vez de desde abajo. */
+
+.reveal-left {
+
+    opacity: 0;
+
+    transform: translateX(-46px);
+
+    transition: opacity 0.6s ease, transform 0.6s ease;
+
+}
+
+
+.reveal-left.reveal-visible {
+
+    opacity: 1;
+
+    transform: translateX(0);
+
+}
+
+
 @media (prefers-reduced-motion: reduce) {
 
-    .reveal {
+    .reveal,
+    .reveal-left {
 
         opacity: 1;
 
@@ -1100,6 +1125,88 @@ img {
 
         transition: none;
 
+    }
+
+}
+
+
+/* =========================
+   PANTALLA DE CARGA ENTRE
+   PÁGINAS (index.html <-> ficha.html)
+========================= */
+/*
+   Se ve:
+   1) Al entrar a una página, hasta que
+      termina de cargar todo.
+   2) Al hacer clic en un link que lleva a
+      OTRA página del sitio, antes de navegar.
+
+   El fondo usa el mismo tema (claro/oscuro)
+   que ya tiene aplicado el usuario, gracias
+   a theme-init.js (corre antes de pintar).
+========================= */
+
+.page-loader {
+
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 9999;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background-color: var(--blanco);
+
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+
+}
+
+
+.page-loader-logo {
+
+    width: 150px;
+
+    max-width: 40vw;
+
+    height: auto;
+
+    animation: skeleton-pulso 1.4s ease-in-out infinite;
+
+}
+
+
+.page-loader.page-loader-oculto {
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+}
+
+
+[data-theme="dark"] .page-loader {
+
+    background-color: #0B0E13;
+
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+
+    .page-loader {
+        transition: opacity 0.01s linear;
+    }
+
+    .page-loader-logo {
+        animation: none;
+        opacity: 0.75;
     }
 
 }
