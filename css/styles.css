@@ -727,6 +727,143 @@ img {
 
 
 /* =========================
+   PAGINACIÓN DE MIPYMES
+   (estilo Google: números +
+   botón "Siguiente")
+========================= */
+
+.mipymes-paginacion {
+
+    display: flex;
+
+    justify-content: center;
+
+    margin-top: 30px;
+
+}
+
+
+.paginacion-lista {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    list-style: none;
+
+}
+
+
+.paginacion-num {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 36px;
+
+    height: 36px;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: none;
+
+    color: var(--azul);
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+}
+
+
+.paginacion-num:hover {
+
+    background-color: var(--gris-claro);
+
+}
+
+
+.paginacion-num.activo {
+
+    background-color: var(--azul);
+
+    color: var(--blanco);
+
+}
+
+
+.paginacion-siguiente {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    margin-left: 12px;
+
+    padding: 9px 16px;
+
+    border: none;
+
+    border-radius: 20px;
+
+    background: none;
+
+    color: var(--azul);
+
+    font-family: inherit;
+
+    font-size: 15px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+
+}
+
+
+.paginacion-siguiente svg {
+
+    width: 16px;
+
+    height: 16px;
+
+}
+
+
+.paginacion-siguiente:hover:not(:disabled) {
+
+    background-color: var(--gris-claro);
+
+}
+
+
+.paginacion-siguiente:disabled {
+
+    opacity: 0.35;
+
+    cursor: not-allowed;
+
+}
+
+
+/* =========================
    MIPYME CARD (foto + info en fila)
 ========================= */
 
@@ -2689,5 +2826,30 @@ img {
 [data-theme="dark"] .mipyme-promotion {
 
     background-color: rgba(254, 196, 70, 0.12);
+
+}
+
+
+[data-theme="dark"] .paginacion-num,
+[data-theme="dark"] .paginacion-siguiente {
+
+    color: var(--celeste);
+
+}
+
+
+[data-theme="dark"] .paginacion-num:hover,
+[data-theme="dark"] .paginacion-siguiente:hover:not(:disabled) {
+
+    background-color: var(--dm-superficie);
+
+}
+
+
+[data-theme="dark"] .paginacion-num.activo {
+
+    background-color: var(--celeste);
+
+    color: var(--azul-oscuro);
 
 }

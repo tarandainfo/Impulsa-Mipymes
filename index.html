@@ -159,13 +159,30 @@
 
                     <!-- COLUMNA MIPYMES (perfiles, uno abajo del otro) -->
 
-                    <div class="mipymes-list" id="mipymes-list">
+                    <div>
+
+                        <div class="mipymes-list" id="mipymes-list">
+
+                            <!--
+                                Las Mipymes se cargan automáticamente
+                                desde js/mipymes-data.js. Solo el
+                                administrador edita ese archivo.
+                            -->
+
+                        </div>
+
 
                         <!--
-                            Las Mipymes se cargan automáticamente
-                            desde js/mipymes-data.js. Solo el
-                            administrador edita ese archivo.
+                            Paginación de mipymes (estilo Google:
+                            números de página + "Siguiente"). Se
+                            genera automáticamente desde app.js.
                         -->
+
+                        <nav
+                            class="mipymes-paginacion"
+                            id="mipymes-paginacion"
+                            aria-label="Paginación de mipymes">
+                        </nav>
 
                     </div>
 
