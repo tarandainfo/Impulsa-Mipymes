@@ -20,7 +20,7 @@ const CHATBOT_PREGUNTAS = [
     {
         pregunta: "¿Cómo cargo mi mipyme en el sitio?",
         respuesta:
-            "Primero necesitás tener tu Cédula Mipymes. Con eso, andá a la sección \"Quiero aparecer\" (más arriba en esta misma página) y escribinos por WhatsApp — nosotros nos encargamos de cargar tu perfil."
+            "Primero necesitás tener tu Cédula Mipymes. Con eso, andá a la sección \"Quiero ser parte\" (más arriba en esta misma página) y escribinos por WhatsApp — nosotros nos encargamos de cargar tu perfil."
     },
 
     {

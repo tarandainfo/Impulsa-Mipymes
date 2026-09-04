@@ -272,13 +272,7 @@ function mostrarMipymes() {
 
             if (e.target.closest(".mipyme-actions")) return;
 
-            const url = `ficha.html?mipyme=${crearSlug(mipyme.nombre)}`;
-
-            if (typeof window.transicionAPagina === "function") {
-                window.transicionAPagina(url);
-            } else {
-                window.location.href = url;
-            }
+            window.location.href = `ficha.html?mipyme=${crearSlug(mipyme.nombre)}`;
 
         });
 
