@@ -96,7 +96,7 @@ const MIPYMES_DATA = [
             "./assets/img/ruben-cardus/foto-foto-principal.jpg",
 
         perfilImagen:
-            "",
+            "./assets/img/ruben-cardus/foto-perfil.jpeg",
 
         fotosCarrusel: [
             "./assets/img/ruben-cardus/foto-foto-principal.jpg",
