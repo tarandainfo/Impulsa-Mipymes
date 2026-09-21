@@ -121,7 +121,7 @@ const MIPYMES_DATA = [
             "Resto café que combina platos tradicionales y propuestas innovadoras con una identidad inspirada en la cultura y las tradiciones paraguayas.",
 
         descripcionLarga: [
-            "Che Retã Resto Café nació a partir de una reunión entre Santiago Benítez y César Castro, quienes decidieron unir sus conocimientos y apostar por el crecimiento dentro del rubro gastronómico. El emprendimiento ofrece una variedad de platos tradicionales y propuestas no convencionales, acompañados de una propuesta de café que busca diferenciarse.",
+            "Che Retã Resto Café nace a partir de una reunión entre Santiago Benítez y César Castro, quienes decidieron unir sus conocimientos y apostar por el crecimiento dentro del rubro gastronómico. El emprendimiento ofrece una variedad de platos tradicionales y propuestas no convencionales, acompañados de una propuesta de café que busca diferenciarse.",
             "Con una identidad inspirada en el amor por Paraguay, su gente, su tierra y sus tradiciones, Che Retã busca que cada producto y cada detalle transmita parte de la cultura local. Sus impulsores tienen como objetivo seguir creciendo, desarrollar nuevas propuestas y demostrar que, a través de métodos innovadores, es posible construir un emprendimiento sólido apostando por lo nuestro."
         ],
 
