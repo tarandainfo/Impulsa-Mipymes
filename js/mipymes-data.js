@@ -36,6 +36,43 @@
 const MIPYMES_DATA = [
 
     {
+        nombre: "AG Organización Contable",
+        categoria: "Servicios contables empresariales",
+
+        descripcion:
+            "Firma especializada en servicios contables, tributarios, laborales y administrativos, con asesoramiento integral para emprendedores, empresas, MiPymes e inversionistas.",
+
+        descripcionLarga: [
+            "AG Organización Contable es una firma con más de 20 años de trayectoria, liderada por Fanny Godoy Britos, que brinda soluciones integrales en las áreas contable, tributaria, laboral y administrativa. Su propuesta acompaña a emprendedores y empresas desde la formalización y constitución de sus negocios hasta la gestión cotidiana y el cumplimiento de sus obligaciones.",
+            "Además, ofrece servicios de auditoría externa, registro de marcas, asesoramiento para emprendedores y MiPymes, y asistencia a extranjeros interesados en establecerse e invertir en Paraguay. Su atención personalizada se basa en tres pilares: Confianza, Claridad y Compromiso, buscando brindar acompañamiento profesional durante las distintas etapas de cada proyecto."
+        ],
+
+        ubicacion: "Hernandarias, Paraguay",
+
+        whatsapp: "595991844919",
+
+        instagram: "https://www.instagram.com/agorganizacioncontable/",
+
+        productoImagen:
+            "./assets/img/ag-contable/ag-principal.jpeg",
+
+        perfilImagen:
+            "./assets/img/ag-contable/ag-perfil.jpeg",
+
+        fotosCarrusel: [
+            "./assets/img/ag-contable/ag-foto1.jpg",
+            "./assets/img/ag-contable/ag-foto2.jpg",
+            "./assets/img/ag-contable/ag-foto3.jpg"
+        ],
+
+        promocion:
+            "Consultá por los servicios disponibles.",
+
+        notaPeriodistica: ""
+
+    },
+
+    {
         nombre: "Hey",
         categoria: "Moda y diseño",
 
