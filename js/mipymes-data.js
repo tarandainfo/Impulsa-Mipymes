@@ -36,6 +36,45 @@
 const MIPYMES_DATA = [
 
     {
+        nombre: "Fátima Sosa Organización y ambientación de eventos ",
+        categoria: "Organización de eventos",
+
+        descripcion:
+            "Servicio especializado en la organización, planificación y ambientación de eventos, creando propuestas personalizadas y cuidando cada detalle de la celebración.",
+
+        descripcionLarga: [
+            "Fátima Sosa – Organización y Ambientación de Eventos nació a partir de una experiencia personal: la organización de su propia boda. A partir de ese momento, Fátima Sosa decidió convertir su interés por la planificación y decoración de celebraciones en un emprendimiento dedicado a crear y coordinar eventos.",
+            "Actualmente, ofrece servicios de organización, planificación y ambientación de eventos, trabajando en cada proyecto de manera personalizada. Para fortalecer su propuesta, ha invertido en nuevos materiales y capacitación, mientras que su objetivo es seguir creciendo y asumir la organización de eventos cada vez más complejos."
+        ],
+
+        ubicacion: "Asunción, Paraguay",
+
+        whatsapp: "595984128509",
+
+        instagram: "https://www.instagram.com/fatimasosaeventos?stkn=MWF1a2x5azE0eG5naQ%3D%3D&utm_source=qr",
+
+        productoImagen:
+            "./assets/img/fatima-sosa/foto-1.jpg",
+
+        perfilImagen:
+            "./assets/img/fatima-sosa/foto-perfil.jpg",
+
+        fotosCarrusel: [
+            "./assets/img/fatima-sosa/foto-1.jpg",
+            "./assets/img/fatima-sosa/foto-2.jpg",
+            "./assets/img/fatima-sosa/foto-3.jpg",
+            "./assets/img/fatima-sosa/foto-4.jpg",
+            "./assets/img/fatima-sosa/foto-5.jpg"
+        ],
+
+        promocion:
+            "Consultá por los servicios disponibles.",
+
+        notaPeriodistica: ""
+
+    },
+
+    {
         nombre: "AG Organización Contable",
         categoria: "Servicios contables empresariales",
 
