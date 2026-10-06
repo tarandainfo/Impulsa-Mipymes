@@ -23,9 +23,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
 
-    <link rel="preload" as="image" href="./assets/img/logo-infonegocios-hero.png">
-
-    <link rel="stylesheet" href="./css/styles.css?v=20260828-17">
+    <link rel="stylesheet" href="./css/styles.css?v=20261006-gestos">
 </head>
 
 <body>
@@ -80,10 +78,13 @@
 
     <main>
 
-        <section class="hero">
+        <section class="hero hero-spot">
 
-            <div class="hero-logo-circle">
-                <img src="./assets/img/logo-infonegocios-hero.png" alt="Infonegocios | Impulsa Mipymes" loading="eager" fetchpriority="high" decoding="async">
+            <!-- Fondo animado: manchas de color difuminadas en loop lento -->
+            <div class="hero-aurora" aria-hidden="true">
+                <span class="aurora-blob aurora-blob-1"></span>
+                <span class="aurora-blob aurora-blob-2"></span>
+                <span class="aurora-blob aurora-blob-3"></span>
             </div>
 
             <div class="container hero-container">
@@ -105,17 +106,87 @@
                         que forman parte del ecosistema Mipyme de Paraguay.
                     </p>
 
-                    <a href="#mipymes" class="btn btn-primary">
-                        Conocé las Mipymes
-                    </a>
+                    <div class="hero-btns">
+
+                        <a href="#mipymes" class="btn btn-primary hero-btn">
+                            Conocé las Mipymes
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                        </a>
+
+                        <a href="#participar" class="btn hero-btn hero-btn-ghost">
+                            Quiero ser parte
+                        </a>
+
+                    </div>
 
                 </div>
 
-                <div class="hero-decoration">
 
-                    <div class="hero-circle circle-one"></div>
+                <!--
+                    SPOTLIGHT ROTATIVO
+                    Muestra, de a una, las mipymes de js/mipymes-data.js
+                    (rota solo; también se maneja con flechas, puntitos,
+                    teclado o deslizando en el celular). Lo arma
+                    activarSpotlightHero() en js/app.js.
+                -->
+                <div class="spotlight" id="spotlight" role="region" aria-roledescription="carrusel" aria-label="Mipymes destacadas" aria-live="off">
 
-                    <div class="hero-circle circle-two"></div>
+                    <div class="spotlight-progreso" id="spotlight-progreso"></div>
+
+                    <img class="spotlight-capa visible" id="spotlight-capa-a" alt="" decoding="async">
+                    <img class="spotlight-capa" id="spotlight-capa-b" alt="" decoding="async">
+
+                    <div class="spotlight-velo"></div>
+
+                    <span class="spotlight-categoria" id="spotlight-categoria"></span>
+
+                    <span class="spotlight-badge"><i></i> Destacada</span>
+
+                    <div class="spotlight-info" id="spotlight-info">
+
+                        <h2 class="spotlight-nombre" id="spotlight-nombre"></h2>
+
+                        <p class="spotlight-desc" id="spotlight-desc"></p>
+
+                        <p class="spotlight-ubicacion">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C7.86 2 4.5 5.36 4.5 9.5c0 5.25 6.24 11.34 6.5 11.6a1.4 1.4 0 0 0 2 0c.26-.26 6.5-6.35 6.5-11.6C19.5 5.36 16.14 2 12 2zm0 10.3a2.8 2.8 0 1 1 0-5.6 2.8 2.8 0 0 1 0 5.6z"/></svg>
+                            <span id="spotlight-ubicacion"></span>
+                        </p>
+
+                        <div class="spotlight-acciones">
+
+                            <a href="#" class="spotlight-btn spotlight-btn-ficha" id="spotlight-ficha">
+                                Ver ficha
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                            </a>
+
+                            <a href="#" target="_blank" rel="noopener" class="spotlight-btn spotlight-btn-wa" id="spotlight-wa">
+                                <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.35 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.2 14.2c-.22.62-1.28 1.18-1.77 1.24-.45.06-.98.08-1.58-.1-.36-.11-.83-.27-1.43-.53-2.52-1.09-4.16-3.63-4.29-3.8-.13-.17-1.03-1.37-1.03-2.61 0-1.24.65-1.85.88-2.1.22-.25.49-.31.65-.31.16 0 .33 0 .47.01.15.01.35-.06.55.42.2.49.69 1.68.75 1.8.06.12.1.27.02.44-.08.17-.12.27-.24.42-.12.15-.25.33-.36.44-.12.12-.24.25-.1.49.14.24.61 1.01 1.32 1.63.91.8 1.67 1.05 1.91 1.17.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.53-.12.21.08 1.36.64 1.6.76.24.12.4.18.46.28.06.11.06.61-.16 1.23z"/></svg>
+                                WhatsApp
+                            </a>
+
+                            <a href="#" target="_blank" rel="noopener" class="spotlight-btn spotlight-btn-ig" id="spotlight-ig">
+                                <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4.3" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg>
+                                Instagram
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="spotlight-controles">
+
+                        <button type="button" class="spotlight-flecha" id="spotlight-prev" aria-label="Mipyme anterior">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+                        </button>
+
+                        <div class="spotlight-puntos" id="spotlight-puntos"></div>
+
+                        <button type="button" class="spotlight-flecha" id="spotlight-next" aria-label="Mipyme siguiente">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+                        </button>
+
+                    </div>
 
                 </div>
 
@@ -352,7 +423,13 @@
 
         <section id="cedula" class="cedula-section">
 
-            <div class="container">
+            <!-- Manchas de color de fondo (decorativas) -->
+            <div class="cedula-fondo" aria-hidden="true">
+                <span class="cedula-mancha cedula-mancha-1"></span>
+                <span class="cedula-mancha cedula-mancha-2"></span>
+            </div>
+
+            <div class="container cedula-grid">
 
                 <div class="cedula-content" data-reveal>
 
@@ -415,10 +492,66 @@
 
                 </div>
 
+
+                <!--
+                    Ilustración 3D (decorativa): una "cédula" que se inclina
+                    siguiendo al mouse, con los tres conceptos del texto
+                    (RUC, IRE y DNIT) flotando alrededor.
+                -->
+                <div class="cedula-visual" data-reveal aria-hidden="true">
+
+                    <div class="cedula-escena" id="cedula-escena">
+
+                        <div class="cedula-flota">
+
+                            <div class="cedula-rot">
+
+                                <div class="cedula-tarjeta">
+
+                                    <span class="ct-brillo"></span>
+
+                                    <div class="ct-top">
+
+                                        <div class="ct-titulo">
+                                            <small>MIC</small>
+                                            <strong>Cédula</strong>
+                                            <strong class="ct-mipyme">Mipyme</strong>
+                                        </div>
+
+                                        <span class="ct-chip"></span>
+
+                                    </div>
+
+                                    <div class="ct-acreditada">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+                                        Mipyme acreditada
+                                    </div>
+
+                                    <div class="ct-lineas"><i></i><i></i><i></i></div>
+
+                                    <div class="ct-pie">PARAGUAY</div>
+
+                                </div>
+
+                                <span class="cedula-pill cedula-pill-1">RUC</span>
+                                <span class="cedula-pill cedula-pill-2">IRE</span>
+                                <span class="cedula-pill cedula-pill-3">DNIT</span>
+
+                                <span class="cedula-check">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
             </div>
 
         </section>
-
 
         <!-- =========================
              PARTICIPAR
@@ -430,7 +563,13 @@
 
                 <div class="participar-box" data-reveal>
 
-                    <div>
+                    <!-- Fondo animado (manchas de color difuminadas) -->
+                    <div class="participar-aurora" aria-hidden="true">
+                        <span class="aurora-blob participar-blob-1"></span>
+                        <span class="aurora-blob participar-blob-2"></span>
+                    </div>
+
+                    <div class="participar-texto">
 
                         <span class="section-tag">
                             ¿TENÉS UNA MIPYME?
@@ -447,11 +586,40 @@
                             cómo podés aparecer en nuestra plataforma.
                         </p>
 
+                        <a href="#" id="btn-aparecer" target="_blank" rel="noopener" class="btn btn-light participar-btn">
+                            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.35 5.07L2 22l5.06-1.33A9.94 9.94 0 0 0 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm5.2 14.2c-.22.62-1.28 1.18-1.77 1.24-.45.06-.98.08-1.58-.1-.36-.11-.83-.27-1.43-.53-2.52-1.09-4.16-3.63-4.29-3.8-.13-.17-1.03-1.37-1.03-2.61 0-1.24.65-1.85.88-2.1.22-.25.49-.31.65-.31.16 0 .33 0 .47.01.15.01.35-.06.55.42.2.49.69 1.68.75 1.8.06.12.1.27.02.44-.08.17-.12.27-.24.42-.12.15-.25.33-.36.44-.12.12-.24.25-.1.49.14.24.61 1.01 1.32 1.63.91.8 1.67 1.05 1.91 1.17.24.12.38.1.52-.06.14-.16.6-.7.76-.94.16-.24.32-.2.53-.12.21.08 1.36.64 1.6.76.24.12.4.18.46.28.06.11.06.61-.16 1.23z"/></svg>
+                            Quiero ser parte
+                        </a>
+
                     </div>
 
-                    <a href="#" id="btn-aparecer" target="_blank" rel="noopener" class="btn btn-light">
-                        Quiero ser parte
-                    </a>
+                    <ol class="participar-pasos">
+
+                        <li class="paso" style="--n: 0">
+                            <span class="paso-num">1</span>
+                            <div>
+                                <strong>Tené tu Cédula Mipymes</strong>
+                                <span>Es el requisito para aparecer en Infonegocios.</span>
+                            </div>
+                        </li>
+
+                        <li class="paso" style="--n: 1">
+                            <span class="paso-num">2</span>
+                            <div>
+                                <strong>Escribinos por WhatsApp</strong>
+                                <span>Contactanos y te explicamos cómo aparecer en la plataforma.</span>
+                            </div>
+                        </li>
+
+                        <li class="paso" style="--n: 2">
+                            <span class="paso-num">3</span>
+                            <div>
+                                <strong>Nosotros cargamos tu perfil</strong>
+                                <span>Nos encargamos de cargar tu perfil en el sitio.</span>
+                            </div>
+                        </li>
+
+                    </ol>
 
                 </div>
 
@@ -476,25 +644,36 @@
 
     <footer class="footer">
 
-        <div class="container footer-container">
+        <!-- Manchas de color de fondo (decorativas) -->
+        <div class="footer-aurora" aria-hidden="true">
+            <span class="aurora-blob footer-blob-1"></span>
+            <span class="aurora-blob footer-blob-2"></span>
+        </div>
 
-            <div class="footer-brand">
+        <div class="container footer-contenido">
 
-                <a href="https://infonegocios.com.py/" target="_blank" rel="noopener">
-                    <img
-                        src="./assets/img/logo-infonegocios-footer.png"
-                        alt="Infonegocios | Impulsa Mipymes"
-                        class="footer-logo">
-                </a>
+            <div class="footer-top">
 
-            </div>
+                <div class="footer-brand">
 
-            <div class="footer-right">
+                    <a href="https://infonegocios.com.py/" target="_blank" rel="noopener">
+                        <img
+                            src="./assets/img/logo-infonegocios-footer.png"
+                            alt="Infonegocios | Impulsa Mipymes"
+                            class="footer-logo">
+                    </a>
 
-                <p>
-                    © 2026 Infonegocios.
-                    Todos los derechos reservados.
-                </p>
+                    <p class="footer-lema">
+                        Impulsamos a las Mipymes de Paraguay.
+                    </p>
+
+                </div>
+
+                <nav class="footer-nav" aria-label="Enlaces del sitio">
+                    <a href="#mipymes">Mipymes</a>
+                    <a href="#participar">Quiero ser parte</a>
+                    <a href="#cedula">Mi Cédula Mipyme</a>
+                </nav>
 
                 <div class="footer-social">
 
@@ -522,6 +701,20 @@
 
             </div>
 
+            <div class="footer-bottom">
+
+                <p>
+                    © 2026 Infonegocios.
+                    Todos los derechos reservados.
+                </p>
+
+                <button type="button" class="footer-subir" id="footer-subir">
+                    Volver arriba
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+                </button>
+
+            </div>
+
         </div>
 
     </footer>
@@ -537,10 +730,10 @@
     <script src="./js/config.js?v=20260811-15" defer></script>
     <script src="./js/mipymes-data.js?v=20260811-15" defer></script>
     <script src="./js/banners-data.js?v=20260811-15" defer></script>
-    <script src="./js/app.js?v=20260828-17" defer></script>
+    <script src="./js/app.js?v=20261006-infobot3d" defer></script>
     <script src="./js/theme.js?v=20260828-17" defer></script>
     <script src="./js/chatbot-preguntas.js?v=20260811-15" defer></script>
-    <script src="./js/chatbot.js?v=20260811-15" defer></script>
+    <script src="./js/chatbot.js?v=20261006-gestos" defer></script>
 
 </body>
 

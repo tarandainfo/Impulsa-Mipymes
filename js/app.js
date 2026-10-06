@@ -694,6 +694,404 @@ function activarRevealBloquesFijos() {
 
 
 // ==========================================
+// HERO — SPOTLIGHT ROTATIVO
+// ==========================================
+//
+// Muestra, de a una, las mipymes de MIPYMES_DATA
+// (js/mipymes-data.js). Es automático: si cargás o
+// borrás una mipyme ahí, el spotlight se actualiza
+// solo. No muestra ninguna cantidad ni estadística.
+//
+// Acciones (las mismas que las tarjetas de la lista):
+//   - click en la imagen/tarjeta  -> ficha de la mipyme
+//   - "Ver ficha"                 -> ficha de la mipyme
+//   - WhatsApp / Instagram        -> si la mipyme los tiene
+//
+// Controles: rota solo cada ~5,5 s, flechas, puntitos,
+// teclado (← →) y deslizar con el dedo en el celular.
+// Se pausa con el mouse encima, con el foco adentro,
+// con la pestaña oculta o si el hero no se ve.
+// Si el usuario prefiere menos movimiento, NO rota solo.
+// ==========================================
+
+function activarSpotlightHero() {
+
+    const spot = document.getElementById("spotlight");
+
+    if (!spot) return;
+
+    // Sin mipymes cargadas: se oculta el spotlight (el resto sigue andando)
+    if (typeof MIPYMES_DATA === "undefined" || !MIPYMES_DATA.length) {
+        spot.hidden = true;
+        return;
+    }
+
+    const lista = MIPYMES_DATA;
+
+    const capas = [
+        document.getElementById("spotlight-capa-a"),
+        document.getElementById("spotlight-capa-b")
+    ];
+
+    const elCategoria = document.getElementById("spotlight-categoria");
+    const elNombre = document.getElementById("spotlight-nombre");
+    const elDesc = document.getElementById("spotlight-desc");
+    const elUbicacion = document.getElementById("spotlight-ubicacion");
+    const btnFicha = document.getElementById("spotlight-ficha");
+    const btnWa = document.getElementById("spotlight-wa");
+    const btnIg = document.getElementById("spotlight-ig");
+    const progreso = document.getElementById("spotlight-progreso");
+    const contPuntos = document.getElementById("spotlight-puntos");
+    const btnPrev = document.getElementById("spotlight-prev");
+    const btnNext = document.getElementById("spotlight-next");
+
+    const unica = lista.length === 1;
+    const autoplayPermitido = !prefiereMovimientoReducido && !unica;
+
+    let indice = 0;
+    let capaVisible = 0;
+    let cambioId = 0;
+    let animando = false;
+
+    // Motivos por los que está en pausa (si hay alguno, no avanza solo)
+    const pausas = { mouse: false, foco: false, oculta: false, fuera: false };
+
+
+    function urlFicha(m) {
+        return `ficha.html?mipyme=${crearSlug(m.nombre)}`;
+    }
+
+
+    function precargar(src) {
+        return new Promise(function (resolve) {
+            const img = new Image();
+            img.onload = img.onerror = function () { resolve(); };
+            img.src = src;
+            // tope de seguridad: si una imagen no responde, no se traba el carrusel
+            setTimeout(resolve, 6000);
+        });
+    }
+
+
+    function esperar(ms) {
+        return new Promise(function (resolve) { setTimeout(resolve, ms); });
+    }
+
+
+    // Puntitos (sin números ni cantidades: solo el nombre para lectores de pantalla)
+    if (unica) {
+        contPuntos.hidden = true;
+        btnPrev.hidden = true;
+        btnNext.hidden = true;
+    } else {
+        lista.forEach(function (m, i) {
+            const punto = document.createElement("button");
+            punto.type = "button";
+            punto.setAttribute("aria-label", `Ver ${m.nombre.trim()}`);
+            punto.addEventListener("click", function () {
+                irA(i);
+            });
+            contPuntos.appendChild(punto);
+        });
+    }
+
+
+    function pintarTextos(i) {
+
+        const m = lista[i];
+
+        elCategoria.textContent = m.categoria || "";
+        elCategoria.hidden = !m.categoria;
+
+        elNombre.textContent = m.nombre.trim();
+        elDesc.textContent = m.descripcion || "";
+        elUbicacion.textContent = m.ubicacion || "";
+
+        btnFicha.href = urlFicha(m);
+
+        if (m.whatsapp) {
+            btnWa.href = `https://wa.me/${m.whatsapp}`;
+            btnWa.hidden = false;
+        } else {
+            btnWa.hidden = true;
+        }
+
+        if (m.instagram) {
+            btnIg.href = m.instagram;
+            btnIg.hidden = false;
+        } else {
+            btnIg.hidden = true;
+        }
+
+        Array.from(contPuntos.children).forEach(function (p, n) {
+            if (n === i) {
+                p.setAttribute("aria-current", "true");
+            } else {
+                p.removeAttribute("aria-current");
+            }
+        });
+
+    }
+
+
+    function mostrarImagen(i) {
+
+        // La imagen nueva va en la capa que está oculta y se hace
+        // un fundido entre las dos (así nunca se ve un "salto").
+        const siguienteCapa = 1 - capaVisible;
+        const m = lista[i];
+
+        capas[siguienteCapa].src = m.productoImagen;
+        capas[siguienteCapa].alt = `Producto de ${m.nombre.trim()}`;
+
+        capas[siguienteCapa].classList.add("visible");
+        capas[capaVisible].classList.remove("visible");
+
+        capaVisible = siguienteCapa;
+
+    }
+
+
+    function reiniciarProgreso() {
+
+        progreso.classList.remove("corriendo");
+        spot.classList.remove("activo");
+
+        // fuerza al navegador a "olvidar" la animación anterior
+        void progreso.offsetWidth;
+
+        if (autoplayPermitido) progreso.classList.add("corriendo");
+
+        spot.classList.add("activo");
+
+    }
+
+
+    function actualizarPausa() {
+
+        const enPausa = pausas.mouse || pausas.foco || pausas.oculta || pausas.fuera;
+
+        spot.classList.toggle("pausado", enPausa);
+
+    }
+
+
+    function irA(destino) {
+
+        const nuevo = (destino + lista.length) % lista.length;
+
+        if (nuevo === indice && !animando) {
+            reiniciarProgreso();
+            return;
+        }
+
+        const miCambio = ++cambioId;
+
+        animando = true;
+
+        // 1) Primero se descarga la imagen nueva. Mientras tanto la mipyme
+        //    actual sigue a la vista completa (con fotos pesadas o internet
+        //    lenta, la tarjeta nunca queda "vacía").
+        // 2) Recién cuando la imagen está lista, se hace el fundido y el cambio.
+        precargar(lista[nuevo].productoImagen).then(function () {
+
+            if (miCambio !== cambioId) return;
+
+            spot.classList.add("cambiando");
+
+            return esperar(prefiereMovimientoReducido ? 0 : 280);
+
+        }).then(function () {
+
+            if (miCambio !== cambioId) return;
+
+            indice = nuevo;
+
+            mostrarImagen(indice);
+            pintarTextos(indice);
+
+            spot.classList.remove("cambiando");
+            animando = false;
+
+            reiniciarProgreso();
+
+            // adelanta la descarga de la que viene después
+            if (!unica) precargar(lista[(indice + 1) % lista.length].productoImagen);
+
+        });
+
+    }
+
+
+    // ---------- Estado inicial ----------
+
+    capas[0].src = lista[0].productoImagen;
+    capas[0].alt = `Producto de ${lista[0].nombre.trim()}`;
+    pintarTextos(0);
+    reiniciarProgreso();
+
+    if (!unica) precargar(lista[1].productoImagen);
+
+
+    // ---------- Avance automático (lo dispara la barra de progreso) ----------
+
+    progreso.addEventListener("animationend", function () {
+        irA(indice + 1);
+    });
+
+
+    // ---------- Controles ----------
+
+    btnPrev.addEventListener("click", function () {
+        irA(indice - 1);
+    });
+
+    btnNext.addEventListener("click", function () {
+        irA(indice + 1);
+    });
+
+    spot.addEventListener("keydown", function (e) {
+
+        if (unica) return;
+
+        if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            irA(indice - 1);
+        } else if (e.key === "ArrowRight") {
+            e.preventDefault();
+            irA(indice + 1);
+        }
+
+    });
+
+
+    // Click en la imagen/tarjeta -> ficha (igual que las tarjetas de la lista)
+    spot.classList.add("spotlight-stage-click");
+
+    spot.addEventListener("click", function (e) {
+
+        if (e.target.closest("a, button")) return;
+
+        window.location.href = urlFicha(lista[indice]);
+
+    });
+
+
+    // Deslizar con el dedo (celular)
+    let inicioX = null;
+    let inicioY = null;
+
+    spot.addEventListener("touchstart", function (e) {
+        inicioX = e.touches[0].clientX;
+        inicioY = e.touches[0].clientY;
+    }, { passive: true });
+
+    spot.addEventListener("touchend", function (e) {
+
+        if (inicioX === null || unica) return;
+
+        const dx = e.changedTouches[0].clientX - inicioX;
+        const dy = e.changedTouches[0].clientY - inicioY;
+
+        inicioX = null;
+
+        if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+            irA(dx < 0 ? indice + 1 : indice - 1);
+        }
+
+    }, { passive: true });
+
+
+    // ---------- Pausas ----------
+
+    spot.addEventListener("mouseenter", function () { pausas.mouse = true; actualizarPausa(); });
+    spot.addEventListener("mouseleave", function () { pausas.mouse = false; actualizarPausa(); });
+
+    spot.addEventListener("focusin", function () { pausas.foco = true; actualizarPausa(); });
+    spot.addEventListener("focusout", function () { pausas.foco = false; actualizarPausa(); });
+
+    document.addEventListener("visibilitychange", function () {
+        pausas.oculta = document.hidden;
+        actualizarPausa();
+    });
+
+    if ("IntersectionObserver" in window) {
+
+        new IntersectionObserver(function (entradas) {
+            pausas.fuera = !entradas[0].isIntersecting;
+            actualizarPausa();
+        }, { threshold: 0.2 }).observe(spot);
+
+    }
+
+}
+
+
+// ==========================================
+// CÉDULA — TARJETA 3D
+// ==========================================
+//
+// La ilustración de la cédula se inclina siguiendo
+// al mouse (con las etiquetas RUC / IRE / DNIT
+// flotando por delante). Es solo decoración.
+// En celular o con "menos movimiento" queda quieta.
+// ==========================================
+
+function activarTarjetaCedula3D() {
+
+    if (prefiereMovimientoReducido) return;
+    if (window.matchMedia && window.matchMedia("(pointer: coarse)").matches) return;
+
+    const seccion = document.getElementById("cedula");
+    const escena = document.getElementById("cedula-escena");
+
+    if (!seccion || !escena) return;
+
+    seccion.addEventListener("mousemove", function (e) {
+
+        const r = escena.getBoundingClientRect();
+
+        const nx = Math.max(-1, Math.min(1, ((e.clientX - r.left) / r.width - 0.5) * 2));
+        const ny = Math.max(-1, Math.min(1, ((e.clientY - r.top) / r.height - 0.5) * 2));
+
+        escena.style.setProperty("--c-ry", (-14 + nx * 16).toFixed(1));
+        escena.style.setProperty("--c-rx", (9 - ny * 14).toFixed(1));
+
+    });
+
+    seccion.addEventListener("mouseleave", function () {
+
+        escena.style.removeProperty("--c-ry");
+        escena.style.removeProperty("--c-rx");
+
+    });
+
+}
+
+
+// ==========================================
+// FOOTER — VOLVER ARRIBA
+// ==========================================
+
+function activarVolverArribaFooter() {
+
+    const boton = document.getElementById("footer-subir");
+
+    if (!boton) return;
+
+    boton.addEventListener("click", function () {
+
+        window.scrollTo({
+            top: 0,
+            behavior: prefiereMovimientoReducido ? "auto" : "smooth"
+        });
+
+    });
+
+}
+
+
+// ==========================================
 // EJECUTAR
 // ==========================================
 
@@ -703,3 +1101,6 @@ configurarBotonesContacto();
 activarScrollSuave();
 activarHeroLogoGrande();
 activarRevealBloquesFijos();
+activarSpotlightHero();
+activarTarjetaCedula3D();
+activarVolverArribaFooter();
