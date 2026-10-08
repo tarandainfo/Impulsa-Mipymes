@@ -188,3 +188,17 @@ Elegí la opción que prefieras (las tres son gratis):
   puedan cargar solas desde un formulario público (sin que vos
   edites el código a mano), eso ya requiere un backend/base de
   datos — es un paso distinto al de esta versión estática.
+
+
+---
+
+## Diseño actual: "Oscuro premium"
+
+El sitio usa el diseño **Oscuro premium** (negro, líneas finas y un acento celeste).
+
+- **Tipografías:** Manrope (títulos y texto) y JetBrains Mono (etiquetas de categoría y secciones). Se cargan desde Google Fonts en `index.html` y `ficha.html`. Poppins se sigue usando solo en la marca "infoNEGOCIOS".
+- **Dónde está:** al final de `css/styles.css`, en el bloque `DISEÑO "OSCURO PREMIUM"`. Todo ese bloque depende de `data-tema="dk"` en la etiqueta `<html>`.
+- **Modo oscuro fijo:** con este diseño el sitio es siempre oscuro y el botón de modo está oculto (`js/theme-init.js` lo fuerza).
+- **Colores por categoría:** cada categoría recibe un puntito de color automático (`tonoDeCategoria()` en `js/app.js`). Si agregás una categoría nueva en `js/mipymes-data.js`, toma su color sola.
+- **Volver al diseño anterior:** sacar `data-tema="dk"` (y `data-theme="dark"`) de la etiqueta `<html>` en `index.html` y `ficha.html`. El resto del código no cambia.
+
