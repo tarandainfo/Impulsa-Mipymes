@@ -28,6 +28,47 @@ function crearSlug(texto) {
 
 
 // ==========================================
+// TONO DE COLOR POR CATEGORÍA
+// ==========================================
+//
+// Cada categoría recibe un número de 0 a 5, estable (según el
+// orden en que aparece en MIPYMES_DATA). El CSS lo usa para pintar
+// el puntito de color que acompaña a la categoría de cada mipyme.
+// Si se agrega una categoría nueva en mipymes-data.js, recibe su
+// tono automáticamente.
+// ==========================================
+
+const TONOS_CATEGORIA = {};
+
+(function () {
+
+    let n = 0;
+
+    if (typeof MIPYMES_DATA === "undefined") return;
+
+    MIPYMES_DATA.forEach(function (m) {
+
+        const c = String(m.categoria || "").trim();
+
+        if (!(c in TONOS_CATEGORIA)) {
+            TONOS_CATEGORIA[c] = n % 6;
+            n++;
+        }
+
+    });
+
+})();
+
+function tonoDeCategoria(categoria) {
+
+    const c = String(categoria || "").trim();
+
+    return c in TONOS_CATEGORIA ? TONOS_CATEGORIA[c] : 0;
+
+}
+
+
+// ==========================================
 // CONTENEDORES
 // ==========================================
 
@@ -161,6 +202,9 @@ function mostrarMipymes() {
         const card = document.createElement("article");
 
         card.classList.add("mipyme-card");
+
+        // tono de color de la categoría (lo usa el CSS para el puntito)
+        card.setAttribute("data-tono", tonoDeCategoria(mipyme.categoria));
 
         card.innerHTML = `
 
@@ -802,6 +846,8 @@ function activarSpotlightHero() {
 
         elCategoria.textContent = m.categoria || "";
         elCategoria.hidden = !m.categoria;
+
+        spot.setAttribute("data-tono", tonoDeCategoria(m.categoria));
 
         elNombre.textContent = m.nombre.trim();
         elDesc.textContent = m.descripcion || "";

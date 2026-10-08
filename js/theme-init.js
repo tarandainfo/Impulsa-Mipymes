@@ -16,6 +16,14 @@
 
 (function () {
 
+    // Diseño "Oscuro premium" (data-tema="dk" en <html>): el sitio es
+    // siempre oscuro y el botón de modo está oculto. Se ignora la
+    // preferencia guardada para que nadie quede con un modo claro viejo.
+    if (document.documentElement.getAttribute("data-tema") === "dk") {
+        document.documentElement.setAttribute("data-theme", "dark");
+        return;
+    }
+
     var tema = localStorage.getItem("tema");
 
     if (!tema) {

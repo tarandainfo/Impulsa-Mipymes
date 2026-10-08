@@ -6557,3 +6557,175 @@ img {
     }
 
 }
+
+
+/* =====================================================
+   DISEÑO "OSCURO PREMIUM"  (propuesta 12)
+
+   Tipografía: Manrope (títulos y texto) + JetBrains Mono (etiquetas).
+   Negro con líneas finas y un solo acento celeste. Sin manchas
+   de color, degradados ni brillos, y sin letras rojas en las
+   etiquetas de las mipymes: el rojo queda para botones.
+
+   Se activa con  <html data-tema="dk">  (index.html y ficha.html).
+   Para volver al diseño anterior: sacar  data-tema="dk"  de la
+   etiqueta <html> y quitar  data-theme="dark"  si se quiere el
+   modo claro.  Los colores de esta propuesta están en este bloque.
+===================================================== */
+
+/* ---------- Tonos para las categorías (los asigna un script a cada tarjeta) ---------- */
+html[data-tema="dk"] [data-tono="0"] { --tn-bg: #FFE2D1; --tn-ink: #8F3A10; --tn-solid: #FFB787; --tn-dot: #F26B2A; }
+html[data-tema="dk"] [data-tono="1"] { --tn-bg: #D6F2E4; --tn-ink: #0F6644; --tn-solid: #7BE0B0; --tn-dot: #17A870; }
+html[data-tema="dk"] [data-tono="2"] { --tn-bg: #E5E0FF; --tn-ink: #4A31B5; --tn-solid: #BDB2FF; --tn-dot: #7A5CFF; }
+html[data-tema="dk"] [data-tono="3"] { --tn-bg: #D8EBFF; --tn-ink: #124E9C; --tn-solid: #8FD3FF; --tn-dot: #2E8BFF; }
+html[data-tema="dk"] [data-tono="4"] { --tn-bg: #FFF1BE; --tn-ink: #735400; --tn-solid: #FFD65A; --tn-dot: #E3A400; }
+html[data-tema="dk"] [data-tono="5"] { --tn-bg: #FFDDE8; --tn-ink: #9B1A4A; --tn-solid: #FF9EBB; --tn-dot: #F0457E; }
+
+/* Lo decorativo de la versión actual no se usa en ninguna de las cuatro */
+html[data-tema="dk"] .hero-aurora,
+html[data-tema="dk"] .cedula-fondo,
+html[data-tema="dk"] .participar-aurora,
+html[data-tema="dk"] .footer-aurora,
+html[data-tema="dk"] .spotlight-badge { display: none; }
+
+html[data-tema="dk"] .footer::before { display: none; }
+
+/* =====================================================
+   12 · OSCURO PREMIUM (negro, líneas finas, un acento)
+   (fuerza el modo oscuro; el botón de tema se oculta)
+===================================================== */
+html[data-tema="dk"] {
+    --f-titulo: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+    --f-cuerpo: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
+    --f-label: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    --t-peso: 800; --t-peso-hero: 800; --t-tracking: -0.035em; --t-tracking-hero: -0.05em;
+    --texto: #ECEEF3; --gris-claro: #07080B;
+    --dm-superficie: #0E1016; --dm-borde: #232734; --dm-texto-sec: #8B93A7;
+    --celeste: #67D4FF; --azul: #0E1016; --azul-oscuro: #07080B; --amarillo: #67D4FF;
+}
+html[data-tema="dk"] .theme-toggle { display: none; }
+html[data-tema="dk"] body { background-color: #07080B; }
+
+html[data-tema="dk"] .header { background-color: rgba(7,8,11,.8); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid #1B1F2B; }
+html[data-tema="dk"] .logo img { filter: brightness(0) invert(1); }
+html[data-tema="dk"] .nav a { color: #A7B0C5; font-weight: 600; font-size: .9rem; }
+html[data-tema="dk"] .nav a:hover { color: #67D4FF; }
+
+html[data-tema="dk"] .hero { background: #07080B; }
+html[data-tema="dk"] .hero::before { content: ""; position: absolute; inset: 0; z-index: 0; background-image: radial-gradient(rgba(255,255,255,.12) 1px, transparent 1px); background-size: 24px 24px; -webkit-mask-image: linear-gradient(180deg, #000 0%, transparent 92%); mask-image: linear-gradient(180deg, #000 0%, transparent 92%); }
+html[data-tema="dk"] .hero-spot .hero-container { padding: 60px 0 84px; }
+html[data-tema="dk"] .hero-spot h1 { font-size: clamp(2.8rem, 5.4vw, 5rem); line-height: .96; color: #fff; }
+html[data-tema="dk"] .hero-spot h1 span { background: none; -webkit-text-fill-color: #67D4FF; color: #67D4FF; }
+html[data-tema="dk"] .hero-content p { color: #A7B0C5; font-size: 1.12rem; }
+html[data-tema="dk"] .btn { border-radius: 10px; font-weight: 700; }
+html[data-tema="dk"] .btn-primary { background: #E5251B; box-shadow: none; }
+html[data-tema="dk"] .btn.hero-btn-ghost { border: 1px solid #2D3345; color: #ECEEF3; background: transparent; }
+html[data-tema="dk"] .btn.hero-btn-ghost:hover { background: #151822; border-color: #4A5370; }
+
+html[data-tema="dk"] .spotlight { border: 1px solid #232734; border-radius: 22px; box-shadow: 0 30px 60px -20px rgba(0,0,0,.8); }
+html[data-tema="dk"] .spotlight-categoria { background: rgba(7,8,11,.78); color: #ECEEF3; border: 1px solid rgba(255,255,255,.22); border-radius: 999px; font-family: var(--f-label); font-weight: 500; font-size: .68rem; letter-spacing: .06em; padding: 7px 13px; -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+html[data-tema="dk"] .spotlight-categoria::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: var(--tn-dot, #67D4FF); vertical-align: .08em; }
+html[data-tema="dk"] .spotlight-btn { border-radius: 8px; }
+html[data-tema="dk"] .spotlight-progreso { background: #67D4FF; }
+
+html[data-tema="dk"] .mipymes-section { background: #07080B; padding: 84px 0 100px; }
+html[data-tema="dk"] .section-heading h2 { font-size: clamp(2.2rem, 4.2vw, 3.6rem); line-height: 1; letter-spacing: -.05em; color: #fff; }
+html[data-tema="dk"] .section-heading p { color: #8B93A7; }
+html[data-tema="dk"] .section-tag { font-family: var(--f-label); font-weight: 500; font-size: .72rem; letter-spacing: .08em; color: #8B93A7; }
+html[data-tema="dk"] .section-tag::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 9px; border-radius: 50%; background: #67D4FF; vertical-align: .06em; }
+
+html[data-tema="dk"] .mipyme-card { border: 1px solid #232734; border-radius: 22px; background: #0E1016; box-shadow: none; }
+html[data-tema="dk"] .mipyme-card:hover { transform: translateY(-3px); border-color: #3A4157; background: #121521; box-shadow: none; }
+html[data-tema="dk"] .mipyme-profile-image { border: 1px solid #2D3345; }
+html[data-tema="dk"] .mipyme-category { display: inline-block; margin-bottom: 8px; padding: 4px 11px; border: 1px solid #2D3345; border-radius: 999px; background: transparent; color: #A7B0C5; font-family: var(--f-label); font-weight: 500; font-size: .66rem; letter-spacing: .06em; text-transform: uppercase; }
+html[data-tema="dk"] .mipyme-category::before { content: ""; display: inline-block; width: 6px; height: 6px; margin-right: 8px; border-radius: 50%; background: var(--tn-dot, #67D4FF); vertical-align: .08em; }
+html[data-tema="dk"] .mipyme-header h3 { font-size: 1.6rem; line-height: 1.05; letter-spacing: -.04em; color: #fff; }
+html[data-tema="dk"] .mipyme-description, html[data-tema="dk"] .mipyme-location { color: #98A2B3; }
+html[data-tema="dk"] .mipyme-promotion { border: 1px solid rgba(103,212,255,.28); border-radius: 12px; background: rgba(103,212,255,.07); }
+html[data-tema="dk"] .mipyme-promotion strong { color: #67D4FF; font-family: var(--f-label); font-weight: 500; letter-spacing: .06em; }
+html[data-tema="dk"] .mipyme-promotion p, html[data-tema="dk"] .mipyme-promotion span { color: #C9D2E5; }
+html[data-tema="dk"] .whatsapp-btn { background: rgba(37,211,102,.12); color: #7DF0AE; border: 1px solid rgba(37,211,102,.35); box-shadow: none; }
+html[data-tema="dk"] .instagram-btn { background: transparent; color: #E5E9F3; border: 1px solid #2D3345; box-shadow: none; }
+html[data-tema="dk"] .paginacion-num { color: #A7B0C5; }
+html[data-tema="dk"] .paginacion-num.activo { background: #ECEEF3; color: #07080B; }
+html[data-tema="dk"] .paginacion-siguiente { color: #ECEEF3; }
+
+html[data-tema="dk"] .banner { background: #0E1016; border: 1px solid #232734; border-radius: 20px; }
+html[data-tema="dk"] .banner-image { background: #151822; color: #8B93A7; }
+html[data-tema="dk"] .banner-content h4 { color: #fff; }
+html[data-tema="dk"] .banner-content p { color: #98A2B3; }
+html[data-tema="dk"] .banner-link { color: #67D4FF; }
+html[data-tema="dk"] .banner-content > span, html[data-tema="dk"] .advertisers-title span { color: #8B93A7; font-family: var(--f-label); font-weight: 500; letter-spacing: .06em; }
+
+html[data-tema="dk"] .cedula-section { background: #0A0C11; border-top: 1px solid #1B1F2B; border-bottom: 1px solid #1B1F2B; }
+html[data-tema="dk"] .cedula-content h2 { color: #fff; }
+html[data-tema="dk"] .cedula-content p { color: #A7B0C5; }
+html[data-tema="dk"] .ce-caja { border: 1px solid #232734; border-radius: 16px; background: #0E1016; }
+html[data-tema="dk"] .ce-caja small { color: #8B93A7; opacity: 1; }
+html[data-tema="dk"] .ce-caja strong { color: #fff; }
+html[data-tema="dk"] .ce-caja.ce-resultado { background: #67D4FF; border-color: #67D4FF; }
+html[data-tema="dk"] .ce-caja.ce-resultado small, html[data-tema="dk"] .ce-caja.ce-resultado strong { color: #07080B; opacity: 1; }
+html[data-tema="dk"] .ce-signo { color: #67D4FF; }
+html[data-tema="dk"] .ce-nota { color: #8B93A7; }
+html[data-tema="dk"] .cedula-tarjeta { background: linear-gradient(135deg, #12162A, #0B0E1B); border: 1px solid #2D3345; border-radius: 22px; box-shadow: 0 40px 70px rgba(0,0,0,.6); }
+html[data-tema="dk"] .ct-titulo small { color: #67D4FF; }
+html[data-tema="dk"] .ct-titulo .ct-mipyme { background: none; -webkit-text-fill-color: #67D4FF; color: #67D4FF; }
+html[data-tema="dk"] .cedula-pill { background: #151822; color: #ECEEF3; border: 1px solid #2D3345; box-shadow: none; }
+html[data-tema="dk"] .cedula-check { background: #67D4FF; color: #07080B; box-shadow: none; }
+html[data-tema="dk"] .cedula-cta-badge { background: rgba(103,212,255,.1); color: #67D4FF; }
+html[data-tema="dk"] .cedula-cta-badge-icono { color: #67D4FF; }
+html[data-tema="dk"] .cedula-cta-boton { background: #E5251B; box-shadow: none; border-radius: 12px; }
+html[data-tema="dk"] .cedula-cta-boton::before { display: none; }
+
+html[data-tema="dk"] .participar-section { background: #07080B; }
+html[data-tema="dk"] .participar-box { border: 1px solid #232734; border-radius: 28px; background: #0E1016; box-shadow: none; }
+html[data-tema="dk"] .participar-box .section-tag { color: #8B93A7; }
+html[data-tema="dk"] .participar-box p { color: #A7B0C5; }
+html[data-tema="dk"] .paso { background: transparent; border: 0; border-top: 1px solid #232734; border-radius: 0; -webkit-backdrop-filter: none; backdrop-filter: none; padding: 18px 0; }
+html[data-tema="dk"] .participar-pasos { border-bottom: 1px solid #232734; }
+html[data-tema="dk"] .participar-pasos::before { display: none; }
+html[data-tema="dk"] .paso-num { background: transparent; border: 1px solid #2D3345; color: #67D4FF; box-shadow: none; font-family: var(--f-label); font-weight: 500; }
+html[data-tema="dk"] .paso strong { color: #fff; }
+html[data-tema="dk"] .paso div span { color: #8B93A7; }
+html[data-tema="dk"] .btn.participar-btn { background: #ECEEF3; color: #07080B; box-shadow: none; border-radius: 12px; }
+html[data-tema="dk"] .btn.participar-btn::after { display: none; }
+html[data-tema="dk"] .footer { background: #050608; border-top: 1px solid #161A24; }
+html[data-tema="dk"] .footer .footer-social a { border-radius: 12px; }
+html[data-tema="dk"] .footer .footer-social a:hover { background: #151822; border-color: #4A5370; box-shadow: none; transform: translateY(-2px); }
+
+/* =====================================================
+   REGLAS COMPARTIDAS
+===================================================== */
+html[data-tema="dk"] body,
+html[data-tema="dk"] button,
+html[data-tema="dk"] input,
+html[data-tema="dk"] textarea,
+html[data-tema="dk"] #chatbot-widget { font-family: var(--f-cuerpo); }
+
+html[data-tema="dk"] h1,
+html[data-tema="dk"] h2,
+html[data-tema="dk"] h3,
+html[data-tema="dk"] h4,
+html[data-tema="dk"] .spotlight-nombre,
+html[data-tema="dk"] .ct-titulo strong,
+html[data-tema="dk"] .cedula-pill,
+html[data-tema="dk"] .paso-num,
+html[data-tema="dk"] .chatbot-header strong,
+html[data-tema="dk"] .ce-caja strong {
+    font-family: var(--f-titulo);
+    font-weight: var(--t-peso);
+    letter-spacing: var(--t-tracking);
+    font-synthesis: none;
+}
+
+html[data-tema="dk"] .hero-spot h1 { font-weight: var(--t-peso-hero); letter-spacing: var(--t-tracking-hero); animation: none; }
+html[data-tema="dk"] .hero-spot h1 span { animation: none; background-clip: border-box; -webkit-background-clip: border-box; }
+
+
+html[data-tema="dk"] .section-tag { font-family: var(--f-label); }
+
+/* Ajustes de legibilidad detectados al revisar todos los textos de index y ficha */
+html[data-tema="dk"] .ficha-volver { color: #A7B0C5; }
+html[data-tema="dk"] .ficha-volver:hover { color: #67D4FF; }
+html[data-tema="dk"] .spotlight-btn-wa { background: #0F3B22; color: #7DF0AE; border: 1px solid rgba(37, 211, 102, 0.5); }
+html[data-tema="dk"] .spotlight-btn-wa:hover { background: #14502D; }
