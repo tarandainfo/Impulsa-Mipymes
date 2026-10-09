@@ -194,11 +194,11 @@ Elegí la opción que prefieras (las tres son gratis):
 
 ## Diseño actual: "Oscuro premium"
 
-El sitio usa el diseño **Oscuro premium** (negro, líneas finas y un acento celeste).
+El sitio usa el diseño **Oscuro premium** (negro, líneas finas y un acento celeste), con **modo oscuro y modo claro**.
 
+- **Modo oscuro / claro:** el botón de luna/sol del encabezado cambia de modo. La primera vez se usa el modo del dispositivo del visitante; después se guarda su elección. Lo maneja `js/theme-init.js` (el modo inicial) y `js/theme.js` (el botón), como antes.
+- **Qué queda oscuro en ambos modos:** el hero, el spotlight, el panel "Queremos que tu negocio sea parte" y el footer. Dan contraste y anclan la marca.
 - **Tipografías:** Manrope (títulos y texto) y JetBrains Mono (etiquetas de categoría y secciones). Se cargan desde Google Fonts en `index.html` y `ficha.html`. Poppins se sigue usando solo en la marca "infoNEGOCIOS".
-- **Dónde está:** al final de `css/styles.css`, en el bloque `DISEÑO "OSCURO PREMIUM"`. Todo ese bloque depende de `data-tema="dk"` en la etiqueta `<html>`.
-- **Modo oscuro fijo:** con este diseño el sitio es siempre oscuro y el botón de modo está oculto (`js/theme-init.js` lo fuerza).
+- **Dónde está:** al final de `css/styles.css`, en el bloque `DISEÑO "OSCURO PREMIUM"` (modo oscuro) y su `VARIANTE CLARA`. Todo depende de `data-tema="dk"` en la etiqueta `<html>`.
 - **Colores por categoría:** cada categoría recibe un puntito de color automático (`tonoDeCategoria()` en `js/app.js`). Si agregás una categoría nueva en `js/mipymes-data.js`, toma su color sola.
-- **Volver al diseño anterior:** sacar `data-tema="dk"` (y `data-theme="dark"`) de la etiqueta `<html>` en `index.html` y `ficha.html`. El resto del código no cambia.
-
+- **Volver al diseño anterior:** sacar `data-tema="dk"` de la etiqueta `<html>` en `index.html` y `ficha.html`. El resto del código no cambia.

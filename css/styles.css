@@ -6567,10 +6567,11 @@ img {
    de color, degradados ni brillos, y sin letras rojas en las
    etiquetas de las mipymes: el rojo queda para botones.
 
-   Se activa con  <html data-tema="dk">  (index.html y ficha.html).
-   Para volver al diseño anterior: sacar  data-tema="dk"  de la
-   etiqueta <html> y quitar  data-theme="dark"  si se quiere el
-   modo claro.  Los colores de esta propuesta están en este bloque.
+   Tiene modo oscuro (el principal) y modo claro, con el botón del
+   encabezado. Se activa con  <html data-tema="dk">  (index.html y
+   ficha.html). Para volver al diseño anterior: sacar  data-tema="dk"
+   de la etiqueta <html>.  El hero, el panel de "participar", el
+   footer y el spotlight son oscuros en los dos modos.
 ===================================================== */
 
 /* ---------- Tonos para las categorías (los asigna un script a cada tarjeta) ---------- */
@@ -6599,12 +6600,19 @@ html[data-tema="dk"] {
     --f-cuerpo: 'Manrope', 'Helvetica Neue', Arial, sans-serif;
     --f-label: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
     --t-peso: 800; --t-peso-hero: 800; --t-tracking: -0.035em; --t-tracking-hero: -0.05em;
-    --texto: #ECEEF3; --gris-claro: #07080B;
-    --dm-superficie: #0E1016; --dm-borde: #232734; --dm-texto-sec: #8B93A7;
     --celeste: #67D4FF; --azul: #0E1016; --azul-oscuro: #07080B; --amarillo: #67D4FF;
 }
-html[data-tema="dk"] .theme-toggle { display: none; }
-html[data-tema="dk"] body { background-color: #07080B; }
+/* modo oscuro */
+html[data-tema="dk"][data-theme="dark"] {
+    --texto: #ECEEF3; --gris-claro: #07080B;
+    --dm-superficie: #0E1016; --dm-borde: #232734; --dm-texto-sec: #8B93A7;
+}
+html[data-tema="dk"][data-theme="dark"] body { background-color: #07080B; }
+/* modo claro: ver la variante clara, al final de este bloque */
+html[data-tema="dk"]:not([data-theme="dark"]) {
+    --texto: #0B0D12; --gris-claro: #F5F6F8; --gris: #E3E6EC;
+}
+html[data-tema="dk"]:not([data-theme="dark"]) body { background-color: #F5F6F8; }
 
 html[data-tema="dk"] .header { background-color: rgba(7,8,11,.8); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); border-bottom: 1px solid #1B1F2B; }
 html[data-tema="dk"] .logo img { filter: brightness(0) invert(1); }
@@ -6729,3 +6737,63 @@ html[data-tema="dk"] .ficha-volver { color: #A7B0C5; }
 html[data-tema="dk"] .ficha-volver:hover { color: #67D4FF; }
 html[data-tema="dk"] .spotlight-btn-wa { background: #0F3B22; color: #7DF0AE; border: 1px solid rgba(37, 211, 102, 0.5); }
 html[data-tema="dk"] .spotlight-btn-wa:hover { background: #14502D; }
+
+
+/* =====================================================
+   VARIANTE CLARA del diseño "Oscuro premium"
+   Misma tipografía y mismas líneas finas, pero con fondo claro,
+   tinta negra y un celeste más oscuro (#0A6FA3) para que se lea.
+   El hero, el spotlight, el panel de "participar" y el footer
+   quedan oscuros: dan contraste, como en el diseño original.
+===================================================== */
+
+html[data-tema="dk"]:not([data-theme="dark"]) .header { background-color: rgba(255, 255, 255, 0.95); border-bottom: 1px solid #E3E6EC; }
+html[data-tema="dk"]:not([data-theme="dark"]) .logo img { filter: none; }
+html[data-tema="dk"]:not([data-theme="dark"]) .nav a { color: #3B4357; }
+html[data-tema="dk"]:not([data-theme="dark"]) .nav a:hover { color: #0A6FA3; }
+
+html[data-tema="dk"]:not([data-theme="dark"]) .mipymes-section { background: #F5F6F8; }
+html[data-tema="dk"]:not([data-theme="dark"]) .section-heading h2 { color: #0B0D12; }
+html[data-tema="dk"]:not([data-theme="dark"]) .section-heading p { color: #485063; }
+html[data-tema="dk"]:not([data-theme="dark"]) .section-tag { color: #667086; }
+html[data-tema="dk"]:not([data-theme="dark"]) .section-tag::before { background: #0A6FA3; }
+
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-card { background: #FFFFFF; border-color: #E3E6EC; }
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-card:hover { background: #FFFFFF; border-color: #B9C1D1; box-shadow: 0 16px 34px -16px rgba(11, 13, 18, 0.22); }
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-profile-image { border-color: #D3D8E2; }
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-category { border-color: #D3D8E2; color: #485063; }
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-header h3 { color: #0B0D12; }
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-description,
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-location { color: #485063; }
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-promotion { border-color: rgba(10, 111, 163, 0.3); background: rgba(10, 111, 163, 0.06); }
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-promotion strong { color: #0A6FA3; }
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-promotion p,
+html[data-tema="dk"]:not([data-theme="dark"]) .mipyme-promotion span { color: #3A4254; }
+html[data-tema="dk"]:not([data-theme="dark"]) .whatsapp-btn { background: #E7F8EE; color: #0B7A3E; border-color: rgba(37, 211, 102, 0.45); }
+html[data-tema="dk"]:not([data-theme="dark"]) .instagram-btn { color: #1B2130; border-color: #CBD1DC; }
+html[data-tema="dk"]:not([data-theme="dark"]) .paginacion-num { color: #485063; }
+html[data-tema="dk"]:not([data-theme="dark"]) .paginacion-num.activo { background: #0B0D12; color: #FFFFFF; }
+html[data-tema="dk"]:not([data-theme="dark"]) .paginacion-siguiente { color: #0B0D12; }
+
+html[data-tema="dk"]:not([data-theme="dark"]) .banner { background: #FFFFFF; border-color: #E3E6EC; }
+html[data-tema="dk"]:not([data-theme="dark"]) .banner-image { background: #EDF0F5; color: #667086; }
+html[data-tema="dk"]:not([data-theme="dark"]) .banner-content h4 { color: #0B0D12; }
+html[data-tema="dk"]:not([data-theme="dark"]) .banner-content p { color: #485063; }
+html[data-tema="dk"]:not([data-theme="dark"]) .banner-link { color: #0A6FA3; }
+html[data-tema="dk"]:not([data-theme="dark"]) .banner-content > span,
+html[data-tema="dk"]:not([data-theme="dark"]) .advertisers-title span { color: #667086; }
+
+html[data-tema="dk"]:not([data-theme="dark"]) .cedula-section { background: #FFFFFF; border-color: #E3E6EC; }
+html[data-tema="dk"]:not([data-theme="dark"]) .cedula-content h2 { color: #0B0D12; }
+html[data-tema="dk"]:not([data-theme="dark"]) .cedula-content p { color: #485063; }
+html[data-tema="dk"]:not([data-theme="dark"]) .cedula-pill { background: #FFFFFF; color: #0B0D12; border-color: #D3D8E2; box-shadow: 0 10px 22px -10px rgba(11, 13, 24, 0.25); }
+html[data-tema="dk"]:not([data-theme="dark"]) .cedula-cta-badge { background: rgba(10, 111, 163, 0.1); color: #0A6FA3; }
+html[data-tema="dk"]:not([data-theme="dark"]) .cedula-cta-badge-icono { color: #0A6FA3; }
+
+html[data-tema="dk"]:not([data-theme="dark"]) .participar-section { background: #F5F6F8; }
+html[data-tema="dk"]:not([data-theme="dark"]) .participar-box .section-tag { color: #8B93A7; }
+html[data-tema="dk"]:not([data-theme="dark"]) .participar-box .section-tag::before { background: #67D4FF; }
+
+html[data-tema="dk"]:not([data-theme="dark"]) .ficha-volver { color: #485063; }
+html[data-tema="dk"]:not([data-theme="dark"]) .ficha-volver:hover { color: #0A6FA3; }
+
