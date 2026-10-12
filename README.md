@@ -197,7 +197,8 @@ Elegí la opción que prefieras (las tres son gratis):
 El sitio usa el diseño **Oscuro premium** (negro, líneas finas y un acento celeste), con **modo oscuro y modo claro**.
 
 - **Modo oscuro / claro:** el botón de luna/sol del encabezado cambia de modo. La primera vez se usa el modo del dispositivo del visitante; después se guarda su elección. Lo maneja `js/theme-init.js` (el modo inicial) y `js/theme.js` (el botón), como antes.
-- **Qué queda oscuro en ambos modos:** el hero, el spotlight, el panel "Queremos que tu negocio sea parte" y el footer. Dan contraste y anclan la marca.
+- **Luces del modo claro ("Amanecer"):** en modo claro, el hero, el panel "Queremos que tu negocio sea parte" y el footer son blancos con un resplandor rojo-rosa que sube desde abajo. En modo oscuro esas mismas zonas son negras, sin luces. Las luces se ajustan con las variables `--luz-hero`, `--luz-box`, `--luz-footer`, `--luz-acento`, `--luz-borde` y `--luz-sombra` (al final de `css/styles.css`, bloque `MODO CLARO: LUCES DIFUSAS "AMANECER"`). El footer lleva dos logos: el blanco (modo oscuro) y el a color (modo claro); el CSS muestra el que corresponde.
+- **Siempre oscuros, en ambos modos:** la tarjeta de foto del spotlight y la tarjeta de la cédula, para que contrasten.
 - **Tipografías:** Manrope (títulos y texto) y JetBrains Mono (etiquetas de categoría y secciones). Se cargan desde Google Fonts en `index.html` y `ficha.html`. Poppins se sigue usando solo en la marca "infoNEGOCIOS".
 - **Dónde está:** al final de `css/styles.css`, en el bloque `DISEÑO "OSCURO PREMIUM"` (modo oscuro) y su `VARIANTE CLARA`. Todo depende de `data-tema="dk"` en la etiqueta `<html>`.
 - **Colores por categoría:** cada categoría recibe un puntito de color automático (`tonoDeCategoria()` en `js/app.js`). Si agregás una categoría nueva en `js/mipymes-data.js`, toma su color sola.

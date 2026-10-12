@@ -6797,3 +6797,115 @@ html[data-tema="dk"]:not([data-theme="dark"]) .participar-box .section-tag::befo
 html[data-tema="dk"]:not([data-theme="dark"]) .ficha-volver { color: #485063; }
 html[data-tema="dk"]:not([data-theme="dark"]) .ficha-volver:hover { color: #0A6FA3; }
 
+
+/* =====================================================
+   MODO CLARO: LUCES DIFUSAS "AMANECER"
+   En modo claro, el hero, el panel "Queremos que tu negocio sea
+   parte" y el footer (que son negros en modo oscuro) pasan a ser
+   blancos con un resplandor rojo-rosa que sube desde abajo.
+   El modo oscuro no cambia.
+
+   Para ajustar las luces, cambiar las variables --luz-... de abajo:
+     --luz-hero / --luz-box / --luz-footer : las luces de cada zona
+       (los números rgba(255, 68, 90, 0.85) son color y fuerza)
+     --luz-acento : color de la palabra "Mipymes" y de los detalles
+     --luz-borde  : color de las líneas finas
+     --luz-sombra : color de la sombra de colores
+===================================================== */
+
+html[data-tema="dk"] {
+    --luz-hero:
+        radial-gradient(110% 90% at 50% 122%, rgba(255, 68, 90, 0.85) 0%, rgba(255, 126, 154, 0.62) 30%, rgba(255, 194, 208, 0.40) 52%, rgba(255, 220, 228, 0) 76%),
+        radial-gradient(48% 62% at 4% 2%, rgba(255, 170, 190, 0.45), rgba(255, 170, 190, 0) 70%),
+        #FFFFFF;
+    --luz-box:
+        radial-gradient(100% 95% at 50% 125%, rgba(255, 68, 90, 0.60) 0%, rgba(255, 140, 165, 0.42) 35%, rgba(255, 205, 215, 0.25) 55%, rgba(255, 220, 228, 0) 76%),
+        #FFFFFF;
+    --luz-footer:
+        radial-gradient(90% 190% at 50% 150%, rgba(255, 68, 90, 0.62) 0%, rgba(255, 140, 165, 0.42) 36%, rgba(255, 205, 215, 0.22) 56%, rgba(255, 220, 228, 0) 76%),
+        #FFFFFF;
+    --luz-acento: #B00F32;
+    --luz-borde: #F5C9D2;
+    --luz-sombra: rgba(255, 68, 90, 0.40);
+}
+
+/* ----- HERO ----- */
+html[data-tema="dk"]:not([data-theme="dark"]) .hero {
+    background: var(--luz-hero);
+    color: #0B0D12;
+}
+html[data-tema="dk"]:not([data-theme="dark"]) .hero::before { display: none; }
+html[data-tema="dk"]:not([data-theme="dark"]) .hero-spot h1 { color: #0B0D12; }
+html[data-tema="dk"]:not([data-theme="dark"]) .hero-spot h1 span {
+    color: var(--luz-acento);
+    -webkit-text-fill-color: var(--luz-acento);
+}
+html[data-tema="dk"]:not([data-theme="dark"]) .hero-content p { color: #3A4254; }
+html[data-tema="dk"]:not([data-theme="dark"]) .btn.hero-btn-ghost {
+    border-color: #C9CFDB;
+    color: #0B0D12;
+    background: rgba(255, 255, 255, 0.6);
+}
+html[data-tema="dk"]:not([data-theme="dark"]) .btn.hero-btn-ghost:hover { background: #FFFFFF; border-color: #0B0D12; }
+html[data-tema="dk"]:not([data-theme="dark"]) .spotlight {
+    border-color: rgba(255, 255, 255, 0.75);
+    box-shadow: 0 40px 80px -24px var(--luz-sombra);
+}
+
+/* ----- PANEL "PARTICIPAR" ----- */
+html[data-tema="dk"]:not([data-theme="dark"]) .participar-box {
+    background: var(--luz-box);
+    border: 1px solid var(--luz-borde);
+    color: #0B0D12;
+    box-shadow: 0 34px 64px -36px var(--luz-sombra);
+}
+html[data-tema="dk"]:not([data-theme="dark"]) .participar-box h2 { color: #0B0D12; }
+html[data-tema="dk"]:not([data-theme="dark"]) .participar-box p { color: #3A4254; }
+html[data-tema="dk"]:not([data-theme="dark"]) .participar-box .section-tag { color: #1B2130; }
+html[data-tema="dk"]:not([data-theme="dark"]) .participar-box .section-tag::before { background: var(--luz-acento); }
+html[data-tema="dk"]:not([data-theme="dark"]) .paso { border-top-color: var(--luz-borde); }
+html[data-tema="dk"]:not([data-theme="dark"]) .participar-pasos { border-bottom-color: var(--luz-borde); }
+html[data-tema="dk"]:not([data-theme="dark"]) .paso-num {
+    background: #FFFFFF;
+    border-color: var(--luz-borde);
+    color: var(--luz-acento);
+}
+html[data-tema="dk"]:not([data-theme="dark"]) .paso strong { color: #0B0D12; }
+html[data-tema="dk"]:not([data-theme="dark"]) .paso div span { color: #485063; }
+html[data-tema="dk"]:not([data-theme="dark"]) .btn.participar-btn { background: #E5251B; color: #FFFFFF; }
+html[data-tema="dk"]:not([data-theme="dark"]) .btn.participar-btn svg { color: #FFFFFF; }
+
+/* ----- FOOTER ----- */
+html[data-tema="dk"] .footer-logo-claro { display: none; }
+html[data-tema="dk"]:not([data-theme="dark"]) .footer-logo:not(.footer-logo-claro) { display: none; }
+html[data-tema="dk"]:not([data-theme="dark"]) .footer-logo-claro { display: inline; }
+html[data-tema="dk"]:not([data-theme="dark"]) .footer {
+    background: var(--luz-footer);
+    border-top: 1px solid var(--luz-borde);
+}
+html[data-tema="dk"]:not([data-theme="dark"]) .footer p,
+html[data-tema="dk"]:not([data-theme="dark"]) .footer-lema { color: #485063; }
+html[data-tema="dk"]:not([data-theme="dark"]) .footer-nav a { color: #3B4357; }
+html[data-tema="dk"]:not([data-theme="dark"]) .footer-nav a:hover { color: var(--luz-acento); }
+html[data-tema="dk"]:not([data-theme="dark"]) .footer .footer-social a {
+    border-color: var(--luz-borde);
+    background: rgba(255, 255, 255, 0.78);
+    color: #0B0D12;
+}
+html[data-tema="dk"]:not([data-theme="dark"]) .footer .footer-social a:hover {
+    background: #FFFFFF;
+    border-color: var(--luz-acento);
+    color: var(--luz-acento);
+}
+html[data-tema="dk"]:not([data-theme="dark"]) .footer-bottom { border-top-color: var(--luz-borde); }
+html[data-tema="dk"]:not([data-theme="dark"]) .footer-bottom p { color: #3F4658; }
+html[data-tema="dk"]:not([data-theme="dark"]) .footer-subir {
+    color: #0B0D12;
+    border-color: #D3D8E2;
+    background: rgba(255, 255, 255, 0.72);
+}
+html[data-tema="dk"]:not([data-theme="dark"]) .footer-subir:hover {
+    background: #FFFFFF;
+    color: var(--luz-acento);
+    border-color: var(--luz-acento);
+}
