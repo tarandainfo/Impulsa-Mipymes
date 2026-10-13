@@ -25,3 +25,35 @@
 # RewriteEngine On
 # RewriteCond %{HTTPS} off
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+# ==========================================
+# SEO y velocidad (agregado)
+# Todo va dentro de <IfModule>: si el hosting no tiene
+# el módulo, simplemente se ignora (no da error).
+# ==========================================
+
+# Tipos de archivo de los íconos y el manifiesto
+<IfModule mod_mime.c>
+    AddType application/manifest+json .webmanifest
+    AddType image/x-icon .ico
+</IfModule>
+
+# Compresión también para el manifiesto, el sitemap y el favicon
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE application/manifest+json application/xml text/xml image/x-icon
+</IfModule>
+
+# Cache de íconos y manifiesto
+<IfModule mod_expires.c>
+    ExpiresByType image/x-icon "access plus 30 days"
+    ExpiresByType image/vnd.microsoft.icon "access plus 30 days"
+    ExpiresByType application/manifest+json "access plus 7 days"
+</IfModule>
+
+# Cabeceras de seguridad básicas (también las valoran los buscadores)
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+

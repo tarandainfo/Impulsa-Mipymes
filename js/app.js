@@ -214,6 +214,7 @@ function mostrarMipymes() {
                     src="${mipyme.productoImagen}"
                     alt="Producto de ${mipyme.nombre}"
                     loading="lazy"
+                    decoding="async"
                 >
 
             </div>
@@ -228,6 +229,8 @@ function mostrarMipymes() {
                         src="${mipyme.perfilImagen}"
                         alt="Perfil de ${mipyme.nombre}"
                         loading="lazy"
+                        decoding="async"
+                    decoding="async"
                     >
 
                     <div>
@@ -237,7 +240,7 @@ function mostrarMipymes() {
                         </span>
 
                         <h3>
-                            ${mipyme.nombre}
+                            <a class="mipyme-nombre-link" href="ficha.html?mipyme=${crearSlug(mipyme.nombre)}">${mipyme.nombre}</a>
                         </h3>
 
                     </div>
@@ -314,7 +317,7 @@ function mostrarMipymes() {
         // excepto si el click fue en los botones de contacto.
         card.addEventListener("click", function (e) {
 
-            if (e.target.closest(".mipyme-actions")) return;
+            if (e.target.closest("a, .mipyme-actions")) return;
 
             window.location.href = `ficha.html?mipyme=${crearSlug(mipyme.nombre)}`;
 
@@ -854,6 +857,9 @@ function activarSpotlightHero() {
         elUbicacion.textContent = m.ubicacion || "";
 
         btnFicha.href = urlFicha(m);
+        btnFicha.setAttribute("aria-label", `Ver la ficha de ${m.nombre.trim()}`);
+        btnWa.setAttribute("aria-label", `Escribir por WhatsApp a ${m.nombre.trim()}`);
+        btnIg.setAttribute("aria-label", `Ver el Instagram de ${m.nombre.trim()}`);
 
         if (m.whatsapp) {
             btnWa.href = `https://wa.me/${m.whatsapp}`;
@@ -1138,6 +1144,46 @@ function activarVolverArribaFooter() {
 
 
 // ==========================================
+// DATOS ESTRUCTURADOS: LISTA DE MIPYMES (SEO)
+// ==========================================
+//
+// Le dice a Google cuáles son las mipymes del sitio y a qué
+// ficha lleva cada una. Se arma sola desde js/mipymes-data.js.
+// ==========================================
+
+function agregarDatosEstructuradosLista() {
+
+    if (typeof MIPYMES_DATA === "undefined" || !MIPYMES_DATA.length) return;
+
+    const sitio = "https://www.impulsamipymes.com.py";
+
+    const datos = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "@id": `${sitio}/#lista-mipymes`,
+        "name": "Mipymes de Paraguay en Impulsa Mipymes",
+        "itemListOrder": "https://schema.org/ItemListUnordered",
+        "numberOfItems": MIPYMES_DATA.length,
+        "itemListElement": MIPYMES_DATA.map(function (m, i) {
+            return {
+                "@type": "ListItem",
+                "position": i + 1,
+                "name": m.nombre.trim(),
+                "url": `${sitio}/ficha.html?mipyme=${crearSlug(m.nombre)}`
+            };
+        })
+    };
+
+    const script = document.createElement("script");
+    script.type = "application/ld+json";
+    script.id = "jsonld-lista";
+    script.textContent = JSON.stringify(datos);
+    document.head.appendChild(script);
+
+}
+
+
+// ==========================================
 // EJECUTAR
 // ==========================================
 
@@ -1150,3 +1196,4 @@ activarRevealBloquesFijos();
 activarSpotlightHero();
 activarTarjetaCedula3D();
 activarVolverArribaFooter();
+agregarDatosEstructuradosLista();

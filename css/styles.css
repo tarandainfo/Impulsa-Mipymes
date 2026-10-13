@@ -6909,3 +6909,18 @@ html[data-tema="dk"]:not([data-theme="dark"]) .footer-subir:hover {
     color: var(--luz-acento);
     border-color: var(--luz-acento);
 }
+
+
+/* El nombre de cada mipyme es ahora un link real (para que Google lo siga):
+   se ve igual que antes y se subraya al pasar el mouse. */
+.mipyme-nombre-link {
+    color: inherit;
+    text-decoration: none;
+}
+
+.mipyme-nombre-link:hover {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+    text-decoration-thickness: 2px;
+}
+

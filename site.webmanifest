@@ -1,0 +1,31 @@
+{
+  "name": "Impulsa Mipymes | Infonegocios",
+  "short_name": "Impulsa Mipymes",
+  "description": "Emprendimientos y pequeñas empresas de Paraguay.",
+  "lang": "es-PY",
+  "start_url": "/",
+  "scope": "/",
+  "display": "browser",
+  "background_color": "#FFFFFF",
+  "theme_color": "#D2072A",
+  "icons": [
+    {
+      "src": "/assets/favicon/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/favicon/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/favicon/icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}

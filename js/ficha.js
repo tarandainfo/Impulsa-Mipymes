@@ -48,6 +48,193 @@ function obtenerMipymeDesdeURL() {
 
 
 // ==========================================
+// SEO DE CADA FICHA
+// ==========================================
+//
+// Cada mipyme tiene su propio título, descripción, dirección
+// "canónica", imagen para compartir en redes (WhatsApp, Facebook,
+// X, LinkedIn) y datos estructurados para Google. Todo sale de
+// js/mipymes-data.js: no hay que escribir nada a mano.
+// ==========================================
+
+const SEO_SITIO = "https://www.impulsamipymes.com.py";
+
+function seoPonerMeta(clave, valor, esProperty) {
+
+    const atributo = esProperty ? "property" : "name";
+
+    let el = document.querySelector(`meta[${atributo}="${clave}"]`);
+
+    if (!el) {
+        el = document.createElement("meta");
+        el.setAttribute(atributo, clave);
+        document.head.appendChild(el);
+    }
+
+    el.setAttribute("content", valor);
+
+}
+
+function seoCanonical(url) {
+
+    let el = document.querySelector('link[rel="canonical"]');
+
+    if (!el) {
+        el = document.createElement("link");
+        el.setAttribute("rel", "canonical");
+        document.head.appendChild(el);
+    }
+
+    el.setAttribute("href", url);
+
+}
+
+function seoUrlAbsoluta(ruta) {
+
+    try {
+        return new URL(ruta, SEO_SITIO + "/").href;
+    } catch (e) {
+        return "";
+    }
+
+}
+
+// Corta un texto sin partir palabras (Google muestra ~155 caracteres)
+function seoRecortar(texto, maximo) {
+
+    const t = String(texto || "").replace(/\s+/g, " ").trim();
+
+    if (t.length <= maximo) return t;
+
+    const corte = t.lastIndexOf(" ", maximo - 1);
+
+    return t.slice(0, corte > 60 ? corte : maximo - 1).replace(/[\s,.;:–-]+$/, "") + "…";
+
+}
+
+function seoPonerJsonLd(id, datos) {
+
+    let el = document.getElementById(id);
+
+    if (!el) {
+        el = document.createElement("script");
+        el.type = "application/ld+json";
+        el.id = id;
+        document.head.appendChild(el);
+    }
+
+    el.textContent = JSON.stringify(datos);
+
+}
+
+function actualizarSEO(m) {
+
+    const nombre = String(m.nombre).trim();
+    const slug = crearSlug(m.nombre);
+    const url = `${SEO_SITIO}/ficha.html?mipyme=${slug}`;
+
+    let titulo = `${nombre} | ${m.categoria} | Impulsa Mipymes`;
+
+    if (titulo.length > 70) titulo = `${nombre} | Impulsa Mipymes`;
+
+    const descripcion = seoRecortar(m.descripcion, 155);
+    const imagen = seoUrlAbsoluta(m.productoImagen);
+
+    document.title = titulo;
+
+    seoPonerMeta("description", descripcion);
+    seoPonerMeta("robots", "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1");
+    seoCanonical(url);
+
+    // Redes sociales
+    seoPonerMeta("og:type", "website", true);
+    seoPonerMeta("og:url", url, true);
+    seoPonerMeta("og:title", titulo, true);
+    seoPonerMeta("og:description", descripcion, true);
+    seoPonerMeta("og:image", imagen, true);
+    seoPonerMeta("og:image:alt", `Producto de ${nombre}`, true);
+    seoPonerMeta("twitter:title", titulo);
+    seoPonerMeta("twitter:description", descripcion);
+    seoPonerMeta("twitter:image", imagen);
+    seoPonerMeta("twitter:image:alt", `Producto de ${nombre}`);
+
+    // las medidas de la imagen genérica ya no corresponden
+    ["og:image:width", "og:image:height", "og:image:type"].forEach(function (clave) {
+        const el = document.querySelector(`meta[property="${clave}"]`);
+        if (el) el.remove();
+    });
+
+    // Datos estructurados
+    const fotos = [m.productoImagen, m.perfilImagen].concat(m.fotosCarrusel || [])
+        .filter(Boolean)
+        .map(seoUrlAbsoluta)
+        .filter(function (f, i, todas) { return f && todas.indexOf(f) === i; })
+        .slice(0, 6);
+
+    const negocio = {
+        "@type": "LocalBusiness",
+        "@id": `${url}#negocio`,
+        "name": nombre,
+        "description": String(m.descripcion || "").replace(/\s+/g, " ").trim(),
+        "url": url,
+        "image": fotos,
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": String(m.ubicacion || "").split(",")[0].trim(),
+            "addressCountry": "PY"
+        },
+        "areaServed": { "@type": "Country", "name": "Paraguay" }
+    };
+
+    if (m.instagram) negocio.sameAs = [m.instagram];
+
+    if (m.whatsapp && /^\d{9,15}$/.test(String(m.whatsapp))) {
+        negocio.telephone = "+" + m.whatsapp;
+    }
+
+    seoPonerJsonLd("jsonld-ficha", {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": url,
+                "url": url,
+                "name": titulo,
+                "description": descripcion,
+                "inLanguage": "es-PY",
+                "isPartOf": { "@id": `${SEO_SITIO}/#website` },
+                "primaryImageOfPage": { "@type": "ImageObject", "url": imagen },
+                "breadcrumb": { "@id": `${url}#migas` },
+                "about": { "@id": `${url}#negocio` }
+            },
+            {
+                "@type": "BreadcrumbList",
+                "@id": `${url}#migas`,
+                "itemListElement": [
+                    { "@type": "ListItem", "position": 1, "name": "Impulsa Mipymes", "item": `${SEO_SITIO}/` },
+                    { "@type": "ListItem", "position": 2, "name": nombre, "item": url }
+                ]
+            },
+            negocio
+        ]
+    });
+
+}
+
+// Si el link no corresponde a ninguna mipyme, que Google no la guarde
+function marcarFichaNoEncontrada() {
+
+    document.title = "Mipyme no encontrada | Impulsa Mipymes";
+
+    seoPonerMeta("robots", "noindex, follow");
+
+    const canonica = document.querySelector('link[rel="canonical"]');
+    if (canonica) canonica.remove();
+
+}
+
+
+// ==========================================
 // ARMAR LA FICHA EN PANTALLA
 // ==========================================
 
@@ -57,6 +244,8 @@ function mostrarFicha() {
     const contenedor = document.querySelector(".ficha-container");
 
     if (!mipyme) {
+
+        marcarFichaNoEncontrada();
 
         if (contenedor) {
 
@@ -74,7 +263,7 @@ function mostrarFicha() {
 
     }
 
-    document.title = `${mipyme.nombre} | Infonegocios`;
+    actualizarSEO(mipyme);
 
     // ---------- encabezado ----------
     const encabezado = document.getElementById("ficha-header");

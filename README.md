@@ -203,3 +203,28 @@ El sitio usa el diseño **Oscuro premium** (negro, líneas finas y un acento cel
 - **Dónde está:** al final de `css/styles.css`, en el bloque `DISEÑO "OSCURO PREMIUM"` (modo oscuro) y su `VARIANTE CLARA`. Todo depende de `data-tema="dk"` en la etiqueta `<html>`.
 - **Colores por categoría:** cada categoría recibe un puntito de color automático (`tonoDeCategoria()` en `js/app.js`). Si agregás una categoría nueva en `js/mipymes-data.js`, toma su color sola.
 - **Volver al diseño anterior:** sacar `data-tema="dk"` de la etiqueta `<html>` en `index.html` y `ficha.html`. El resto del código no cambia.
+
+
+---
+
+## SEO (para que Google y las redes muestren bien el sitio)
+
+**Ícono de la pestaña:** el logo de Impulsa Mipymes (la "i" y la "m" sobre rojo de marca) está en `favicon.ico` y en `assets/favicon/` (tamaños para pestaña, iPhone, Android y Google). Se enlaza en el `<head>` de `index.html` y `ficha.html`. Para cambiarlo, reemplazá esos archivos manteniendo los nombres.
+
+**Qué tiene cada página:**
+- `index.html`: título, descripción, dirección canónica, etiquetas para compartir en redes (WhatsApp, Facebook, LinkedIn, X) y datos estructurados de Google (organización, sitio y lista de mipymes). La imagen que aparece al compartir es `assets/img/og-impulsa-mipymes.jpg` (1200 × 630).
+- `ficha.html`: cada ficha arma sola su título, descripción, dirección canónica, imagen para redes y datos estructurados (`LocalBusiness`) a partir de `js/mipymes-data.js`, en `js/ficha.js`. Si el link no corresponde a ninguna mipyme, se marca `noindex` para que Google no la guarde.
+- Las tarjetas de la lista tienen un link real en el nombre (antes solo se podían abrir con un clic de JavaScript, y Google no las podía seguir).
+
+**Cada vez que agregues, cambies o borres una mipyme**, corré en la carpeta del proyecto:
+
+    node tools/generar-seo.js
+
+Eso regenera `sitemap.xml` (la lista de páginas para Google) y la lista de enlaces de `index.html` para quienes no ejecutan JavaScript. Después subí `sitemap.xml` e `index.html`. Solo hace falta tener Node.js.
+
+**Una sola vez:** dar de alta el sitio en Google Search Console (https://search.google.com/search-console) y enviar `https://www.impulsamipymes.com.py/sitemap.xml`.
+
+**Otros archivos de SEO:** `robots.txt` (permite todo salvo `/admin/` y `/tools/` y avisa dónde está el sitemap), `site.webmanifest` (nombre e íconos para el celular) y `.htaccess` (compresión, caché y cabeceras de seguridad, para hosting Apache).
+
+**Fotos:** para que el sitio cargue rápido (la velocidad cuenta para Google), las fotos deben pesar poco. Al cargar fotos nuevas conviene achicarlas a unos 1600 px de largo y 80-85 % de calidad (las de cámara pueden pesar 10 MB o más); los avatares de perfil, a unos 500 px.
+

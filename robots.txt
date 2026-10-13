@@ -1,0 +1,10 @@
+# robots.txt — Impulsa Mipymes (Infonegocios)
+# Los buscadores pueden recorrer todo el sitio, salvo las
+# herramientas internas del administrador.
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /tools/
+
+Sitemap: https://www.impulsamipymes.com.py/sitemap.xml
