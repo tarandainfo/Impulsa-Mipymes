@@ -329,6 +329,9 @@ function mostrarMipymes() {
 
     mostrarPaginacionMipymes(totalPaginas);
 
+    // Publicidad entre las tarjetas (js/ads.js): se vuelve a poner en cada página
+    if (window.Publicidad) window.Publicidad.enLista(mipymesList);
+
 }
 
 
@@ -857,7 +860,7 @@ function activarSpotlightHero() {
         elUbicacion.textContent = m.ubicacion || "";
 
         btnFicha.href = urlFicha(m);
-        btnFicha.setAttribute("aria-label", `Ver la ficha de ${m.nombre.trim()}`);
+        btnFicha.setAttribute("aria-label", `Ver ficha de ${m.nombre.trim()}`);
         btnWa.setAttribute("aria-label", `Escribir por WhatsApp a ${m.nombre.trim()}`);
         btnIg.setAttribute("aria-label", `Ver el Instagram de ${m.nombre.trim()}`);
 

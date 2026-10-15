@@ -114,7 +114,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/styles.css?v=20261013-seo">
+    <link rel="stylesheet" href="./css/styles.css?v=20261020-ads">
 </head>
 
 <body>
@@ -122,6 +122,14 @@
     <!-- =========================
          HEADER
     ========================== -->
+
+    <!-- ESPACIO PUBLICITARIO: franja de arriba de todo
+         (lo llena js/ads.js con lo que haya en js/ads-data.js) -->
+    <aside class="ad-slot ad-970x90 ad-tope" data-ad-slot="tope" aria-label="Publicidad">
+        <span class="ad-etiqueta">Publicidad</span>
+        <div class="ad-enlace ad-reserva"></div>
+    </aside>
+
 
     <header class="header">
 
@@ -286,6 +294,13 @@
         </section>
 
 
+        <!-- ESPACIO PUBLICITARIO: debajo de la portada
+             (lo llena js/ads.js con lo que haya en js/ads-data.js) -->
+        <aside class="ad-slot ad-728x90 ad-fila" data-ad-slot="despues-hero" aria-label="Publicidad">
+            <span class="ad-etiqueta">Publicidad</span>
+            <div class="ad-enlace ad-reserva"></div>
+        </aside>
+
         <!-- =========================
              MIPYMES + ANUNCIANTES
         ========================== -->
@@ -444,6 +459,12 @@
                     <!-- COLUMNA ANUNCIANTES (banners, uno abajo del otro) -->
 
                     <aside class="advertisers">
+
+                        <!-- ESPACIO PUBLICITARIO: columna derecha (lo llena js/ads.js) -->
+                        <aside class="ad-slot ad-300x250 ad-lateral" data-ad-slot="sidebar" aria-label="Publicidad">
+                            <span class="ad-etiqueta">Publicidad</span>
+                            <div class="ad-enlace ad-reserva"></div>
+                        </aside>
 
                         <div class="advertisers-title">
 
@@ -719,6 +740,13 @@
         </section>
 
 
+        <!-- ESPACIO PUBLICITARIO: antes del pie de página
+             (lo llena js/ads.js con lo que haya en js/ads-data.js) -->
+        <aside class="ad-slot ad-728x90 ad-fila" data-ad-slot="antes-footer" aria-label="Publicidad">
+            <span class="ad-etiqueta">Publicidad</span>
+            <div class="ad-enlace ad-reserva"></div>
+        </aside>
+
         <!-- =========================
              CONTACTO INFONEGOCIOS
              (eliminado: ya existe el
@@ -847,7 +875,9 @@
     <script src="./js/config.js?v=20260811-15" defer></script>
     <script src="./js/mipymes-data.js?v=20260811-15" defer></script>
     <script src="./js/banners-data.js?v=20260811-15" defer></script>
-    <script src="./js/app.js?v=20261013-seo" defer></script>
+    <script src="./js/ads-data.js?v=20261020-ads" defer></script>
+    <script src="./js/ads.js?v=20261020-ads" defer></script>
+    <script src="./js/app.js?v=20261020-ads" defer></script>
     <script src="./js/theme.js?v=20260828-17" defer></script>
     <script src="./js/chatbot-preguntas.js?v=20260811-15" defer></script>
     <script src="./js/chatbot.js?v=20261006-gestos" defer></script>

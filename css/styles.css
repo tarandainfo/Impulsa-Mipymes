@@ -6924,3 +6924,106 @@ html[data-tema="dk"]:not([data-theme="dark"]) .footer-subir:hover {
     text-decoration-thickness: 2px;
 }
 
+
+
+/* =====================================================
+   PUBLICIDAD (banners)
+   Los banners los carga el administrador en js/ads-data.js y los
+   muestra js/ads.js. Cada espacio reserva su tamaño exacto desde
+   el principio (aunque el GIF todavía no haya cargado), para que
+   la página no se mueva cuando aparece.
+===================================================== */
+
+.ad-slot {
+    margin: 0 auto;
+    max-width: 100%;
+    text-align: center;
+}
+
+.ad-slot[hidden] {
+    display: none;
+}
+
+.ad-etiqueta {
+    display: block;
+    margin: 0 0 6px;
+    font: 600 10px/1 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--texto);
+    opacity: 0.68;
+}
+
+.ad-enlace {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+    line-height: 0;
+}
+
+.ad-enlace img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* el cuadrito gris que se ve un instante, antes de que cargue el GIF */
+.ad-reserva {
+    background-color: #E9ECF1;
+}
+
+[data-theme="dark"] .ad-reserva {
+    background-color: #151822;
+}
+
+/* medidas (PC) */
+.ad-970x90 .ad-enlace  { width: 970px; aspect-ratio: 970 / 90; }
+.ad-728x90 .ad-enlace  { width: 728px; aspect-ratio: 728 / 90; }
+.ad-300x250 .ad-enlace { width: 300px; aspect-ratio: 300 / 250; }
+
+/* medidas (celular) */
+@media (max-width: 700px) {
+
+    .ad-970x90 .ad-enlace { width: 320px; aspect-ratio: 320 / 50; }
+    .ad-728x90 .ad-enlace { width: 320px; aspect-ratio: 320 / 100; }
+
+}
+
+/* franja de arriba de todo */
+.ad-tope {
+    padding: 8px 12px 10px;
+    background-color: #F5F6F8;
+    border-bottom: 1px solid #E3E6EC;
+}
+
+[data-theme="dark"] .ad-tope {
+    background-color: #0B0E13;
+    border-bottom-color: #1B1F2B;
+}
+
+.ad-tope .ad-etiqueta {
+    margin-bottom: 5px;
+}
+
+/* espacios entre secciones */
+.ad-fila {
+    padding: 34px 20px;
+}
+
+/* entre las tarjetas de la lista */
+.ad-fila-lista {
+    padding: 6px 0 10px;
+}
+
+/* columna derecha */
+.ad-lateral {
+    margin-bottom: 30px;
+}
+
+.ad-enlace:focus-visible {
+    outline: 3px solid var(--celeste);
+    outline-offset: 3px;
+}

@@ -95,7 +95,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/styles.css?v=20261013-seo">
+    <link rel="stylesheet" href="./css/styles.css?v=20261020-ads">
 </head>
 
 <body>
@@ -103,6 +103,14 @@
     <!-- =========================
          HEADER
     ========================== -->
+
+    <!-- ESPACIO PUBLICITARIO: franja de arriba de todo
+         (lo llena js/ads.js con lo que haya en js/ads-data.js) -->
+    <aside class="ad-slot ad-970x90 ad-tope" data-ad-slot="tope" aria-label="Publicidad">
+        <span class="ad-etiqueta">Publicidad</span>
+        <div class="ad-enlace ad-reserva"></div>
+    </aside>
+
 
     <header class="header">
 
@@ -174,6 +182,12 @@
 
                 </div>
 
+                <!-- ESPACIO PUBLICITARIO: debajo de las fotos (lo llena js/ads.js) -->
+                <aside class="ad-slot ad-728x90 ad-fila" data-ad-slot="ficha-fotos" aria-label="Publicidad">
+                    <span class="ad-etiqueta">Publicidad</span>
+                    <div class="ad-enlace ad-reserva"></div>
+                </aside>
+
                 <!-- Descripción (2 párrafos) -->
                 <div class="ficha-descripcion" id="ficha-descripcion"></div>
 
@@ -191,11 +205,25 @@
 
                 </div>
 
+                <!-- ESPACIO PUBLICITARIO: debajo del contacto (lo llena js/ads.js) -->
+                <aside class="ad-slot ad-300x250 ad-fila" data-ad-slot="ficha-contacto" aria-label="Publicidad">
+                    <span class="ad-etiqueta">Publicidad</span>
+                    <div class="ad-enlace ad-reserva"></div>
+                </aside>
+
             </div>
 
         </section>
 
     </main>
+
+
+        <!-- ESPACIO PUBLICITARIO: antes del pie de página
+             (lo llena js/ads.js con lo que haya en js/ads-data.js) -->
+        <aside class="ad-slot ad-728x90 ad-fila" data-ad-slot="antes-footer" aria-label="Publicidad">
+            <span class="ad-etiqueta">Publicidad</span>
+            <div class="ad-enlace ad-reserva"></div>
+        </aside>
 
 
     <!-- =========================
@@ -262,6 +290,8 @@
 
     <script src="./js/config.js?v=20260811-15" defer></script>
     <script src="./js/mipymes-data.js?v=20260811-15" defer></script>
+    <script src="./js/ads-data.js?v=20261020-ads" defer></script>
+    <script src="./js/ads.js?v=20261020-ads" defer></script>
     <script src="./js/ficha.js?v=20261013-seo" defer></script>
     <script src="./js/theme.js?v=20260828-17" defer></script>
     <script src="./js/chatbot-preguntas.js?v=20260811-15" defer></script>

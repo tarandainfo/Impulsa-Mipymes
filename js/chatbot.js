@@ -162,7 +162,7 @@ const IB_CUERPO = `
         <path d="M60 110 L61.6 134 L60 140 Z" fill="#000000" opacity="0.18"/>
 
         <circle cx="40" cy="121" r="5.6" fill="#0B0D12" stroke="#C5CEDC" stroke-width="0.9"/>
-        <text x="40" y="123.3" text-anchor="middle" font-family="Arial, sans-serif" font-weight="900" font-size="6" fill="#FFFFFF">IN</text>
+        <path d="M37.4 118.4 V123.8 M39.9 123.8 V118.4 L43.1 123.8 V118.4" fill="none" stroke="#FFFFFF" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
 
         <path d="M79 118 L89 116 L88.4 119.6 L79.6 121 Z" fill="#E8ECF2"/>
     </g>
@@ -263,7 +263,7 @@ function crearWidgetChatbot() {
 
             <span class="ib-sombra" aria-hidden="true"></span>
 
-            <span class="chatbot-icono-bot ib-escena">${infobotFiguraHTML()}</span>
+            <span class="chatbot-icono-bot ib-escena" aria-hidden="true">${infobotFiguraHTML()}</span>
 
             <svg class="chatbot-icono-cerrar" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M18.3 5.71 12 12.01l-6.3-6.3-1.41 1.41 6.3 6.3-6.3 6.29 1.41 1.41 6.3-6.29 6.3 6.29 1.41-1.41-6.3-6.29 6.3-6.3z"/>

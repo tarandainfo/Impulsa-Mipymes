@@ -228,3 +228,31 @@ Eso regenera `sitemap.xml` (la lista de páginas para Google) y la lista de enla
 
 **Fotos:** para que el sitio cargue rápido (la velocidad cuenta para Google), las fotos deben pesar poco. Al cargar fotos nuevas conviene achicarlas a unos 1600 px de largo y 80-85 % de calidad (las de cámara pueden pesar 10 MB o más); los avatares de perfil, a unos 500 px.
 
+
+---
+
+## Publicidad (banners GIF)
+
+Hay 7 espacios publicitarios. Todo se maneja desde **`js/ads-data.js`** (ahí está la explicación paso a paso); el código que los muestra es `js/ads.js` y no hace falta tocarlo.
+
+| Espacio (`slot`) | Página | Medida en PC | Medida en celular | Dónde está |
+|---|---|---|---|---|
+| `tope` | las dos | 970 × 90 | 320 × 50 | franja arriba de todo, sobre el encabezado |
+| `despues-hero` | portada | 728 × 90 | 320 × 100 | debajo de la portada |
+| `sidebar` | portada | 300 × 250 | 300 × 250 | columna derecha, sobre "Empresas que apoyan a las Mipymes" |
+| `en-lista` | portada | 728 × 90 | 320 × 100 | entre las tarjetas (después de la 2ª, en cada página) |
+| `antes-footer` | las dos | 728 × 90 | 320 × 100 | antes del pie de página |
+| `ficha-fotos` | ficha | 728 × 90 | 320 × 100 | debajo de las fotos de la mipyme |
+| `ficha-contacto` | ficha | 300 × 250 | 300 × 250 | debajo del contacto |
+
+**Para poner un banner:** guardá el GIF en `assets/ads/` (con la medida exacta y, si se puede, hasta 150 KB) y agregá un bloque en el espacio que corresponda de `js/ads-data.js`. Cada bloque tiene el nombre del anunciante, el GIF de PC y el de celular, a dónde lleva el clic, y fechas de inicio y fin opcionales (`desde`, `hasta`).
+
+- **Fechas:** un banner fuera de fecha deja de mostrarse solo. Si un espacio se queda sin banners vigentes, desaparece (no deja un hueco).
+- **Rotación:** si en un espacio hay varios banners vigentes, se elige uno al azar cada vez que alguien entra (`peso` para que uno aparezca más que otro).
+- **Pausar:** `activo: false` en un banner; o `ADS_CONFIG.activos = false` para sacar toda la publicidad.
+- **Avisos propios:** hoy los espacios muestran avisos de ejemplo que invitan a anunciar y llevan al WhatsApp de Infonegocios (`assets/ads/demo-*.gif`). Se reemplazan por los de cada anunciante cuando los haya.
+- **Accesibilidad:** si cargás `fijo` / `fijoMovil` (una imagen quieta), la ven las personas con "reducir movimiento" activado.
+- **Medición:** los enlaces llevan solos `utm_source`, `utm_medium=banner`, `utm_campaign` (el anunciante) y `utm_content` (el espacio), para que el anunciante vea las visitas en su Analytics. Si el sitio tiene Google Analytics, cada banner informa `ad_impression` y `ad_click` con el espacio y el anunciante, para armar informes.
+- **Etiquetas:** todos los banners dicen "Publicidad" y llevan `rel="sponsored"`.
+- **Reserva de espacio:** cada espacio mantiene su tamaño exacto aunque el GIF no haya cargado, para que la página no se mueva.
+
