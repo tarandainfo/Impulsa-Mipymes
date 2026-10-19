@@ -317,7 +317,7 @@
             "Hola! Quiero que mi mipyme esté en la guía gratuita de Impulsa Mipymes.\nNombre: \nRubro: \nRed social (y link): ";
 
         if (config2.whatsapp) {
-            unirse.href = "https://wa.me/" + config2.whatsapp + "?text=" + encodeURIComponent(mensaje);
+            unirse.href = "https://wa.me/+595972277107" + config2.whatsapp + "?text=" + encodeURIComponent(mensaje);
         } else {
             unirse.hidden = true;
         }

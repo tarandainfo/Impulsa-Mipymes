@@ -68,7 +68,7 @@ const DIRECTORIO_RUBROS = [
     "Hogar y decoración",
     "Servicios profesionales",
     "Eventos y fotografía",
-    "Tecnología y diseño web",
+    "Tecnología",
     "Salud y bienestar",
     "Educación y clases",
     "Oficios y construcción",
@@ -85,6 +85,6 @@ const DIRECTORIO_CONFIG = {
 
 const DIRECTORIO_DATA = [
 
-    // Agregá acá las mipymes de la guía (ver explicación de arriba).
+    // Escribir acá a las Mipymes gratis
 
 ];
