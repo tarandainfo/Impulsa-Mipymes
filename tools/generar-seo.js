@@ -10,8 +10,12 @@
 //      (entre las marcas SEO:LISTA-INICIO y SEO:LISTA-FIN), que les
 //      muestra los links de cada ficha a los buscadores y a las
 //      redes que no ejecutan JavaScript.
+////   3) la guía de mipymes "sin JavaScript" (entre las marcas
+//      SEO:DIRECTORIO-INICIO y SEO:DIRECTORIO-FIN), armada con lo que
+//      haya en js/directorio-data.js.
 //
-// CÓMO USARLO (cada vez que agregues, cambies o borres una mipyme):
+// CÓMO USARLO (cada vez que agregues, cambies o borres una mipyme,
+// o un nombre de la guía):
 //
 //     node tools/generar-seo.js
 //
@@ -119,3 +123,82 @@ ${items}
     console.warn("index.html no tiene las marcas SEO:LISTA-INICIO / SEO:LISTA-FIN; se omitió la lista sin JavaScript.");
 
 }
+
+
+// ---------- 3) guía de mipymes "sin JavaScript" en index.html ----------
+(function () {
+
+    const INICIO_D = "<!-- SEO:DIRECTORIO-INICIO -->";
+    const FIN_D = "<!-- SEO:DIRECTORIO-FIN -->";
+
+    let html2 = fs.readFileSync(archivoIndex, "utf8");
+
+    if (!html2.includes(INICIO_D) || !html2.includes(FIN_D)) {
+        console.warn("index.html no tiene las marcas SEO:DIRECTORIO-INICIO / SEO:DIRECTORIO-FIN; se omitió la guía sin JavaScript.");
+        return;
+    }
+
+    let enlaces;
+    let datos;
+
+    try {
+        enlaces = require(path.join(RAIZ, "js", "directorio-enlaces.js"));
+        datos = vm.runInNewContext(
+            fs.readFileSync(path.join(RAIZ, "js", "directorio-data.js"), "utf8") +
+            "\n;({ rubros: DIRECTORIO_RUBROS, datos: DIRECTORIO_DATA })"
+        );
+    } catch (error) {
+        console.error("No se pudo leer la guía (js/directorio-data.js):", error.message);
+        return;
+    }
+
+    const resultado = enlaces.normalizarEntradas(datos.datos, datos.rubros);
+
+    resultado.omitidas.forEach(function (o) {
+        console.warn("[Guía] Se omitió «" + o.nombre + "»: " + o.motivo);
+    });
+
+    let bloque;
+
+    if (!resultado.entradas.length) {
+
+        // Sin nombres: no se escribe nada (la sección tampoco se ve en la web)
+        bloque = `${INICIO_D}\n        ${FIN_D}`;
+
+    } else {
+
+        const grupos = resultado.rubros.map(function (rubro) {
+
+            const items = enlaces.ordenar(resultado.entradas.filter(function (e) { return e.rubro === rubro; }))
+                .map(function (e) {
+                    return `                        <li><a href="${escaparHtml(e.url)}" target="_blank" rel="nofollow noopener noreferrer">${escaparHtml(e.nombre)}</a> — ${escaparHtml(enlaces.REDES[e.red].nombre)}</li>`;
+                }).join("\n");
+
+            return `                    <h3>${escaparHtml(rubro)}</h3>\n                    <ul>\n${items}\n                    </ul>`;
+
+        }).join("\n");
+
+        bloque = `${INICIO_D}
+        <noscript>
+            <section class="container" style="padding: 40px 0;">
+                <h2>Guía de mipymes</h2>
+                <div>
+${grupos}
+                </div>
+            </section>
+        </noscript>
+        ${FIN_D}`;
+
+    }
+
+    const re2 = new RegExp(INICIO_D.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&") + "[\\s\\S]*?" + FIN_D.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&"));
+
+    html2 = html2.replace(re2, bloque);
+    fs.writeFileSync(archivoIndex, html2, "utf8");
+
+    console.log(resultado.entradas.length
+        ? `index.html actualizado: guía sin JavaScript con ${resultado.entradas.length} mipymes en ${resultado.rubros.length} rubros.`
+        : "index.html: la guía está vacía (no se muestra nada).");
+
+})();
+

@@ -23,6 +23,11 @@ const INFONEGOCIOS_CONFIG = {
     // (el nombre de la variable queda igual para no
     // romper la referencia en app.js)
     mensajeQuieroAparecer:
-        "Hola! Tengo una Mipyme y quiero ser parte de Infonegocios."
+        "Hola! Tengo una Mipyme y quiero ser parte de Infonegocios.",
+
+    // Mensaje prearmado para el botón "Quiero estar en la guía"
+    // (la guía gratuita de mipymes).
+    mensajeQuieroEstarEnLaGuia:
+        "Hola! Quiero que mi mipyme esté en la guía gratuita de Impulsa Mipymes.\nNombre: \nRubro: \nRed social (y link): "
 
 };

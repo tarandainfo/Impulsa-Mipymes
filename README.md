@@ -256,3 +256,34 @@ Hay 7 espacios publicitarios. Todo se maneja desde **`js/ads-data.js`** (ahí es
 - **Etiquetas:** todos los banners dicen "Publicidad" y llevan `rel="sponsored"`.
 - **Reserva de espacio:** cada espacio mantiene su tamaño exacto aunque el GIF no haya cargado, para que la página no se mueva.
 
+
+---
+
+## Guía de mipymes (directorio gratuito)
+
+Una lista de nombres de mipymes que **no pagaron** por aparecer, agrupadas por rubro. Cada nombre es un link a la red social que eligió el emprendedor (Instagram, Facebook, WhatsApp, TikTok o sitio web). Se ve entre "Mipymes destacadas" y la cédula, con el menú "Directorio" y un buscador.
+
+**Importante: mientras la lista esté vacía, la sección NO se muestra** (ni el enlace "Directorio" del menú y del pie). Aparece sola con el primer nombre que cargues.
+
+**Cómo agregar mipymes:** se cargan en **`js/directorio-data.js`**, una línea por mipyme (ahí hay una explicación paso a paso):
+
+    { nombre: "Sabores del Chaco", rubro: "Gastronomía", red: "instagram", usuario: "sabores.del.chaco" },
+
+- `red`: `instagram`, `facebook`, `tiktok`, `whatsapp` o `web`.
+- `usuario`: el usuario sin @ (Instagram, TikTok), lo que va después de facebook.com/ (Facebook), o el número con código de país, sin + ni espacios (WhatsApp, ej. `595981123456`). Para `web` (o links largos) se usa `link: "https://..."`.
+- Para no equivocarte, abrí **`admin/generador-directorio.html`**: completás los datos, te muestra el link que se va a abrir y arma la línea lista para pegar.
+- El orden de la lista no importa (la web ordena de la A a la Z). Para sacar una mipyme, se borra su línea.
+- Los rubros están en `DIRECTORIO_RUBROS` (arriba de ese mismo archivo). Un rubro nuevo se crea solo con usarlo.
+- Las líneas mal cargadas (sin nombre o rubro, o con un link inválido) **no se muestran**; la consola del navegador (F12) dice cuál se omitió y por qué.
+
+**Para probar cómo queda llena:** copiá las líneas de `tools/directorio-ejemplo.js` (son nombres inventados) dentro de `DIRECTORIO_DATA`, mirá la web y **volvé a vaciar la lista antes de publicar**.
+
+**Reglas que ya cumple la guía:**
+- Todos los links se abren en una pestaña nueva con `rel="nofollow noopener noreferrer"` (no son pagos y no avalamos esas páginas).
+- Solo se aceptan links `http://` y `https://`: cualquier otra cosa (por ejemplo `javascript:`) se rechaza. El texto de los nombres nunca se interpreta como código.
+- Si el sitio tiene Google Analytics, cada clic se informa como `directorio_click` (con nombre, rubro y red).
+- Al final de la sección hay dos invitaciones: **"Quiero estar en la guía"** (abre tu WhatsApp con un mensaje armado, editable en `mensajeQuieroEstarEnLaGuia` de `js/config.js`) y **"Conocé cómo aparecer destacada"** (lleva a "participar").
+- Se ven 14 nombres al principio y el resto con "Ver las N mipymes restantes" (se cambia en `filasIniciales`); con búsqueda o filtros se ven todos.
+
+**Después de cargar mipymes**, corré `node tools/generar-seo.js`: además del sitemap, actualiza la versión de la guía "sin JavaScript" (la que leen algunos buscadores).
+

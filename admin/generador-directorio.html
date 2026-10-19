@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="es-PY">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Generador de la guía de mipymes | Impulsa Mipymes</title>
+
+    <link rel="icon" href="../favicon.ico" sizes="any">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 40px 20px 80px;
+            background: #F5F6F8;
+            color: #0B0D12;
+            font-family: 'Manrope', Arial, sans-serif;
+            line-height: 1.5;
+        }
+
+        .caja { max-width: 760px; margin: 0 auto; }
+
+        h1 { margin: 0 0 6px; font-size: 1.9rem; letter-spacing: -0.03em; }
+
+        .bajada { margin: 0 0 28px; color: #485063; }
+
+        .tarjeta {
+            background: #fff;
+            border: 1px solid #E3E6EC;
+            border-radius: 18px;
+            padding: 26px;
+            margin-bottom: 20px;
+        }
+
+        .tarjeta h2 { margin: 0 0 16px; font-size: 1.1rem; }
+
+        label { display: block; margin: 0 0 6px; font-weight: 700; font-size: 0.9rem; }
+
+        .campo { margin-bottom: 18px; }
+
+        .ayuda { margin: 6px 0 0; color: #566075; font-size: 0.84rem; }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #C9CFDB;
+            border-radius: 12px;
+            background: #fff;
+            color: #0B0D12;
+            font: 500 1rem 'Manrope', Arial, sans-serif;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: 3px solid rgba(10, 111, 163, 0.28);
+            border-color: #0A6FA3;
+        }
+
+        .fila { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+
+        @media (max-width: 640px) { .fila { grid-template-columns: 1fr; gap: 0; } }
+
+        .resultado {
+            margin: 4px 0 18px;
+            padding: 14px 16px;
+            border-radius: 12px;
+            font-size: 0.92rem;
+            background: #EEF1F6;
+            color: #485063;
+            word-break: break-all;
+        }
+
+        .resultado.ok { background: #E7F6EC; color: #14532D; }
+        .resultado.mal { background: #FDECEC; color: #8A1111; }
+
+        .resultado a { color: inherit; font-weight: 700; }
+
+        button {
+            padding: 12px 20px;
+            border: 0;
+            border-radius: 12px;
+            background: #D2072A;
+            color: #fff;
+            font: 700 0.95rem 'Manrope', Arial, sans-serif;
+            cursor: pointer;
+        }
+
+        button:disabled { background: #C9CFDB; color: #566075; cursor: not-allowed; }
+
+        button.suave { background: #fff; color: #0B0D12; border: 1px solid #C9CFDB; }
+
+        .botones { display: flex; gap: 10px; flex-wrap: wrap; }
+
+        textarea {
+            min-height: 180px;
+            font: 500 0.82rem/1.6 'JetBrains Mono', monospace;
+            white-space: pre;
+            overflow: auto;
+        }
+
+        .pasos { margin: 0; padding-left: 20px; color: #485063; font-size: 0.92rem; }
+
+        .aviso { margin-top: 10px; font-weight: 700; color: #14532D; min-height: 1.4em; }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="caja">
+
+        <h1>Generador de la guía de mipymes</h1>
+        <p class="bajada">
+            Completá los datos de la mipyme y te armo la línea lista para pegar
+            en <strong>js/directorio-data.js</strong>.
+        </p>
+
+        <div class="tarjeta">
+
+            <h2>1. Datos de la mipyme</h2>
+
+            <div class="campo">
+                <label for="nombre">Nombre de la mipyme</label>
+                <input id="nombre" type="text" maxlength="80" autocomplete="off" placeholder="Ej.: Sabores del Chaco">
+            </div>
+
+            <div class="fila">
+
+                <div class="campo">
+                    <label for="rubro">Rubro</label>
+                    <select id="rubro"></select>
+                </div>
+
+                <div class="campo">
+                    <label for="red">Red social que eligió</label>
+                    <select id="red">
+                        <option value="instagram">Instagram</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="whatsapp">WhatsApp</option>
+                        <option value="tiktok">TikTok</option>
+                        <option value="web">Sitio web</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="campo" id="campo-rubro-nuevo" hidden>
+                <label for="rubro-nuevo">Nombre del rubro nuevo</label>
+                <input id="rubro-nuevo" type="text" maxlength="60" autocomplete="off" placeholder="Ej.: Turismo">
+                <p class="ayuda">Se crea solo en la web. Para elegir en qué lugar de la lista aparece, agregalo también a DIRECTORIO_RUBROS.</p>
+            </div>
+
+            <div class="campo">
+                <label for="dato" id="etiqueta-dato">Usuario de Instagram</label>
+                <input id="dato" type="text" autocomplete="off" placeholder="Ej.: sabores.del.chaco">
+                <p class="ayuda" id="ayuda-dato">Sin la @. Es lo que va después de instagram.com/</p>
+            </div>
+
+            <div class="resultado" id="resultado" role="status" aria-live="polite">
+                Completá los datos para ver el link.
+            </div>
+
+            <div class="botones">
+                <button type="button" id="agregar" disabled>Agregar a la lista</button>
+            </div>
+
+        </div>
+
+        <div class="tarjeta">
+
+            <h2>2. Líneas listas para pegar</h2>
+
+            <label for="salida">Copiá todo esto y pegalo dentro de DIRECTORIO_DATA</label>
+            <textarea id="salida" readonly placeholder="Acá van apareciendo las líneas que agregues."></textarea>
+
+            <div class="botones" style="margin-top: 14px;">
+                <button type="button" id="copiar" disabled>Copiar todo</button>
+                <button type="button" id="vaciar" class="suave" disabled>Vaciar</button>
+            </div>
+
+            <p class="aviso" id="aviso" role="status" aria-live="polite"></p>
+
+            <ol class="pasos">
+                <li>Abrí <strong>js/directorio-data.js</strong>.</li>
+                <li>Pegá las líneas dentro de <strong>DIRECTORIO_DATA</strong> (entre los corchetes).</li>
+                <li>Corré <strong>node tools/generar-seo.js</strong> y subí los archivos cambiados.</li>
+            </ol>
+
+        </div>
+
+    </div>
+
+    <script src="../js/directorio-enlaces.js"></script>
+    <script src="../js/directorio-data.js"></script>
+
+    <script>
+        (function () {
+
+            "use strict";
+
+            const ENLACES = window.DirectorioEnlaces;
+
+            const campos = {
+                nombre: document.getElementById("nombre"),
+                rubro: document.getElementById("rubro"),
+                rubroNuevo: document.getElementById("rubro-nuevo"),
+                campoRubroNuevo: document.getElementById("campo-rubro-nuevo"),
+                red: document.getElementById("red"),
+                dato: document.getElementById("dato"),
+                etiqueta: document.getElementById("etiqueta-dato"),
+                ayuda: document.getElementById("ayuda-dato"),
+                resultado: document.getElementById("resultado"),
+                agregar: document.getElementById("agregar"),
+                salida: document.getElementById("salida"),
+                copiar: document.getElementById("copiar"),
+                vaciar: document.getElementById("vaciar"),
+                aviso: document.getElementById("aviso")
+            };
+
+            const lineas = [];
+
+            // Rubros: los de js/directorio-data.js + la opción de escribir uno nuevo
+            const rubros = (typeof DIRECTORIO_RUBROS !== "undefined") ? DIRECTORIO_RUBROS : [];
+
+            rubros.forEach(function (r) {
+                const o = document.createElement("option");
+                o.value = r;
+                o.textContent = r;
+                campos.rubro.appendChild(o);
+            });
+
+            const otro = document.createElement("option");
+            otro.value = "__otro__";
+            otro.textContent = "Otro (escribir uno nuevo)…";
+            campos.rubro.appendChild(otro);
+
+            const TEXTOS = {
+                instagram: ["Usuario de Instagram", "Ej.: sabores.del.chaco", "Sin la @. Es lo que va después de instagram.com/"],
+                facebook: ["Página de Facebook", "Ej.: saboresdelchaco", "Lo que va después de facebook.com/ . Si el link es largo o raro, pegá el link completo."],
+                tiktok: ["Usuario de TikTok", "Ej.: sabores.del.chaco", "Sin la @. Es lo que va después de tiktok.com/@"],
+                whatsapp: ["Número de WhatsApp", "Ej.: 595981123456", "Con el código de país (595), sin +, sin espacios y sin el 0 inicial."],
+                web: ["Link del sitio web", "Ej.: https://www.minegocio.com.py", "El link completo, empezando con https://"]
+            };
+
+            function rubroElegido() {
+
+                return campos.rubro.value === "__otro__"
+                    ? campos.rubroNuevo.value.trim().replace(/\s+/g, " ")
+                    : campos.rubro.value;
+
+            }
+
+            function entradaActual() {
+
+                const red = campos.red.value;
+                const dato = campos.dato.value.trim();
+                const entrada = { nombre: campos.nombre.value.trim().replace(/\s+/g, " "), rubro: rubroElegido(), red: red };
+
+                // Si pegaron un link entero, se guarda como link
+                if (red === "web" || /^https?:\/\//i.test(dato)) {
+                    entrada.link = dato;
+                } else if (red === "whatsapp") {
+                    entrada.usuario = dato.replace(/^\+/, "").replace(/[\s\-().]/g, "");
+                } else {
+                    entrada.usuario = dato.replace(/^@+/, "").replace(/\s+/g, "");
+                }
+
+                return entrada;
+
+            }
+
+            function actualizar() {
+
+                const t = TEXTOS[campos.red.value];
+
+                campos.etiqueta.textContent = t[0];
+                campos.dato.placeholder = t[1];
+                campos.ayuda.textContent = t[2];
+                campos.campoRubroNuevo.hidden = campos.rubro.value !== "__otro__";
+
+                const e = entradaActual();
+                const r = campos.resultado;
+
+                r.className = "resultado";
+
+                if (!campos.dato.value.trim()) {
+                    r.textContent = "Completá los datos para ver el link.";
+                    campos.agregar.disabled = true;
+                    return;
+                }
+
+                const enlace = ENLACES.armarEnlace(e);
+
+                if (!enlace.ok) {
+                    r.classList.add("mal");
+                    r.textContent = "⚠ " + enlace.motivo;
+                    campos.agregar.disabled = true;
+                    return;
+                }
+
+                const falta = !e.nombre ? "el nombre" : (!e.rubro ? "el rubro" : "");
+
+                r.classList.add(falta ? "mal" : "ok");
+                r.innerHTML = "";
+
+                const texto = document.createElement("span");
+                texto.textContent = (falta ? "Falta " + falta + ". " : "✔ Se va a abrir: ");
+
+                const a = document.createElement("a");
+                a.href = enlace.url;
+                a.target = "_blank";
+                a.rel = "noopener";
+                a.textContent = enlace.url;
+
+                r.appendChild(texto);
+                if (!falta) r.appendChild(a);
+
+                campos.agregar.disabled = !!falta;
+
+            }
+
+            function lineaDe(e) {
+
+                const partes = [
+                    "nombre: " + JSON.stringify(e.nombre),
+                    "rubro: " + JSON.stringify(e.rubro),
+                    "red: " + JSON.stringify(e.red)
+                ];
+
+                if (e.link) partes.push("link: " + JSON.stringify(e.link));
+                else partes.push("usuario: " + JSON.stringify(e.usuario));
+
+                return "    { " + partes.join(", ") + " },";
+
+            }
+
+            function pintarSalida() {
+
+                campos.salida.value = lineas.join("\n");
+                campos.copiar.disabled = !lineas.length;
+                campos.vaciar.disabled = !lineas.length;
+
+            }
+
+            ["input", "change"].forEach(function (ev) {
+
+                [campos.nombre, campos.rubro, campos.rubroNuevo, campos.red, campos.dato].forEach(function (c) {
+                    c.addEventListener(ev, actualizar);
+                });
+
+            });
+
+            campos.agregar.addEventListener("click", function () {
+
+                lineas.push(lineaDe(entradaActual()));
+                pintarSalida();
+
+                campos.nombre.value = "";
+                campos.dato.value = "";
+                actualizar();
+                campos.nombre.focus();
+
+                campos.aviso.textContent = "Agregada. Ya hay " + lineas.length + (lineas.length === 1 ? " línea." : " líneas.");
+
+            });
+
+            campos.copiar.addEventListener("click", function () {
+
+                const ok = function () { campos.aviso.textContent = "¡Copiado! Pegalo en js/directorio-data.js"; };
+
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(campos.salida.value).then(ok, function () {
+                        campos.salida.select();
+                        campos.aviso.textContent = "Seleccioné el texto: apretá Ctrl+C para copiarlo.";
+                    });
+                } else {
+                    campos.salida.select();
+                    campos.aviso.textContent = "Seleccioné el texto: apretá Ctrl+C para copiarlo.";
+                }
+
+            });
+
+            campos.vaciar.addEventListener("click", function () {
+
+                lineas.length = 0;
+                pintarSalida();
+                campos.aviso.textContent = "Lista vaciada.";
+
+            });
+
+            actualizar();
+
+        })();
+    </script>
+
+</body>
+
+</html>

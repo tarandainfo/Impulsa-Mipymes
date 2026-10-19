@@ -114,7 +114,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/styles.css?v=20261020-ads">
+    <link rel="stylesheet" href="./css/styles.css?v=20261027-guia">
 </head>
 
 <body>
@@ -144,6 +144,7 @@
                 <nav class="nav">
 
                     <a href="#mipymes">Mipymes</a>
+                    <a href="#directorio" data-dir-nav hidden>Directorio</a>
 
                     <a href="#participar">Quiero ser parte</a>
 
@@ -533,6 +534,53 @@
              CÉDULA MIPYMES
         ========================== -->
 
+        <!-- =========================
+             GUÍA DE MIPYMES (directorio gratuito)
+             Se llena sola desde js/directorio-data.js.
+             Mientras esa lista esté vacía, esta sección no se ve.
+        ========================== -->
+
+        <section id="directorio" class="dir-section" aria-labelledby="dir-titulo" hidden>
+            <div class="container">
+
+                <div class="section-heading">
+                    <div>
+                        <span class="section-tag">DIRECTORIO</span>
+                        <h2 id="dir-titulo">Guía de mipymes</h2>
+                    </div>
+                    <p>Más emprendimientos de todo Paraguay, por rubro.
+                       Tocá un nombre para ir a su red social.</p>
+                </div>
+
+                <div class="dir-herramientas">
+                    <label class="dir-buscar">
+                        <span class="vh">Buscar una mipyme por nombre o rubro</span>
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                        <input type="search" id="dir-q" placeholder="Buscar por nombre o rubro…" autocomplete="off">
+                    </label>
+                    <p class="dir-contador" id="dir-contador" role="status" aria-live="polite"></p>
+                </div>
+
+                <div id="dir-cuerpo" class="dir-b"></div>
+
+                <p class="dir-vacio" id="dir-vacio" hidden>No encontramos ninguna mipyme con esa búsqueda. Probá con otra palabra o con el rubro.</p>
+
+                <div class="dir-invitacion">
+                    <div class="dir-inv-caja">
+                        <strong>¿Querés estar en la guía? Es gratis.</strong>
+                        <p>Escribinos el nombre de tu mipyme, tu rubro y el link de la red social que prefieras.</p>
+                        <a class="btn btn-primary" id="dir-unirse" href="#" target="_blank" rel="noopener">Quiero estar en la guía</a>
+                    </div>
+                    <div class="dir-inv-caja dir-inv-destacada">
+                        <strong>¿Querés destacarte más?</strong>
+                        <p>Las mipymes destacadas tienen ficha propia, fotos y botón de contacto directo.</p>
+                        <a class="dir-inv-link" href="#participar">Conocé cómo aparecer destacada →</a>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
         <section id="cedula" class="cedula-section">
 
             <!-- Manchas de color de fondo (decorativas) -->
@@ -774,6 +822,9 @@
         </noscript>
         <!-- SEO:LISTA-FIN -->
 
+        <!-- SEO:DIRECTORIO-INICIO -->
+        <!-- SEO:DIRECTORIO-FIN -->
+
     </main>
 
 
@@ -816,6 +867,7 @@
 
                 <nav class="footer-nav" aria-label="Enlaces del sitio">
                     <a href="#mipymes">Mipymes</a>
+                    <a href="#directorio" data-dir-nav hidden>Directorio</a>
                     <a href="#participar">Quiero ser parte</a>
                     <a href="#cedula">Mi Cédula Mipyme</a>
                 </nav>
@@ -877,6 +929,9 @@
     <script src="./js/banners-data.js?v=20260811-15" defer></script>
     <script src="./js/ads-data.js?v=20261020-ads" defer></script>
     <script src="./js/ads.js?v=20261020-ads" defer></script>
+    <script src="./js/directorio-enlaces.js?v=20261027-guia" defer></script>
+    <script src="./js/directorio-data.js?v=20261027-guia" defer></script>
+    <script src="./js/directorio.js?v=20261027-guia" defer></script>
     <script src="./js/app.js?v=20261020-ads" defer></script>
     <script src="./js/theme.js?v=20260828-17" defer></script>
     <script src="./js/chatbot-preguntas.js?v=20260811-15" defer></script>
