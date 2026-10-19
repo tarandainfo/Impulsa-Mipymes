@@ -85,6 +85,6 @@ const DIRECTORIO_CONFIG = {
 
 const DIRECTORIO_DATA = [
 
-    // Escribir acá a las Mipymes gratis
+    // carga acá las mipymes para activar la sección
 
 ];
