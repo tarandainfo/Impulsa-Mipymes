@@ -36,6 +36,44 @@
 const MIPYMES_DATA = [
 
     {
+        nombre: "Báez Maldonado y Bolla Consulting",
+        categoria: "Consultoría",
+
+        descripcion:
+            "Consultora familiar especializada en proyectos de maquila, estructuración de sociedades e inversiones, asesoría legal, servicios notariales y gestión migratoria para empresas e inversionistas nacionales y extranjeros.",
+
+        descripcionLarga: [
+            "Báez Maldonado y Bolla Consulting es una consultora familiar paraguaya fundada por el Dr. Alcides Emilio Báez Maldonado, reconocido por su aporte a la creación e impulso de la Ley de Maquila en Paraguay, junto con la escribana pública María Jackeline Bolla de Báez. La firma nació con el objetivo de acompañar a empresas y emprendedores en la estructuración de proyectos de maquila, constitución de sociedades y desarrollo de inversiones, combinando conocimientos jurídicos, notariales y de comercio internacional.",
+            "Actualmente, la consultora continúa el legado familiar bajo la dirección de Eugenia Báez Bolla, Adria Báez Bolla y María Jackeline Bolla de Báez. Ofrece servicios integrales que incluyen estructuración de proyectos de maquila, asesoramiento para inversiones bajo la Ley 60/90, mantenimiento de sociedades con soporte contable, representación legal, trámites migratorios y acompañamiento para el desembarco de extranjeros en Paraguay. Su propuesta se distingue por la atención personalizada, el trato humano y el acompañamiento continuo durante las distintas etapas de cada proyecto."
+        ],
+
+        ubicacion: "Asunción, Paraguay",
+
+        whatsapp: "595981811445",
+
+        instagram: "https://www.instagram.com/bmbconsulting/",
+
+        productoImagen:
+            "./assets/img/bolla-consultora/foto-tarjeta.jpg",
+
+        perfilImagen:
+            "./assets/img/bolla-consultora/foto-perfil.png",
+
+        fotosCarrusel: [
+            "./assets/img/bolla-consultora/foto-principal.png",
+            "./assets/img/bolla-consultora/foto-2.jpeg",
+            "./assets/img/bolla-consultora/foto-3.jpg",
+            "./assets/img/bolla-consultora/foto-4.jpg"
+        ],
+
+        promocion:
+            "Consultá por los servicios disponibles.",
+
+        notaPeriodistica: ""
+
+    },
+
+    {
         nombre: "Fátima Sosa Organización y ambientación de eventos ",
         categoria: "Organización de eventos",
 
