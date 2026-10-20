@@ -85,6 +85,15 @@ const DIRECTORIO_CONFIG = {
 
 const DIRECTORIO_DATA = [
 
-    // carga acá las mipymes para activar la sección
+    {nombre: "Pedacitos de Luna", rubro: "Gastronomía", red: "Instagram", usuario: "pedacitos_de_luna__"},
+    {nombre: "MAP Crochet", rubro: "Moda y diseño", red: "Instagram", usuario: "map_crochet"},
+    {nombre: "El Fogón del Patio", rubro: "Decoración y productos para exteriores", red: "Instagram", usuario: "elfogondelpatio"},
+    {nombre: "Creaciones Pascuala", rubro: "Moda y diseño", red: "Instagram", usuario: "creacionesdepascuala"},
+    {nombre: "Che Retã Resto Café", rubro: "Gastronomía", red: "Instagram", usuario: "cheretacafe_"},
+    {nombre: "Rubén Cardus Fotografía", rubro: "Servicios audiovisuales", red: "Instagram", usuario: "rubencardusfotografo"},
+    {nombre: "Hey", rubro: "Moda y diseño", red: "Instagram", usuario: "hey.megusta"},
+    {nombre: "AG Organización Contable", rubro: "Servicios contables", red: "Instagram", usuario: "agorganizacioncontable"},
+    {nombre: "Fátima Sosa Organización y ambientación de eventos", rubro: "Organización de eventos", red: "Instagram", usuario: "fatimasosaeventos"},
+    {nombre: "Báez Maldonado y Bolla Consulting", rubro: "Consultoría", red: "Instagram", usuario: "bmbconsulting"}
 
 ];
