@@ -31,6 +31,21 @@
 //   - notaPeriodistica: link a la nota/artículo sobre
 //     la mipyme. Si no tiene, dejalo como "" y ese link
 //     no se muestra en la ficha.
+//   - verificada: la palomita azul de "mipyme verificada".
+//     Las mipymes de esta lista son las que pagaron por estar
+//     destacadas, así que TODAS la llevan (verificada: true;
+//     si te olvidás de la línea, también la llevan). Solo si
+//     alguna no debe llevarla, poné verificada: false. La
+//     palomita aparece sola junto al nombre en la portada,
+//     las tarjetas, la ficha y la guía de mipymes.
+//   - productoImagenMovil (opcional): otra foto para la
+//     tarjeta de la lista en celular (pantallas de hasta
+//     600 px). Sirve cuando la foto principal es muy vertical
+//     o lleva texto, como un logo. Si no se pone, se usa
+//     productoImagen en todos los tamaños.
+//   - rubroGuia (opcional): el rubro con el que entra a la guía
+//     de mipymes. Si no se pone, se usa la categoría
+//     (ver DIRECTORIO_EQUIVALENCIAS_RUBRO en directorio-data.js).
 // ==========================================
 
 const MIPYMES_DATA = [
@@ -38,6 +53,7 @@ const MIPYMES_DATA = [
     {
         nombre: "Báez Maldonado y Bolla Consulting",
         categoria: "Consultoría",
+        verificada: true,
 
         descripcion:
             "Consultora familiar especializada en proyectos de maquila, estructuración de sociedades e inversiones, asesoría legal, servicios notariales y gestión migratoria para empresas e inversionistas nacionales y extranjeros.",
@@ -54,6 +70,9 @@ const MIPYMES_DATA = [
         instagram: "https://www.instagram.com/bmbconsulting/",
 
         productoImagen:
+            "./assets/img/bolla-consultora/foto-tarjeta-vertical.jpg",
+
+        productoImagenMovil:
             "./assets/img/bolla-consultora/foto-tarjeta.jpg",
 
         perfilImagen:
@@ -76,6 +95,7 @@ const MIPYMES_DATA = [
     {
         nombre: "Fátima Sosa Organización y ambientación de eventos ",
         categoria: "Organización de eventos",
+        verificada: true,
 
         descripcion:
             "Servicio especializado en la organización, planificación y ambientación de eventos, creando propuestas personalizadas y cuidando cada detalle de la celebración.",
@@ -115,6 +135,7 @@ const MIPYMES_DATA = [
     {
         nombre: "AG Organización Contable",
         categoria: "Servicios contables empresariales",
+        verificada: true,
 
         descripcion:
             "Firma especializada en servicios contables, tributarios, laborales y administrativos, con asesoramiento integral para emprendedores, empresas, MiPymes e inversionistas.",
@@ -152,6 +173,7 @@ const MIPYMES_DATA = [
     {
         nombre: "Hey",
         categoria: "Moda y diseño",
+        verificada: true,
 
         descripcion:
             "Estudio creativo que desarrolla regalos y experiencias personalizadas para personas y empresas, diseñando cada propuesta según la ocasión, identidad y presupuesto del cliente.",
@@ -191,6 +213,7 @@ const MIPYMES_DATA = [
     {
         nombre: "Rubén Cardus Fotografía",
         categoria: "Servicios audiovisuales",
+        verificada: true,
 
         descripcion:
             "Servicio audiovisual especializado en fotografía y video para eventos sociales, creación de contenido, manejo de redes sociales y fotografía gastronómica.",
@@ -230,6 +253,7 @@ const MIPYMES_DATA = [
     {
         nombre: "Che Retã Resto Café",
         categoria: "Gastronomía",
+        verificada: true,
 
         descripcion:
             "Resto café que combina platos tradicionales y propuestas innovadoras con una identidad inspirada en la cultura y las tradiciones paraguayas.",
@@ -267,6 +291,7 @@ const MIPYMES_DATA = [
     {
         nombre: "El Fogón del Patio",
         categoria: "Decoración y productos para exteriores",
+        verificada: true,
 
         descripcion:
             "Emprendimiento dedicado a la fabricación y comercialización de fogoneros, parrillas y productos para disfrutar y decorar espacios exteriores.",
@@ -305,6 +330,7 @@ const MIPYMES_DATA = [
     {
         nombre: "MAP Crochet",
         categoria: "Moda y diseño",
+        verificada: true,
 
         descripcion:
             "Emprendimiento dedicado a la elaboración artesanal de prendas de crochet.",
@@ -344,6 +370,7 @@ const MIPYMES_DATA = [
     {
         nombre: "Creaciones Pascuala",
         categoria: "Moda y diseño",
+        verificada: true,
 
         descripcion:
             "Emprendimiento artesanal dedicado a la confección de bolsos, cartucheras, individuales, fundas y otros artículos de tela.",
@@ -382,6 +409,7 @@ const MIPYMES_DATA = [
     {
         nombre: "Pedacitos de Luna",
         categoria: "Gastronomía",
+        verificada: true,
 
         descripcion:
             "Emprendimiento gastronómico dedicado a la elaboración y venta de productos dulces y salados en el microcentro de Asunción.",

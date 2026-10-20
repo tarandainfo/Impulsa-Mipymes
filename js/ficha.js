@@ -268,13 +268,18 @@ function mostrarFicha() {
     // ---------- encabezado ----------
     const encabezado = document.getElementById("ficha-header");
 
+    // Palomita de "mipyme verificada" (solo si en los datos dice  verificada: true)
+    const insigniaVerificada = (window.Verificada && window.Verificada.esVerificada(mipyme))
+        ? window.Verificada.html(true)
+        : "";
+
     if (encabezado) {
 
         encabezado.innerHTML = `
             <img class="ficha-perfil-img" src="${mipyme.perfilImagen}" alt="Perfil de ${mipyme.nombre}">
             <div>
                 <span class="mipyme-category">${mipyme.categoria}</span>
-                <h1>${mipyme.nombre}</h1>
+                <h1>${mipyme.nombre}${insigniaVerificada}</h1>
                 <p class="mipyme-location"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C7.86 2 4.5 5.36 4.5 9.5c0 5.25 6.24 11.34 6.5 11.6a1.4 1.4 0 0 0 2 0c.26-.26 6.5-6.35 6.5-11.6C19.5 5.36 16.14 2 12 2zm0 10.3a2.8 2.8 0 1 1 0-5.6 2.8 2.8 0 0 1 0 5.6z"/></svg>${mipyme.ubicacion}</p>
             </div>
         `;

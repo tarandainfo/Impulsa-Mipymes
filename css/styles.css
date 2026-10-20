@@ -2332,11 +2332,20 @@ img {
 
     width: 100%;
 
-    height: 420px;
+    height: 540px;
 
     object-fit: cover;
 
     display: block;
+
+}
+
+/* Tablet: el marco baja un poco para no ocupar toda la pantalla */
+@media (max-width: 900px) {
+
+    .carrusel-slide img {
+        height: 450px;
+    }
 
 }
 
@@ -2518,9 +2527,7 @@ img {
 
 
     .carrusel-slide img {
-
-        height: 260px;
-
+        height: 330px;
     }
 
 
@@ -7114,3 +7121,97 @@ html[data-theme="dark"] .dir-inv-caja .btn-primary{color:#fff}
 
 /* los elementos ocultos con el atributo hidden tienen que seguir ocultos */
 .dir-section[hidden],.nav a[hidden],.footer-nav a[hidden]{display:none!important}
+
+
+/* Foto de la tarjeta con versión para celular (productoImagenMovil): el <picture>
+   no altera el diseño; la imagen se comporta igual que siempre. */
+.mipyme-product-image picture {
+    display: contents;
+}
+
+
+/* =====================================================
+   PALOMITA DE "MIPYME VERIFICADA"
+   Solo la llevan las mipymes con  verificada: true  en sus datos
+   (js/mipymes-data.js y js/directorio-data.js). La dibuja
+   js/verificada.js: un sello azul festoneado con tilde blanco.
+===================================================== */
+
+.verif {
+    --verif-fondo: #1D8FE1;
+    --verif-tilde: #FFFFFF;
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    vertical-align: middle;
+    margin-left: 0.34em;
+    line-height: 1;
+}
+
+.verif svg {
+    display: block;
+    width: 1.02em;
+    height: 1.02em;
+    overflow: visible;
+}
+
+.verif .verif-fondo { fill: var(--verif-fondo); }
+.verif .verif-tilde { stroke: var(--verif-tilde); }
+
+/* modo oscuro: un azul un poco más claro para que se vea sobre fondo negro */
+html[data-theme="dark"] .verif { --verif-fondo: #2FA0F2; }
+
+/* la portada rotativa es una foto oscura en los dos modos */
+.spotlight .verif { --verif-fondo: #2FA0F2; }
+
+/* globo de ayuda: al pasar el mouse, o al tocar / llegar con el teclado */
+.verif[data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    z-index: 60;
+    padding: 7px 11px;
+    border-radius: 9px;
+    background: #0B0D12;
+    color: #FFFFFF;
+    font: 600 12px/1.25 'Manrope', Arial, sans-serif;
+    letter-spacing: 0;
+    text-transform: none;
+    white-space: nowrap;
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.28);
+    transform: translate(-50%, 4px);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+}
+
+html[data-theme="dark"] .verif[data-tip]::after,
+.spotlight .verif[data-tip]::after {
+    background: #ECEEF3;
+    color: #0B0D12;
+}
+
+.verif[data-tip]:hover::after,
+.verif[data-tip]:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.verif:focus-visible {
+    outline: 2px solid var(--celeste, #50C7E7);
+    outline-offset: 3px;
+    border-radius: 50%;
+}
+
+/* en la guía la palomita va dentro de la fila (que es un link): un poco más chica */
+.dir-fila .verif { margin-left: 0.4em; }
+.dir-fila .verif svg { width: 0.95em; height: 0.95em; }
+
+@media (prefers-reduced-motion: reduce) {
+    .verif[data-tip]::after { transition: none; }
+}
+

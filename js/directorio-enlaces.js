@@ -183,12 +183,44 @@
 
     }
 
+    // Link de Instagram "limpio": solo el perfil, sin los parámetros de seguimiento
+    function enlaceDeDestacada(m) {
+
+        let enlace = armarEnlace({ link: m.instagram });
+
+        if (enlace.ok && enlace.red === "instagram") {
+
+            try {
+
+                const u = new URL(enlace.url);
+                const perfil = u.pathname.split("/").filter(Boolean)[0];
+
+                if (perfil) enlace = { ok: true, red: "instagram", url: "https://www.instagram.com/" + perfil + "/" };
+
+            } catch (error) { /* se deja el link como estaba */ }
+
+        }
+
+        // Si no tiene Instagram (o no sirve), se prueba con su WhatsApp
+        if (!enlace.ok) enlace = armarEnlace({ red: "whatsapp", usuario: m.whatsapp });
+
+        return enlace;
+
+    }
+
     // Revisa toda la lista cargada.
+    //
+    // "destacadas" es opcional: { mipymes, incluir, equivalencias }
+    //   mipymes       → las mipymes de js/mipymes-data.js (las que pagaron)
+    //   incluir       → true (por defecto): las destacadas que falten en la guía se agregan solas
+    //   equivalencias → { "categoría de destacadas": "rubro de la guía" }
+    // La palomita ("verificada") la llevan SOLO las filas que coinciden con una destacada.
+    //
     // Devuelve:
-    //   entradas  → las válidas, ya con su link: { nombre, rubro, red, url }
+    //   entradas  → las válidas, ya con su link: { nombre, rubro, red, url, verificada }
     //   rubros    → los rubros que tienen al menos una mipyme, en orden
     //   omitidas  → las que se descartaron y por qué: { nombre, motivo }
-    function normalizarEntradas(datos, rubrosEnOrden) {
+    function normalizarEntradas(datos, rubrosEnOrden, destacadas) {
 
         const entradas = [];
         const omitidas = [];
@@ -230,7 +262,52 @@
 
             vistas[clave] = true;
 
-            entradas.push({ nombre: nombre, rubro: rubro, red: enlace.red, url: enlace.url });
+            entradas.push({ nombre: nombre, rubro: rubro, red: enlace.red, url: enlace.url, verificada: false });
+
+        });
+
+        // ---- mipymes destacadas (las que pagaron): llevan la palomita y entran solas a la guía ----
+        const opciones = destacadas || {};
+        const incluir = opciones.incluir !== false;
+        const equivalencias = opciones.equivalencias || {};
+        const limpiar = function (t) { return String(t == null ? "" : t).trim().replace(/\s+/g, " "); };
+
+        (Array.isArray(opciones.mipymes) ? opciones.mipymes : []).forEach(function (m) {
+
+            const nombre = limpiar(m && m.nombre);
+
+            if (!nombre) return;
+
+            const verificada = m.verificada !== false;
+            const clave = claveNombre(nombre);
+            let esta = false;
+
+            // Si ya está cargada en la guía (aunque con otro rubro), solo se le da la palomita
+            entradas.forEach(function (x) {
+                if (claveNombre(x.nombre) === clave) {
+                    x.verificada = verificada;
+                    esta = true;
+                }
+            });
+
+            if (esta || !incluir) return;
+
+            const categoria = limpiar(m.categoria);
+            const rubro = limpiar(m.rubroGuia) || limpiar(equivalencias[categoria]) || categoria;
+
+            if (!rubro) {
+                omitidas.push({ nombre: nombre, motivo: "es una mipyme destacada pero no tiene categoría para ubicarla en la guía" });
+                return;
+            }
+
+            const enlace = enlaceDeDestacada(m);
+
+            if (!enlace.ok) {
+                omitidas.push({ nombre: nombre, motivo: "es una mipyme destacada pero no tiene un Instagram o WhatsApp válido para armar su link en la guía" });
+                return;
+            }
+
+            entradas.push({ nombre: nombre, rubro: rubro, red: enlace.red, url: enlace.url, verificada: verificada });
 
         });
 

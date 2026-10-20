@@ -42,6 +42,27 @@
 // los datos y te arma la línea lista para pegar.
 //
 // ------------------------------------------
+// MIPYMES DESTACADAS (las que pagaron) EN LA GUÍA
+// ------------------------------------------
+//
+//  • Las mipymes que están en js/mipymes-data.js (las destacadas)
+//    SON las que pagaron: en la guía llevan la palomita azul de
+//    "mipyme verificada" junto al nombre.
+//  • La palomita se asigna comparando los NOMBRES (sin importar
+//    mayúsculas, tildes ni espacios de más): si una línea de la guía
+//    tiene el mismo nombre que una destacada, lleva la palomita.
+//    Las que están SOLO acá (la lista gratuita) nunca la llevan.
+//  • Si una mipyme destacada todavía no está en la guía, entra
+//    sola (con su Instagram, o su WhatsApp si no tiene). No hace
+//    falta cargarla dos veces. Para desactivarlo:
+//    incluirDestacadas: false  (más abajo).
+//  • Al entrar sola, la mipyme se ubica en el rubro que diga la
+//    tabla DIRECTORIO_EQUIVALENCIAS_RUBRO (más abajo) o, si no
+//    figura ahí, en un rubro con el nombre de su categoría. Una
+//    destacada también puede traer en sus datos  rubroGuia: "..."
+//    para elegir el rubro de la guía.
+//
+// ------------------------------------------
 // COSAS A SABER
 // ------------------------------------------
 //
@@ -79,7 +100,20 @@ const DIRECTORIO_CONFIG = {
 
     // Cuántas mipymes se ven al principio. El resto se abre con el
     // botón "Ver las N mipymes restantes". (Con búsqueda o filtros se ven todas.)
-    filasIniciales: 14
+    filasIniciales: 14,
+
+    // true = las mipymes destacadas que falten en la guía entran solas (con su palomita).
+    // false = solo aparecen las que cargues a mano en DIRECTORIO_DATA.
+    incluirDestacadas: true
+
+};
+
+// Cuando una mipyme destacada entra sola a la guía, su "categoría" se traduce
+// al rubro de la guía con esta tabla. Formato:  "categoría de destacadas": "rubro de la guía"
+// (si una categoría no está acá, se usa con su mismo nombre como rubro).
+const DIRECTORIO_EQUIVALENCIAS_RUBRO = {
+
+    "Servicios contables empresariales": "Servicios contables"
 
 };
 

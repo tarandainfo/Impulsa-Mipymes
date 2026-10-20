@@ -206,16 +206,34 @@ function mostrarMipymes() {
         // tono de color de la categoría (lo usa el CSS para el puntito)
         card.setAttribute("data-tono", tonoDeCategoria(mipyme.categoria));
 
-        card.innerHTML = `
-
-            <div class="mipyme-product-image">
-
-                <img
+        // Foto de la tarjeta. Si la mipyme tiene "productoImagenMovil", en celular
+        // (pantallas de hasta 600 px, donde la tarjeta pasa a una sola columna y
+        // la foto se ve entera) se usa esa foto; si no, siempre la misma.
+        const imagenHtml = `<img
                     src="${mipyme.productoImagen}"
                     alt="Producto de ${mipyme.nombre}"
                     loading="lazy"
                     decoding="async"
-                >
+                >`;
+
+        const imagenDeLaTarjeta = mipyme.productoImagenMovil
+            ? `<picture>
+                    <source media="(max-width: 600px)" srcset="${mipyme.productoImagenMovil}">
+                    ${imagenHtml}
+                </picture>`
+            : imagenHtml;
+
+        // Palomita de "mipyme verificada" (solo si en los datos dice  verificada: true).
+        // Va fuera del link, para que el subrayado al pasar el mouse no la toque.
+        const insigniaVerificada = (window.Verificada && window.Verificada.esVerificada(mipyme))
+            ? window.Verificada.html(true)
+            : "";
+
+        card.innerHTML = `
+
+            <div class="mipyme-product-image">
+
+                ${imagenDeLaTarjeta}
 
             </div>
 
@@ -240,7 +258,7 @@ function mostrarMipymes() {
                         </span>
 
                         <h3>
-                            <a class="mipyme-nombre-link" href="ficha.html?mipyme=${crearSlug(mipyme.nombre)}">${mipyme.nombre}</a>
+                            <a class="mipyme-nombre-link" href="ficha.html?mipyme=${crearSlug(mipyme.nombre)}">${mipyme.nombre}</a>${insigniaVerificada}
                         </h3>
 
                     </div>
@@ -856,6 +874,11 @@ function activarSpotlightHero() {
         spot.setAttribute("data-tono", tonoDeCategoria(m.categoria));
 
         elNombre.textContent = m.nombre.trim();
+
+        // Palomita de "mipyme verificada" junto al nombre
+        if (window.Verificada && window.Verificada.esVerificada(m)) {
+            elNombre.insertAdjacentHTML("beforeend", window.Verificada.html(true));
+        }
         elDesc.textContent = m.descripcion || "";
         elUbicacion.textContent = m.ubicacion || "";
 

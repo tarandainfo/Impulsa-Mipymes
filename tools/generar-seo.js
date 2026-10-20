@@ -145,14 +145,19 @@ ${items}
         enlaces = require(path.join(RAIZ, "js", "directorio-enlaces.js"));
         datos = vm.runInNewContext(
             fs.readFileSync(path.join(RAIZ, "js", "directorio-data.js"), "utf8") +
-            "\n;({ rubros: DIRECTORIO_RUBROS, datos: DIRECTORIO_DATA })"
+            "\n;({ rubros: DIRECTORIO_RUBROS, datos: DIRECTORIO_DATA, config: (typeof DIRECTORIO_CONFIG !== 'undefined' ? DIRECTORIO_CONFIG : {}), equivalencias: (typeof DIRECTORIO_EQUIVALENCIAS_RUBRO !== 'undefined' ? DIRECTORIO_EQUIVALENCIAS_RUBRO : {}) })"
         );
     } catch (error) {
         console.error("No se pudo leer la guía (js/directorio-data.js):", error.message);
         return;
     }
 
-    const resultado = enlaces.normalizarEntradas(datos.datos, datos.rubros);
+    // las destacadas (variable "mipymes", leída arriba) llevan la palomita y entran solas a la guía
+    const resultado = enlaces.normalizarEntradas(datos.datos, datos.rubros, {
+        mipymes: mipymes,
+        incluir: datos.config.incluirDestacadas !== false,
+        equivalencias: datos.equivalencias
+    });
 
     resultado.omitidas.forEach(function (o) {
         console.warn("[Guía] Se omitió «" + o.nombre + "»: " + o.motivo);
@@ -171,7 +176,7 @@ ${items}
 
             const items = enlaces.ordenar(resultado.entradas.filter(function (e) { return e.rubro === rubro; }))
                 .map(function (e) {
-                    return `                        <li><a href="${escaparHtml(e.url)}" target="_blank" rel="nofollow noopener noreferrer">${escaparHtml(e.nombre)}</a> — ${escaparHtml(enlaces.REDES[e.red].nombre)}</li>`;
+                    return `                        <li><a href="${escaparHtml(e.url)}" target="_blank" rel="nofollow noopener noreferrer">${escaparHtml(e.nombre)}</a>${e.verificada ? " (mipyme verificada)" : ""} — ${escaparHtml(enlaces.REDES[e.red].nombre)}</li>`;
                 }).join("\n");
 
             return `                    <h3>${escaparHtml(rubro)}</h3>\n                    <ul>\n${items}\n                    </ul>`;

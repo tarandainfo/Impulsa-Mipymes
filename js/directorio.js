@@ -25,13 +25,20 @@
     const ENLACES = window.DirectorioEnlaces;
 
     const config = Object.assign(
-        { filasIniciales: 14 },
+        { filasIniciales: 14, incluirDestacadas: true },
         (typeof DIRECTORIO_CONFIG !== "undefined") ? DIRECTORIO_CONFIG : {}
     );
 
+    // Las mipymes destacadas (las que pagaron) llevan la palomita en la guía, y las que
+    // falten en la lista entran solas.
     const resultado = ENLACES.normalizarEntradas(
         DIRECTORIO_DATA,
-        (typeof DIRECTORIO_RUBROS !== "undefined") ? DIRECTORIO_RUBROS : []
+        (typeof DIRECTORIO_RUBROS !== "undefined") ? DIRECTORIO_RUBROS : [],
+        {
+            mipymes: (typeof MIPYMES_DATA !== "undefined") ? MIPYMES_DATA : [],
+            incluir: config.incluirDestacadas !== false,
+            equivalencias: (typeof DIRECTORIO_EQUIVALENCIAS_RUBRO !== "undefined") ? DIRECTORIO_EQUIVALENCIAS_RUBRO : {}
+        }
     );
 
     // Avisar (en la consola) de lo que no se pudo mostrar y por qué
@@ -39,7 +46,7 @@
         console.warn("[Directorio] Se omitió «" + o.nombre + "»: " + o.motivo);
     });
 
-    // Sin mipymes cargadas: la sección no se muestra
+    // Sin mipymes cargadas (ni destacadas): la sección no se muestra
     if (!resultado.entradas.length) return;
 
     const ENTRADAS = ENLACES.ordenar(resultado.entradas);
@@ -186,7 +193,7 @@
             html +=
                 '<li><a class="dir-enlace dir-fila" href="' + esc(e.url) + '" target="_blank" rel="nofollow noopener noreferrer"' +
                 ' data-rubro="' + esc(e.rubro) + '" data-red="' + e.red + '" data-nombre="' + esc(e.nombre) + '">' +
-                '<span class="dir-nombre">' + resaltar(e.nombre) + '</span>' +
+                '<span class="dir-nombre">' + resaltar(e.nombre) + (e.verificada && window.Verificada ? window.Verificada.html(false) : '') + '</span>' +
                 '<span class="dir-rubro-etq">' + esc(e.rubro) + '</span>' +
                 '<span class="dir-red">' + ICONOS[e.red] + esc(nombreRed) + '</span>' +
                 '<span class="dir-flecha" aria-hidden="true">→</span>' +
@@ -317,7 +324,7 @@
             "Hola! Quiero que mi mipyme esté en la guía gratuita de Impulsa Mipymes.\nNombre: \nRubro: \nRed social (y link): ";
 
         if (config2.whatsapp) {
-            unirse.href = "https://wa.me/+595972277107" + config2.whatsapp + "?text=" + encodeURIComponent(mensaje);
+            unirse.href = "https://wa.me/" + config2.whatsapp + "?text=" + encodeURIComponent(mensaje);
         } else {
             unirse.hidden = true;
         }

@@ -229,6 +229,13 @@ Eso regenera `sitemap.xml` (la lista de páginas para Google) y la lista de enla
 **Fotos:** para que el sitio cargue rápido (la velocidad cuenta para Google), las fotos deben pesar poco. Al cargar fotos nuevas conviene achicarlas a unos 1600 px de largo y 80-85 % de calidad (las de cámara pueden pesar 10 MB o más); los avatares de perfil, a unos 500 px.
 
 
+**Foto de la tarjeta de la lista (marco vertical de 280 px de ancho):** el alto del marco no es fijo: depende de cuánto texto tenga la tarjeta y del ancho de la pantalla, y la proporción va de unos 0,4 a 0,6 (por ejemplo 280 × 467 en escritorio y 280 × 700 en un iPad horizontal). La imagen se recorta al centro para llenarlo, y la **altura de la foto también estira la tarjeta**: una imagen más angosta que 0,6 la hace más alta. Para un logo o una imagen con texto conviene armarla en proporción **0,6 : 1** (por ejemplo 840 × 1400 px), con el logo en el centro y que ocupe como mucho el 60 % del ancho, rodeado del mismo color de fondo.
+
+**Foto distinta para celular en la tarjeta de la lista (opcional):** en pantallas de hasta 600 px la tarjeta pasa a una sola columna y la foto se ve entera, con su proporción original. Si la foto principal es muy vertical (como la de un logo), se puede sumar en los datos de la mipyme `productoImagenMovil: "./assets/img/<carpeta>/foto-movil.jpg"` (por ejemplo una versión cuadrada): en esas pantallas se usa esa foto y en las demás la principal. La portada rotativa siempre usa la principal. Las mipymes que no tienen este campo no cambian en nada.
+
+**Encuadre de las fotos del carrusel de cada ficha:** el marco mide 900 × 540 px en escritorio, 690 × 450 en tablet y 350 × 330 en celular, y la foto se recorta al centro para llenarlo. Si la foto es de personas, conviene recortarla antes con una proporción de unos **1,6 : 1** (por ejemplo 1300 × 800 px), con las caras en el tercio de arriba y dejando un margen sobre la cabeza. Las caras tienen que quedar hacia el centro de la foto (no pegadas a los costados), porque en celular se recortan los lados. La foto principal (`productoImagen`) se ve en la tarjeta de la lista y en la portada, con otros marcos: para personas funciona bien una foto casi cuadrada.
+
+
 ---
 
 ## Publicidad (banners GIF)
@@ -287,3 +294,23 @@ Una lista de nombres de mipymes que **no pagaron** por aparecer, agrupadas por r
 
 **Después de cargar mipymes**, corré `node tools/generar-seo.js`: además del sitemap, actualiza la versión de la guía "sin JavaScript" (la que leen algunos buscadores).
 
+
+---
+
+## Mipyme verificada (la palomita azul)
+
+Un sello azul con tilde, como el de las redes sociales, que identifica a las **mipymes que pagaron por estar destacadas**.
+
+**La regla:**
+- **Toda mipyme que está en `js/mipymes-data.js` (las destacadas) lleva la palomita**, sin hacer nada. En su bloque figura `verificada: true`, y si te olvidás de la línea, también la lleva.
+- Si alguna vez una destacada **no** debe llevarla, se escribe `verificada: false`.
+- **En la guía de mipymes**, una fila lleva la palomita cuando esa mipyme también está en destacadas (se comparan los **nombres**, sin importar mayúsculas, tildes ni espacios de más). Las que están **solo en la guía** (la lista gratuita) **nunca** la llevan, aunque se escriba `verificada: true` en su línea.
+- **Las destacadas entran solas a la guía:** si una destacada todavía no está cargada en `js/directorio-data.js`, aparece igual, con su palomita y el link de su Instagram (o su WhatsApp si no tiene). No hace falta cargarla dos veces. Se ubica en el rubro que diga la tabla `DIRECTORIO_EQUIVALENCIAS_RUBRO` de `js/directorio-data.js` (por ejemplo, "Servicios contables empresariales" → "Servicios contables"), o en un rubro con el nombre de su categoría. Una destacada puede traer `rubroGuia: "..."` para elegir el rubro. Para que **no** entren solas: `incluirDestacadas: false` en `DIRECTORIO_CONFIG`.
+
+**Dónde aparece (sola, junto al nombre):** la portada rotativa, las tarjetas de "Mipymes destacadas", la ficha de la mipyme y la guía de mipymes (también al buscar o filtrar).
+
+**Globo de ayuda:** al pasar el mouse (o al tocarla, o llegar con el teclado) dice «Mipyme verificada por Infonegocios». Para cambiar ese texto, agregá en `js/config.js`: `textoMipymeVerificada: "tu texto",`. Los lectores de pantalla la leen como «Mipyme verificada».
+
+**Dónde está el diseño:** el dibujo y la lógica, en `js/verificada.js`; los colores y el tamaño, al final de `css/styles.css` (bloque `PALOMITA DE "MIPYME VERIFICADA"`, variables `--verif-fondo` y `--verif-tilde`). Se cambia en un solo lugar y vale para los cuatro sitios. La regla de la guía, en `js/directorio-enlaces.js`.
+
+**Importante:** "verificada" le dice al público que alguien comprobó que el negocio es real. Conviene definir qué se revisa antes de dar la palomita (por ejemplo, Cédula Mipyme y contacto comprobado) y mantenerlo.
