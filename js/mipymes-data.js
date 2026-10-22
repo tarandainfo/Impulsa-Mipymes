@@ -93,7 +93,47 @@ const MIPYMES_DATA = [
     },
 
     {
-        nombre: "Fátima Sosa Organización y ambientación de eventos ",
+        nombre: "Eventos Paraguay",
+        categoria: "Servicios para eventos",
+        verificada: true,
+
+        descripcion:
+            "Empresa especializada en producción técnica y equipamiento integral para eventos, con servicios de pantallas LED, sonido, iluminación profesional, streaming, montaje de escenarios, mobiliario y traducción simultánea.",
+
+        descripcionLarga: [
+            "Eventos Paraguay, fundada por Leonora Delvalle, es una empresa paraguaya dedicada a la producción técnica y al equipamiento integral para eventos corporativos, congresos, ferias, exposiciones, espectáculos y acontecimientos sociales. Su propuesta consiste en brindar soluciones adaptadas a las necesidades de cada proyecto, ofreciendo tecnología y equipamiento para garantizar el desarrollo de eventos profesionales.",
+            "A lo largo de su trayectoria, la empresa ha invertido en tecnología, pantallas LED, equipos de sonido, iluminación profesional y mobiliario para ampliar su capacidad operativa y mejorar la calidad de sus servicios. Con la mirada puesta en el futuro, busca consolidarse como referente en el sector de eventos en Paraguay, incorporando nuevas tecnologías, ampliando su oferta y fortaleciendo sus vínculos con empresas e instituciones."
+        ],
+
+        ubicacion: "Asunción, Paraguay",
+
+        whatsapp: "595992489504",
+
+        instagram: "https://www.instagram.com/eventosparaguay_/",
+
+        productoImagen:
+            "./assets/img/eventos-paraguay/principal.jpeg",
+
+        perfilImagen:
+            "./assets/img/eventos-paraguay/foto-perfil.jpeg",
+
+        fotosCarrusel: [
+            "./assets/img/eventos-paraguay/foto-1.jpg",
+            "./assets/img/eventos-paraguay/foto-2.jpg",
+            "./assets/img/eventos-paraguay/foto-3.jpg",
+            "./assets/img/eventos-paraguay/foto-4.jpg",
+            "./assets/img/eventos-paraguay/foto-5.jpg"
+        ],
+
+        promocion:
+            "Consultá por los servicios disponibles.",
+
+        notaPeriodistica: ""
+
+    },
+    
+    {
+        nombre: "Fátima Sosa Organización y ambientación de eventos",
         categoria: "Organización de eventos",
         verificada: true,
 
