@@ -314,3 +314,35 @@ Un sello azul con tilde, como el de las redes sociales, que identifica a las **m
 **Dónde está el diseño:** el dibujo y la lógica, en `js/verificada.js`; los colores y el tamaño, al final de `css/styles.css` (bloque `PALOMITA DE "MIPYME VERIFICADA"`, variables `--verif-fondo` y `--verif-tilde`). Se cambia en un solo lugar y vale para los cuatro sitios. La regla de la guía, en `js/directorio-enlaces.js`.
 
 **Importante:** "verificada" le dice al público que alguien comprobó que el negocio es real. Conviene definir qué se revisa antes de dar la palomita (por ejemplo, Cédula Mipyme y contacto comprobado) y mantenerlo.
+
+
+---
+
+## Orden de las mipymes destacadas (turnos parejos)
+
+Las mipymes de "Mipymes destacadas" **rotan por turnos**: cada día todas se corren un lugar hacia arriba y la que estaba primera pasa al final. Con 10 mipymes y 3 por página, cada una está en la primera página 3 de cada 10 días, y a lo largo de 10 días pasa exactamente una vez por cada posición. Es un reparto exacto, sin suerte de por medio.
+
+**Cómo funciona:**
+- **El día cambia a las 00:00 de Paraguay**, sin importar desde dónde se mire la web.
+- **Todos los visitantes ven el mismo orden durante todo el día.**
+- **El orden no cambia mientras alguien está mirando:** se calcula al abrir la página, por eso la página 2 siempre sigue a la 1 (aunque pase la medianoche con la página abierta).
+- **El orden base es el de `js/mipymes-data.js`.** El día de inicio abre la primera de esa lista, al día siguiente la segunda, y así.
+- **La portada rotativa** arranca con la mipyme que quedó primera ese día y recorre el mismo orden.
+- **No rotan:** la guía de mipymes (sigue de la A a la Z), el color de cada categoría ni la lista de mipymes que lee Google.
+
+**Ajustes (opcionales), en `js/config.js`:**
+
+    ordenDestacadas: "manual",      // vuelve al orden fijo de mipymes-data.js
+    ordenInicio: "2026-11-02",      // el día en que abre la primera de la lista (por defecto, el 2 de noviembre de 2026)
+
+**Para ver cómo queda otro día** (sirve para mostrarle a una mipyme cuándo va a salir primera), agregá a la dirección de la web:
+
+    ?orden=2026-11-05      → el orden de ese día
+    ?orden=manual          → el orden fijo de mipymes-data.js
+
+Solo lo ve quien escribe la dirección: no cambia nada para el público.
+
+**Al agregar o sacar una mipyme:** la vuelta completa pasa a tener otra cantidad de días (por ejemplo, 11 en vez de 10) y el orden de ese día se reacomoda. A partir de ahí el reparto vuelve a ser exacto en cada vuelta. Una mipyme nueva se agrega al final de `mipymes-data.js` y entra sola a los turnos.
+
+**Qué no hace:** no ordena por clics ni por plan de pago. Si más adelante se quiere dar más presencia a algún plan, se puede hacer con turnos (por ejemplo, que entre dos veces por vuelta) y no con sorteo, para que el reparto siga siendo previsible.
+
