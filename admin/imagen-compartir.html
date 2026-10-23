@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es-PY">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+
+    <title>Imagen para compartir | Impulsa Mipymes</title>
+
+    <link rel="icon" href="../favicon.ico" sizes="any">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+
+    <style>
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 40px 20px 80px;
+            background: #F5F6F8;
+            color: #0B0D12;
+            font-family: 'Manrope', Arial, sans-serif;
+            line-height: 1.5;
+        }
+
+        .caja { max-width: 860px; margin: 0 auto; }
+
+        h1 { margin: 0 0 6px; font-size: 1.9rem; letter-spacing: -0.03em; }
+
+        .bajada { margin: 0 0 28px; color: #485063; max-width: 640px; }
+
+        .tarjeta {
+            background: #fff;
+            border: 1px solid #E3E6EC;
+            border-radius: 18px;
+            padding: 26px;
+            margin-bottom: 20px;
+        }
+
+        label { display: block; margin-bottom: 6px; font-size: 0.85rem; font-weight: 700; }
+
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid #D3D8E2;
+            border-radius: 12px;
+            background: #fff;
+            color: inherit;
+            font: inherit;
+        }
+
+        canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin-top: 20px;
+            border-radius: 14px;
+            border: 1px solid #E3E6EC;
+            background: #07080C;
+        }
+
+        .acciones { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 18px; }
+
+        button {
+            padding: 12px 20px;
+            border: 0;
+            border-radius: 12px;
+            background: #0B0D12;
+            color: #fff;
+            font: 700 0.95rem inherit;
+            font-family: inherit;
+            cursor: pointer;
+        }
+
+        button.suave { background: #EEF1F6; color: #0B0D12; }
+
+        button:disabled { opacity: 0.45; cursor: not-allowed; }
+
+        .peso { color: #485063; font-size: 0.88rem; }
+
+        .peso.mal { color: #B3261E; font-weight: 700; }
+
+        .pasos { margin: 0; padding-left: 20px; color: #485063; }
+
+        .pasos li { margin-bottom: 6px; }
+
+        code { padding: 2px 6px; border-radius: 6px; background: #EEF1F6; font-size: 0.9em; }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="caja">
+
+        <h1>Imagen para compartir</h1>
+
+        <p class="bajada">
+            Crea la imagen que aparece en WhatsApp, Facebook y X cuando alguien comparte el link de una mipyme
+            (1200 × 630 píxeles, con su foto, su nombre, su rubro y su ciudad).
+        </p>
+
+        <div class="tarjeta">
+
+            <label for="mipyme">Mipyme</label>
+            <select id="mipyme"></select>
+
+            <canvas id="lienzo" width="1200" height="630" role="img" aria-label="Vista previa de la imagen para compartir"></canvas>
+
+            <div class="acciones">
+                <button type="button" id="descargar">Descargar esta imagen</button>
+                <button type="button" id="descargar-todas" class="suave">Descargar las de todas</button>
+                <span class="peso" id="peso" role="status" aria-live="polite"></span>
+            </div>
+
+        </div>
+
+        <div class="tarjeta">
+
+            <strong>Qué hacer con la imagen</strong>
+
+            <ol class="pasos">
+                <li>Guardala dentro de la carpeta <code>assets/og/</code>, con el nombre exacto con el que se descarga (por ejemplo <code>eventos-paraguay.jpg</code>).</li>
+                <li>Corré <code>node tools/generar-seo.js</code>.</li>
+                <li>Subí los cambios. Desde ese momento, el link de esa mipyme muestra su imagen en WhatsApp.</li>
+            </ol>
+
+            <p class="peso">Tiene que pesar menos de 300 KB para que WhatsApp la muestre siempre. Esta herramienta la comprime sola para lograrlo.</p>
+
+        </div>
+
+    </div>
+
+    <script src="../js/config.js"></script>
+    <script src="../js/verificada.js"></script>
+    <script src="../js/mipymes-data.js"></script>
+
+    <script>
+        (function () {
+
+            "use strict";
+
+            const ANCHO = 1200;
+            const ALTO = 630;
+            const MAXIMO_KB = 300;
+
+            // Colores: los mismos de la imagen general del sitio
+            const FONDO = "#07080C";
+            const CELESTE = "#68D0F8";
+            const ROJO = "#E02018";
+            const GRIS = "#A7B0C5";
+            const BLANCO = "#F8F8F8";
+
+            const lienzo = document.getElementById("lienzo");
+            const ctx = lienzo.getContext("2d");
+            const selector = document.getElementById("mipyme");
+            const pesoEl = document.getElementById("peso");
+
+            const mipymes = (typeof MIPYMES_DATA !== "undefined") ? MIPYMES_DATA : [];
+
+            function crearSlug(texto) {
+
+                return String(texto).normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim()
+                    .replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+            }
+
+            // Las imágenes se leen desde la raíz del sitio (esta página está dentro de /admin/)
+            function cargarImagen(ruta) {
+
+                return new Promise(function (resolver) {
+
+                    const img = new Image();
+
+                    img.onload = function () { resolver(img); };
+                    img.onerror = function () { resolver(null); };
+                    img.src = "../" + String(ruta || "").replace(/^\.\//, "");
+
+                });
+
+            }
+
+            // Los dibujos de la palomita salen de js/verificada.js (un solo diseño en todo el sitio)
+            function dibujosPalomita() {
+
+                if (!window.Verificada) return null;
+
+                const html = window.Verificada.html(false);
+                const fondo = (html.match(/class="verif-fondo" d="([^"]+)"/) || [])[1];
+                const tilde = (html.match(/class="verif-tilde" d="([^"]+)"/) || [])[1];
+
+                return fondo && tilde ? { fondo: new Path2D(fondo), tilde: new Path2D(tilde) } : null;
+
+            }
+
+            function rectRedondeado(x, y, w, h, r) {
+
+                ctx.beginPath();
+                ctx.moveTo(x + r, y);
+                ctx.arcTo(x + w, y, x + w, y + h, r);
+                ctx.arcTo(x + w, y + h, x, y + h, r);
+                ctx.arcTo(x, y + h, x, y, r);
+                ctx.arcTo(x, y, x + w, y, r);
+                ctx.closePath();
+
+            }
+
+            // Dibuja una foto llenando el rectángulo (recortando lo que sobre, desde el centro)
+            function fotoLlenando(img, x, y, w, h) {
+
+                const escala = Math.max(w / img.width, h / img.height);
+                const dw = img.width * escala;
+                const dh = img.height * escala;
+
+                ctx.drawImage(img, x + (w - dw) / 2, y + (h - dh) / 2, dw, dh);
+
+            }
+
+            // Parte un texto en líneas que entren en "ancho"
+            function lineas(texto, ancho) {
+
+                const palabras = texto.split(/\s+/);
+                const resultado = [];
+                let actual = "";
+
+                palabras.forEach(function (p) {
+
+                    const prueba = actual ? actual + " " + p : p;
+
+                    if (ctx.measureText(prueba).width <= ancho || !actual) {
+                        actual = prueba;
+                    } else {
+                        resultado.push(actual);
+                        actual = p;
+                    }
+
+                });
+
+                if (actual) resultado.push(actual);
+
+                return resultado;
+
+            }
+
+            async function dibujar(m) {
+
+                // las tipografías de la página tienen que estar listas antes de dibujar
+                await Promise.all([
+                    document.fonts.load('800 60px Manrope'),
+                    document.fonts.load('700 24px Manrope'),
+                    document.fonts.load('600 20px "JetBrains Mono"'),
+                    document.fonts.load('500 22px "JetBrains Mono"')
+                ]).catch(function () { /* se usa la tipografía de reemplazo */ });
+
+                const [logo, foto] = await Promise.all([
+                    cargarImagen("assets/img/logo-infonegocios-footer.png"),
+                    cargarImagen(m.productoImagen)
+                ]);
+
+                // ----- fondo, con una grilla de puntitos -----
+                ctx.clearRect(0, 0, ANCHO, ALTO);
+                ctx.fillStyle = FONDO;
+                ctx.fillRect(0, 0, ANCHO, ALTO);
+
+                ctx.fillStyle = "rgba(255,255,255,0.055)";
+
+                for (let y = 14; y < ALTO; y += 28) {
+                    for (let x = 14; x < ANCHO; x += 28) ctx.fillRect(x, y, 2, 2);
+                }
+
+                // ----- la foto de la mipyme, a la derecha -----
+                const fx = 700, fy = 58, fw = 440, fh = 514;
+
+                ctx.save();
+                rectRedondeado(fx, fy, fw, fh, 30);
+                ctx.clip();
+
+                if (foto) {
+                    fotoLlenando(foto, fx, fy, fw, fh);
+                } else {
+                    ctx.fillStyle = "#151822";
+                    ctx.fillRect(fx, fy, fw, fh);
+                }
+
+                ctx.restore();
+
+                ctx.lineWidth = 2;
+                ctx.strokeStyle = "rgba(255,255,255,0.16)";
+                rectRedondeado(fx, fy, fw, fh, 30);
+                ctx.stroke();
+
+                // ----- logo -----
+                if (logo) ctx.drawImage(logo, 66, 46, 200, 200 * logo.height / logo.width);
+
+                // ----- rubro -----
+                ctx.textBaseline = "alphabetic";
+                ctx.fillStyle = CELESTE;
+                ctx.font = '600 21px "JetBrains Mono", ui-monospace, monospace';
+
+                if ("letterSpacing" in ctx) ctx.letterSpacing = "2.5px";
+
+                ctx.fillText(String(m.categoria || "").toUpperCase().slice(0, 44), 72, 232);
+
+                if ("letterSpacing" in ctx) ctx.letterSpacing = "0px";
+
+                // ----- nombre (se achica hasta que entre en 3 renglones) -----
+                const nombre = String(m.nombre).trim().replace(/\s+/g, " ");
+                const anchoNombre = 590;
+                const arriba = 262;
+                const LIMITE_NOMBRE = 405;     // el nombre no puede bajar de acá: abajo van la ciudad y la palomita
+                let tamano = 68;
+                let renglones;
+
+                // Se usa el tamaño más grande con el que el nombre entre en 3 renglones como máximo
+                // y sin invadir el espacio de la ciudad y de la palomita
+                for (; tamano >= 38; tamano -= 2) {
+
+                    ctx.font = '800 ' + tamano + 'px Manrope, Arial, sans-serif';
+                    renglones = lineas(nombre, anchoNombre);
+
+                    const fin = arriba + tamano * 0.9 + (renglones.length - 1) * Math.round(tamano * 1.1);
+
+                    if (renglones.length <= 3 && fin <= LIMITE_NOMBRE) break;
+
+                }
+
+                ctx.fillStyle = BLANCO;
+
+                const alturaLinea = Math.round(tamano * 1.1);
+
+                renglones.slice(0, 3).forEach(function (r, i) {
+                    ctx.fillText(r, 70, arriba + tamano * 0.9 + i * alturaLinea);
+                });
+
+                const finNombre = arriba + tamano * 0.9 + (Math.min(renglones.length, 3) - 1) * alturaLinea;
+
+                // ----- ubicación -----
+                ctx.fillStyle = GRIS;
+                ctx.font = '500 23px "JetBrains Mono", ui-monospace, monospace';
+                ctx.fillText(String(m.ubicacion || "").trim().slice(0, 40), 72, finNombre + 46);
+
+                // ----- palomita de mipyme verificada -----
+                const verificada = window.Verificada && window.Verificada.esVerificada(m);
+                const dibujos = verificada ? dibujosPalomita() : null;
+
+                if (dibujos) {
+
+                    const lado = 38;
+
+                    ctx.save();
+                    ctx.translate(72, 482);
+                    ctx.scale(lado / 24, lado / 24);
+                    ctx.fillStyle = "#2FA0F2";
+                    ctx.fill(dibujos.fondo);
+                    ctx.strokeStyle = "#FFFFFF";
+                    ctx.lineWidth = 2.2;
+                    ctx.lineCap = "round";
+                    ctx.lineJoin = "round";
+                    ctx.stroke(dibujos.tilde);
+                    ctx.restore();
+
+                    ctx.fillStyle = BLANCO;
+                    ctx.font = '700 22px Manrope, Arial, sans-serif';
+                    ctx.fillText("Mipyme verificada por Infonegocios", 122, 510);
+
+                }
+
+                // ----- dirección del sitio -----
+                ctx.fillStyle = ROJO;
+                ctx.fillRect(72, 569, 30, 4);
+
+                ctx.font = '500 23px "JetBrains Mono", ui-monospace, monospace';
+                ctx.fillText("impulsamipymes.com.py", 118, 580);
+
+                return lienzo;
+
+            }
+
+            // JPEG de menos de 300 KB: se baja la calidad hasta que entre
+            function aJpeg() {
+
+                return new Promise(function (resolver) {
+
+                    let calidad = 0.9;
+
+                    (function probar() {
+
+                        lienzo.toBlob(function (blob) {
+
+                            if (blob.size / 1024 > MAXIMO_KB && calidad > 0.55) {
+                                calidad -= 0.05;
+                                probar();
+                                return;
+                            }
+
+                            resolver({ blob: blob, calidad: calidad });
+
+                        }, "image/jpeg", calidad);
+
+                    })();
+
+                });
+
+            }
+
+            async function mostrar() {
+
+                const m = mipymes[Number(selector.value)];
+
+                if (!m) return;
+
+                await dibujar(m);
+
+                const jpeg = await aJpeg();
+                const kb = Math.round(jpeg.blob.size / 1024);
+
+                pesoEl.textContent = "Pesa " + kb + " KB";
+                pesoEl.className = "peso" + (kb > MAXIMO_KB ? " mal" : "");
+
+            }
+
+            function descargar(blob, nombreArchivo) {
+
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement("a");
+
+                a.href = url;
+                a.download = nombreArchivo;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+
+                setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+
+            }
+
+            mipymes.forEach(function (m, i) {
+
+                const o = document.createElement("option");
+
+                o.value = i;
+                o.textContent = String(m.nombre).trim() + "  (" + crearSlug(m.nombre) + ".jpg)";
+                selector.appendChild(o);
+
+            });
+
+            selector.addEventListener("change", mostrar);
+
+            document.getElementById("descargar").addEventListener("click", async function () {
+
+                await mostrar();
+
+                const m = mipymes[Number(selector.value)];
+                const jpeg = await aJpeg();
+
+                descargar(jpeg.blob, crearSlug(m.nombre) + ".jpg");
+
+            });
+
+            document.getElementById("descargar-todas").addEventListener("click", async function () {
+
+                for (let i = 0; i < mipymes.length; i++) {
+
+                    selector.value = i;
+                    await dibujar(mipymes[i]);
+
+                    const jpeg = await aJpeg();
+
+                    descargar(jpeg.blob, crearSlug(mipymes[i].nombre) + ".jpg");
+
+                    // una pausa corta, para que el navegador no bloquee las descargas seguidas
+                    await new Promise(function (r) { setTimeout(r, 450); });
+
+                }
+
+                await mostrar();
+
+            });
+
+            if (mipymes.length) {
+                mostrar();
+            } else {
+                pesoEl.textContent = "No hay mipymes cargadas en js/mipymes-data.js.";
+            }
+
+            // para poder probar la herramienta
+            window.ImagenCompartir = {
+                cantidad: mipymes.length,
+                dibujar: async function (i) { selector.value = i; await dibujar(mipymes[i]); const j = await aJpeg(); return { blob: j.blob, nombre: crearSlug(mipymes[i].nombre) + ".jpg" }; }
+            };
+
+        })();
+    </script>
+
+</body>
+
+</html>

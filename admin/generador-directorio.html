@@ -151,6 +151,13 @@
 
             </div>
 
+            <div class="campo">
+                <label for="ciudad">Ciudad (opcional)</label>
+                <input id="ciudad" type="text" maxlength="60" autocomplete="off" list="lista-ciudades" placeholder="Ej.: Asunción">
+                <datalist id="lista-ciudades"></datalist>
+                <p class="ayuda">Sirve para que la encuentren con el filtro por ciudad y para que aparezca en la página de su ciudad. Si la dejás vacía, igual aparece en la guía.</p>
+            </div>
+
             <div class="campo" id="campo-rubro-nuevo" hidden>
                 <label for="rubro-nuevo">Nombre del rubro nuevo</label>
                 <input id="rubro-nuevo" type="text" maxlength="60" autocomplete="off" placeholder="Ej.: Turismo">
@@ -199,6 +206,7 @@
 
     <script src="../js/directorio-enlaces.js"></script>
     <script src="../js/directorio-data.js"></script>
+    <script src="../js/mipymes-data.js"></script>
 
     <script>
         (function () {
@@ -213,6 +221,7 @@
                 rubroNuevo: document.getElementById("rubro-nuevo"),
                 campoRubroNuevo: document.getElementById("campo-rubro-nuevo"),
                 red: document.getElementById("red"),
+                ciudad: document.getElementById("ciudad"),
                 dato: document.getElementById("dato"),
                 etiqueta: document.getElementById("etiqueta-dato"),
                 ayuda: document.getElementById("ayuda-dato"),
@@ -225,6 +234,22 @@
             };
 
             const lineas = [];
+
+            // Ciudades que se sugieren: las de las mipymes ya cargadas (para escribirlas siempre igual)
+            const ciudadesConocidas = [];
+
+            if (typeof MIPYMES_DATA !== "undefined") {
+                MIPYMES_DATA.forEach(function (m) {
+                    const c = ENLACES.ciudadDeUbicacion(m.ubicacion);
+                    if (c && ciudadesConocidas.indexOf(c) < 0) ciudadesConocidas.push(c);
+                });
+            }
+
+            ciudadesConocidas.sort(function (a, b) { return a.localeCompare(b, "es"); }).forEach(function (c) {
+                const o = document.createElement("option");
+                o.value = c;
+                document.getElementById("lista-ciudades").appendChild(o);
+            });
 
             // Rubros: los de js/directorio-data.js + la opción de escribir uno nuevo
             const rubros = (typeof DIRECTORIO_RUBROS !== "undefined") ? DIRECTORIO_RUBROS : [];
@@ -262,6 +287,9 @@
                 const red = campos.red.value;
                 const dato = campos.dato.value.trim();
                 const entrada = { nombre: campos.nombre.value.trim().replace(/\s+/g, " "), rubro: rubroElegido(), red: red };
+                const ciudad = campos.ciudad.value.trim().replace(/\s+/g, " ");
+
+                if (ciudad) entrada.ciudad = ciudad;
 
                 // Si pegaron un link entero, se guarda como link
                 if (red === "web" || /^https?:\/\//i.test(dato)) {
@@ -330,9 +358,12 @@
 
                 const partes = [
                     "nombre: " + JSON.stringify(e.nombre),
-                    "rubro: " + JSON.stringify(e.rubro),
-                    "red: " + JSON.stringify(e.red)
+                    "rubro: " + JSON.stringify(e.rubro)
                 ];
+
+                if (e.ciudad) partes.push("ciudad: " + JSON.stringify(e.ciudad));
+
+                partes.push("red: " + JSON.stringify(e.red));
 
                 if (e.link) partes.push("link: " + JSON.stringify(e.link));
                 else partes.push("usuario: " + JSON.stringify(e.usuario));
@@ -351,7 +382,7 @@
 
             ["input", "change"].forEach(function (ev) {
 
-                [campos.nombre, campos.rubro, campos.rubroNuevo, campos.red, campos.dato].forEach(function (c) {
+                [campos.nombre, campos.rubro, campos.rubroNuevo, campos.red, campos.ciudad, campos.dato].forEach(function (c) {
                     c.addEventListener(ev, actualizar);
                 });
 
@@ -363,6 +394,7 @@
                 pintarSalida();
 
                 campos.nombre.value = "";
+                campos.ciudad.value = "";
                 campos.dato.value = "";
                 actualizar();
                 campos.nombre.focus();

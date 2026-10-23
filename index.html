@@ -114,7 +114,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/styles.css?v=20261030-verificada">
+    <link rel="stylesheet" href="./css/styles.css?v=20261110-buscador">
 </head>
 
 <body>
@@ -331,6 +331,48 @@
 
                 </div>
 
+
+                <!-- =========================
+                     BUSCADOR GENERAL
+                     Búsqueda de texto + filtro por rubro y por ciudad. La misma búsqueda
+                     filtra las destacadas de abajo y la guía de mipymes (js/buscador.js).
+                     El bloque "Explorar" lo arma tools/generar-seo.js.
+                ========================== -->
+
+                <div class="buscador" id="buscador" role="search" aria-label="Buscar mipymes">
+
+                    <div class="buscador-fila">
+
+                        <label class="buscador-caja">
+                            <span class="vh">Buscar una mipyme por nombre, rubro o ciudad</span>
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+                            <input type="search" id="buscador-q" placeholder="Buscá una mipyme, un rubro o una ciudad…" autocomplete="off" maxlength="80">
+                        </label>
+
+                        <label class="buscador-sel">
+                            <span class="vh">Filtrar por rubro</span>
+                            <select id="buscador-rubro"><option value="">Todos los rubros</option></select>
+                        </label>
+
+                        <label class="buscador-sel">
+                            <span class="vh">Filtrar por ciudad</span>
+                            <select id="buscador-ciudad"><option value="">Todas las ciudades</option></select>
+                        </label>
+
+                        <button type="button" id="buscador-limpiar" class="buscador-limpiar" hidden>Limpiar</button>
+
+                    </div>
+
+                    <p class="buscador-estado" id="buscador-estado" role="status" aria-live="polite"></p>
+
+                    <!-- SEO:EXPLORAR-INICIO -->
+                    <nav class="buscador-explorar" aria-label="Explorar por rubro y por ciudad">
+                        <p><strong>Por rubro</strong> <a href="rubros/gastronomia/">Gastronomía</a> <a href="rubros/moda-y-diseno/">Moda y diseño</a> <a href="rubros/decoracion-y-productos-para-exteriores/">Decoración y productos para exteriores</a> <a href="rubros/servicios-audiovisuales/">Servicios audiovisuales</a> <a href="rubros/servicios-contables/">Servicios contables</a> <a href="rubros/organizacion-de-eventos/">Organización de eventos</a> <a href="rubros/consultoria/">Consultoría</a> <a href="rubros/servicios-para-eventos/">Servicios para eventos</a></p>
+                        <p><strong>Por ciudad</strong> <a href="ciudades/asuncion/">Asunción</a> <a href="ciudades/hernandarias/">Hernandarias</a> <a href="ciudades/san-lorenzo/">San Lorenzo</a></p>
+                    </nav>
+                    <!-- SEO:EXPLORAR-FIN -->
+
+                </div>
 
                 <div class="content-grid">
 
@@ -807,17 +849,17 @@
             <section class="container" style="padding: 40px 0;">
                 <h2>Mipymes de Paraguay</h2>
                 <ul>
-                    <li><a href="ficha.html?mipyme=baez-maldonado-y-bolla-consulting">Báez Maldonado y Bolla Consulting</a> — Consultoría · Asunción, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=eventos-paraguay">Eventos Paraguay</a> — Servicios para eventos · Asunción, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=fatima-sosa-organizacion-y-ambientacion-de-eventos">Fátima Sosa Organización y ambientación de eventos</a> — Organización de eventos · Asunción, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=ag-organizacion-contable">AG Organización Contable</a> — Servicios contables empresariales · Hernandarias, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=hey">Hey</a> — Moda y diseño · Asunción, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=ruben-cardus-fotografia">Rubén Cardus Fotografía</a> — Servicios audiovisuales · Asunción, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=che-reta-resto-cafe">Che Retã Resto Café</a> — Gastronomía · Asunción, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=el-fogon-del-patio">El Fogón del Patio</a> — Decoración y productos para exteriores · Asunción, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=map-crochet">MAP Crochet</a> — Moda y diseño · Asunción, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=creaciones-pascuala">Creaciones Pascuala</a> — Moda y diseño · San Lorenzo, Paraguay</li>
-                    <li><a href="ficha.html?mipyme=pedacitos-de-luna">Pedacitos de Luna</a> — Gastronomía · Asunción, Paraguay</li>
+                    <li><a href="mipymes/baez-maldonado-y-bolla-consulting/">Báez Maldonado y Bolla Consulting</a> — Consultoría · Asunción, Paraguay</li>
+                    <li><a href="mipymes/eventos-paraguay/">Eventos Paraguay</a> — Servicios para eventos · Asunción, Paraguay</li>
+                    <li><a href="mipymes/fatima-sosa-organizacion-y-ambientacion-de-eventos/">Fátima Sosa Organización y ambientación de eventos</a> — Organización de eventos · Asunción, Paraguay</li>
+                    <li><a href="mipymes/ag-organizacion-contable/">AG Organización Contable</a> — Servicios contables empresariales · Hernandarias, Paraguay</li>
+                    <li><a href="mipymes/hey/">Hey</a> — Moda y diseño · Asunción, Paraguay</li>
+                    <li><a href="mipymes/ruben-cardus-fotografia/">Rubén Cardus Fotografía</a> — Servicios audiovisuales · Asunción, Paraguay</li>
+                    <li><a href="mipymes/che-reta-resto-cafe/">Che Retã Resto Café</a> — Gastronomía · Asunción, Paraguay</li>
+                    <li><a href="mipymes/el-fogon-del-patio/">El Fogón del Patio</a> — Decoración y productos para exteriores · Asunción, Paraguay</li>
+                    <li><a href="mipymes/map-crochet/">MAP Crochet</a> — Moda y diseño · Asunción, Paraguay</li>
+                    <li><a href="mipymes/creaciones-pascuala/">Creaciones Pascuala</a> — Moda y diseño · San Lorenzo, Paraguay</li>
+                    <li><a href="mipymes/pedacitos-de-luna/">Pedacitos de Luna</a> — Gastronomía · Asunción, Paraguay</li>
                 </ul>
                 <p>Activá JavaScript para ver el sitio completo.</p>
             </section>
@@ -831,38 +873,38 @@
                 <div>
                     <h3>Gastronomía</h3>
                     <ul>
-                        <li><a href="https://www.instagram.com/cheretacafe_/" target="_blank" rel="nofollow noopener noreferrer">Che Retã Resto Café</a> (mipyme verificada) — Instagram</li>
-                        <li><a href="https://www.instagram.com/pedacitos_de_luna__/" target="_blank" rel="nofollow noopener noreferrer">Pedacitos de Luna</a> (mipyme verificada) — Instagram</li>
+                        <li><a href="https://www.instagram.com/cheretacafe_/" target="_blank" rel="nofollow noopener noreferrer">Che Retã Resto Café</a> (mipyme verificada) — Asunción — Instagram</li>
+                        <li><a href="https://www.instagram.com/pedacitos_de_luna__/" target="_blank" rel="nofollow noopener noreferrer">Pedacitos de Luna</a> (mipyme verificada) — Asunción — Instagram</li>
                     </ul>
                     <h3>Moda y diseño</h3>
                     <ul>
-                        <li><a href="https://www.instagram.com/creacionesdepascuala/" target="_blank" rel="nofollow noopener noreferrer">Creaciones Pascuala</a> (mipyme verificada) — Instagram</li>
-                        <li><a href="https://www.instagram.com/hey.megusta/" target="_blank" rel="nofollow noopener noreferrer">Hey</a> (mipyme verificada) — Instagram</li>
-                        <li><a href="https://www.instagram.com/map_crochet/" target="_blank" rel="nofollow noopener noreferrer">MAP Crochet</a> (mipyme verificada) — Instagram</li>
+                        <li><a href="https://www.instagram.com/creacionesdepascuala/" target="_blank" rel="nofollow noopener noreferrer">Creaciones Pascuala</a> (mipyme verificada) — San Lorenzo — Instagram</li>
+                        <li><a href="https://www.instagram.com/hey.megusta/" target="_blank" rel="nofollow noopener noreferrer">Hey</a> (mipyme verificada) — Asunción — Instagram</li>
+                        <li><a href="https://www.instagram.com/map_crochet/" target="_blank" rel="nofollow noopener noreferrer">MAP Crochet</a> (mipyme verificada) — Asunción — Instagram</li>
                     </ul>
                     <h3>Decoración y productos para exteriores</h3>
                     <ul>
-                        <li><a href="https://www.instagram.com/elfogondelpatio/" target="_blank" rel="nofollow noopener noreferrer">El Fogón del Patio</a> (mipyme verificada) — Instagram</li>
+                        <li><a href="https://www.instagram.com/elfogondelpatio/" target="_blank" rel="nofollow noopener noreferrer">El Fogón del Patio</a> (mipyme verificada) — Asunción — Instagram</li>
                     </ul>
                     <h3>Servicios audiovisuales</h3>
                     <ul>
-                        <li><a href="https://www.instagram.com/rubencardusfotografo/" target="_blank" rel="nofollow noopener noreferrer">Rubén Cardus Fotografía</a> (mipyme verificada) — Instagram</li>
+                        <li><a href="https://www.instagram.com/rubencardusfotografo/" target="_blank" rel="nofollow noopener noreferrer">Rubén Cardus Fotografía</a> (mipyme verificada) — Asunción — Instagram</li>
                     </ul>
                     <h3>Servicios contables</h3>
                     <ul>
-                        <li><a href="https://www.instagram.com/agorganizacioncontable/" target="_blank" rel="nofollow noopener noreferrer">AG Organización Contable</a> (mipyme verificada) — Instagram</li>
+                        <li><a href="https://www.instagram.com/agorganizacioncontable/" target="_blank" rel="nofollow noopener noreferrer">AG Organización Contable</a> (mipyme verificada) — Hernandarias — Instagram</li>
                     </ul>
                     <h3>Organización de eventos</h3>
                     <ul>
-                        <li><a href="https://www.instagram.com/fatimasosaeventos/" target="_blank" rel="nofollow noopener noreferrer">Fátima Sosa Organización y ambientación de eventos</a> (mipyme verificada) — Instagram</li>
+                        <li><a href="https://www.instagram.com/fatimasosaeventos/" target="_blank" rel="nofollow noopener noreferrer">Fátima Sosa Organización y ambientación de eventos</a> (mipyme verificada) — Asunción — Instagram</li>
                     </ul>
                     <h3>Consultoría</h3>
                     <ul>
-                        <li><a href="https://www.instagram.com/bmbconsulting/" target="_blank" rel="nofollow noopener noreferrer">Báez Maldonado y Bolla Consulting</a> (mipyme verificada) — Instagram</li>
+                        <li><a href="https://www.instagram.com/bmbconsulting/" target="_blank" rel="nofollow noopener noreferrer">Báez Maldonado y Bolla Consulting</a> (mipyme verificada) — Asunción — Instagram</li>
                     </ul>
                     <h3>Servicios para eventos</h3>
                     <ul>
-                        <li><a href="https://www.instagram.com/eventosparaguay_/" target="_blank" rel="nofollow noopener noreferrer">Eventos Paraguay</a> (mipyme verificada) — Instagram</li>
+                        <li><a href="https://www.instagram.com/eventosparaguay_/" target="_blank" rel="nofollow noopener noreferrer">Eventos Paraguay</a> (mipyme verificada) — Asunción — Instagram</li>
                     </ul>
                 </div>
             </section>
@@ -974,10 +1016,13 @@
     <script src="./js/banners-data.js?v=20260811-15" defer></script>
     <script src="./js/ads-data.js?v=20261020-ads" defer></script>
     <script src="./js/ads.js?v=20261020-ads" defer></script>
-    <script src="./js/directorio-enlaces.js?v=20261030-verificada" defer></script>
-    <script src="./js/directorio-data.js?v=20261030-verificada" defer></script>
-    <script src="./js/directorio.js?v=20261030-verificada" defer></script>
-    <script src="./js/app.js?v=20261105-turnos" defer></script>
+    <script src="./js/paginas-generadas.js?v=de88923e" defer></script>
+    <script src="./js/orden.js?v=20261110-buscador" defer></script>
+    <script src="./js/directorio-enlaces.js?v=20261110-buscador" defer></script>
+    <script src="./js/directorio-data.js?v=20261110-buscador" defer></script>
+    <script src="./js/buscador.js?v=20261110-buscador" defer></script>
+    <script src="./js/directorio.js?v=20261110-buscador" defer></script>
+    <script src="./js/app.js?v=20261110-buscador" defer></script>
     <script src="./js/theme.js?v=20260828-17" defer></script>
     <script src="./js/chatbot-preguntas.js?v=20260811-15" defer></script>
     <script src="./js/chatbot.js?v=20261006-gestos" defer></script>

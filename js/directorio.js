@@ -29,22 +29,16 @@
         (typeof DIRECTORIO_CONFIG !== "undefined") ? DIRECTORIO_CONFIG : {}
     );
 
-    // Las mipymes destacadas (las que pagaron) llevan la palomita en la guía, y las que
-    // falten en la lista entran solas.
-    const resultado = ENLACES.normalizarEntradas(
-        DIRECTORIO_DATA,
-        (typeof DIRECTORIO_RUBROS !== "undefined") ? DIRECTORIO_RUBROS : [],
-        {
-            mipymes: (typeof MIPYMES_DATA !== "undefined") ? MIPYMES_DATA : [],
-            incluir: config.incluirDestacadas !== false,
-            equivalencias: (typeof DIRECTORIO_EQUIVALENCIAS_RUBRO !== "undefined") ? DIRECTORIO_EQUIVALENCIAS_RUBRO : {}
-        }
-    );
+    // La lista (destacadas + guía) y la búsqueda las arma js/buscador.js: la misma
+    // búsqueda (texto, rubro y ciudad) filtra las destacadas y esta guía a la vez.
+    const BUSC = window.Buscador;
 
-    // Avisar (en la consola) de lo que no se pudo mostrar y por qué
-    resultado.omitidas.forEach(function (o) {
-        console.warn("[Directorio] Se omitió «" + o.nombre + "»: " + o.motivo);
-    });
+    if (!BUSC) {
+        console.warn("[Directorio] Falta js/buscador.js: la guía no se puede mostrar.");
+        return;
+    }
+
+    const resultado = BUSC.resultado;
 
     // Sin mipymes cargadas (ni destacadas): la sección no se muestra
     if (!resultado.entradas.length) return;
@@ -72,14 +66,13 @@
     const vacio = document.getElementById("dir-vacio");
     const buscador = document.getElementById("dir-q");
 
-    const estado = { q: "", rubro: "todos", red: "todas", verTodo: false };
+    // Lo único propio de la guía: el filtro por red social y el "Ver las N restantes"
+    const estado = { red: "todas", verTodo: false };
 
-    // Cuántas mipymes hay por rubro y qué redes se usan (para armar los filtros)
-    const conteoRubro = {};
+    // Qué redes se usan (para armar los filtros de red)
     const redesUsadas = [];
 
     ENTRADAS.forEach(function (e) {
-        conteoRubro[e.rubro] = (conteoRubro[e.rubro] || 0) + 1;
         if (redesUsadas.indexOf(e.red) < 0) redesUsadas.push(e.red);
     });
 
@@ -109,31 +102,69 @@
 
     }
 
+    // Resalta en el nombre cada palabra buscada (sin importar tildes ni mayúsculas)
     function resaltar(nombre) {
 
-        const q = normalizar(estado.q.trim());
+        const palabras = BUSC.palabras();
 
-        if (!q) return esc(nombre);
+        if (!palabras.length) return esc(nombre);
 
-        const i = normalizar(nombre).indexOf(q);
+        const letras = Array.from(String(nombre));
+        let normal = "";
+        const dueno = [];                      // a qué letra del nombre pertenece cada letra del texto normalizado
 
-        if (i < 0) return esc(nombre);
+        letras.forEach(function (c, i) {
 
-        return esc(nombre.slice(0, i)) +
-            "<mark>" + esc(nombre.slice(i, i + q.length)) + "</mark>" +
-            esc(nombre.slice(i + q.length));
+            const n = c.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase();
+
+            for (let k = 0; k < n.length; k++) dueno.push(i);
+
+            normal += n;
+
+        });
+
+        const marcadas = letras.map(function () { return false; });
+        let alguna = false;
+
+        palabras.forEach(function (p) {
+
+            let i = normal.indexOf(p);
+
+            while (i >= 0) {
+
+                for (let k = i; k < i + p.length; k++) marcadas[dueno[k]] = true;
+
+                alguna = true;
+                i = normal.indexOf(p, i + p.length);
+
+            }
+
+        });
+
+        if (!alguna) return esc(nombre);
+
+        let html = "";
+        let abierta = false;
+
+        letras.forEach(function (c, i) {
+
+            if (marcadas[i] && !abierta) { html += "<mark>"; abierta = true; }
+            if (!marcadas[i] && abierta) { html += "</mark>"; abierta = false; }
+
+            html += esc(c);
+
+        });
+
+        return html + (abierta ? "</mark>" : "");
 
     }
 
     function filtrar() {
 
-        const q = normalizar(estado.q.trim());
-
         return ENTRADAS.filter(function (e) {
 
-            if (estado.rubro !== "todos" && e.rubro !== estado.rubro) return false;
+            if (!BUSC.coincide(e)) return false;
             if (estado.red !== "todas" && e.red !== estado.red) return false;
-            if (q && normalizar(e.nombre + " " + e.rubro).indexOf(q) < 0) return false;
 
             return true;
 
@@ -145,18 +176,27 @@
 
         const lista = filtrar();
 
-        const sinFiltros = !estado.q.trim() && estado.rubro === "todos" && estado.red === "todas";
+        const busqueda = BUSC.obtener();
+        const sinFiltros = !BUSC.hayFiltros() && estado.red === "todas";
         const tope = config.filasIniciales;
         const visibles = (sinFiltros && !estado.verTodo) ? lista.slice(0, tope) : lista;
 
         // ----- rubros (columna izquierda) -----
+        const cuentasRubro = BUSC.contar("rubro");
+        const totalRubros = Object.keys(cuentasRubro).reduce(function (suma, k) { return suma + cuentasRubro[k]; }, 0);
+
         let botonesRubro =
-            '<button type="button" class="dir-btn" data-rubro="todos" aria-pressed="' + (estado.rubro === "todos") + '">Todos <span>' + ENTRADAS.length + '</span></button>';
+            '<button type="button" class="dir-btn" data-rubro="todos" aria-pressed="' + (!busqueda.rubro) + '">Todos <span>' + totalRubros + '</span></button>';
 
         RUBROS.forEach(function (r) {
+
+            const n = cuentasRubro[r] || 0;
+            const apagado = n === 0 && busqueda.rubro !== r;
+
             botonesRubro +=
-                '<button type="button" class="dir-btn" data-rubro="' + esc(r) + '" aria-pressed="' + (estado.rubro === r) + '">' +
-                esc(r) + ' <span>' + conteoRubro[r] + '</span></button>';
+                '<button type="button" class="dir-btn" data-rubro="' + esc(r) + '" aria-pressed="' + (busqueda.rubro === r) + '"' + (apagado ? " disabled" : "") + '>' +
+                esc(r) + ' <span>' + n + '</span></button>';
+
         });
 
         // ----- redes (chips) -----
@@ -194,10 +234,10 @@
                 '<li><a class="dir-enlace dir-fila" href="' + esc(e.url) + '" target="_blank" rel="nofollow noopener noreferrer"' +
                 ' data-rubro="' + esc(e.rubro) + '" data-red="' + e.red + '" data-nombre="' + esc(e.nombre) + '">' +
                 '<span class="dir-nombre">' + resaltar(e.nombre) + (e.verificada && window.Verificada ? window.Verificada.html(false) : '') + '</span>' +
-                '<span class="dir-rubro-etq">' + esc(e.rubro) + '</span>' +
+                '<span class="dir-rubro-etq">' + esc(e.rubro) + (e.ciudad ? " · " + esc(e.ciudad) : "") + '</span>' +
                 '<span class="dir-red">' + ICONOS[e.red] + esc(nombreRed) + '</span>' +
                 '<span class="dir-flecha" aria-hidden="true">→</span>' +
-                '<span class="vh"> — ' + esc(e.rubro) + ', en ' + esc(nombreRed) + ' (se abre en una pestaña nueva)</span>' +
+                '<span class="vh"> — ' + esc(e.rubro) + (e.ciudad ? ", " + esc(e.ciudad) : "") + ', en ' + esc(nombreRed) + ' (se abre en una pestaña nueva)</span>' +
                 '</a></li>';
 
         });
@@ -226,9 +266,7 @@
             '</div>';
 
         // ----- contador y mensaje de "sin resultados" -----
-        const hayFiltro = !sinFiltros;
-
-        contador.textContent = hayFiltro
+        contador.textContent = !sinFiltros
             ? lista.length + (lista.length === 1 ? " resultado" : " resultados")
             : ENTRADAS.length + (ENTRADAS.length === 1 ? " mipyme" : " mipymes") + " en " + RUBROS.length + (RUBROS.length === 1 ? " rubro" : " rubros");
 
@@ -268,12 +306,24 @@
 
     // ---------- eventos ----------
 
+    // El campo de búsqueda de la guía y la barra de arriba comparten la misma búsqueda
     buscador.addEventListener("input", function (e) {
 
-        estado.q = e.target.value;
+        BUSC.cambiar({ q: e.target.value });
+
+    });
+
+    BUSC.suscribir(function () {
+
+        const q = BUSC.obtener().q;
+
+        if (document.activeElement !== buscador && buscador.value !== q) buscador.value = q;
+
         dibujar();
 
     });
+
+    buscador.value = BUSC.obtener().q;
 
     seccion.addEventListener("click", function (e) {
 
@@ -296,8 +346,8 @@
         const rubro = e.target.closest(".dir-btn");
 
         if (rubro) {
-            estado.rubro = rubro.dataset.rubro;
-            dibujar();
+            if (rubro.disabled) return;
+            BUSC.cambiar({ rubro: rubro.dataset.rubro === "todos" ? "" : rubro.dataset.rubro });
             devolverFoco('.dir-btn[aria-pressed="true"]');
             return;
         }

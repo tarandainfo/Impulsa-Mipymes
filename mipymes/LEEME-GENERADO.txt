@@ -1,0 +1,2 @@
+Esta carpeta la genera tools/generar-seo.js a partir de js/mipymes-data.js y js/directorio-data.js.
+NO la edites a mano: se borra y se vuelve a escribir cada vez que se corre el script.

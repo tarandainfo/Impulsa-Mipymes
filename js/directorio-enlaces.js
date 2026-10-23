@@ -183,6 +183,26 @@
 
     }
 
+    // Texto para armar direcciones: "Asunción" → "asuncion" (igual que crearSlug de la web)
+    function crearSlug(texto) {
+
+        return String(texto == null ? "" : texto)
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .trim()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-+|-+$/g, "");
+
+    }
+
+    // "Asunción, Paraguay" → "Asunción" (la ciudad es lo que va antes de la primera coma)
+    function ciudadDeUbicacion(ubicacion) {
+
+        return String(ubicacion == null ? "" : ubicacion).split(",")[0].trim().replace(/\s+/g, " ");
+
+    }
+
     // Link de Instagram "limpio": solo el perfil, sin los parámetros de seguimiento
     function enlaceDeDestacada(m) {
 
@@ -217,8 +237,9 @@
     // La palomita ("verificada") la llevan SOLO las filas que coinciden con una destacada.
     //
     // Devuelve:
-    //   entradas  → las válidas, ya con su link: { nombre, rubro, red, url, verificada }
+    //   entradas  → las válidas, ya con su link: { nombre, rubro, ciudad, red, url, verificada, destacada, slug, mipyme, texto }
     //   rubros    → los rubros que tienen al menos una mipyme, en orden
+    //   ciudades  → las ciudades que tienen al menos una mipyme, de la A a la Z
     //   omitidas  → las que se descartaron y por qué: { nombre, motivo }
     function normalizarEntradas(datos, rubrosEnOrden, destacadas) {
 
@@ -262,7 +283,7 @@
 
             vistas[clave] = true;
 
-            entradas.push({ nombre: nombre, rubro: rubro, red: enlace.red, url: enlace.url, verificada: false });
+            entradas.push({ nombre: nombre, rubro: rubro, ciudad: ciudadDeUbicacion(e && e.ciudad), red: enlace.red, url: enlace.url, verificada: false, destacada: false, slug: "", mipyme: null });
 
         });
 
@@ -286,6 +307,10 @@
             entradas.forEach(function (x) {
                 if (claveNombre(x.nombre) === clave) {
                     x.verificada = verificada;
+                    x.destacada = true;
+                    x.slug = crearSlug(nombre);
+                    x.mipyme = m;
+                    x.ciudad = ciudadDeUbicacion(m.ubicacion) || x.ciudad;
                     esta = true;
                 }
             });
@@ -307,7 +332,7 @@
                 return;
             }
 
-            entradas.push({ nombre: nombre, rubro: rubro, red: enlace.red, url: enlace.url, verificada: verificada });
+            entradas.push({ nombre: nombre, rubro: rubro, ciudad: ciudadDeUbicacion(m.ubicacion), red: enlace.red, url: enlace.url, verificada: verificada, destacada: true, slug: crearSlug(nombre), mipyme: m });
 
         });
 
@@ -328,7 +353,34 @@
             if (rubros.indexOf(r) < 0) rubros.push(r);
         });
 
-        return { entradas: entradas, rubros: rubros, omitidas: omitidas };
+        // Texto en el que busca el buscador general (nombre, rubro, ciudad y, en las destacadas, su descripción)
+        entradas.forEach(function (x) {
+            x.texto = [x.nombre, x.rubro, x.ciudad, x.mipyme ? x.mipyme.categoria : "", x.mipyme ? x.mipyme.descripcion : ""].join(" ");
+        });
+
+        // Ciudades que tienen al menos una mipyme (sin repetir, aunque se escriban distinto: "Asunción" / "asuncion")
+        const ciudades = [];
+        const vistasCiudades = {};
+
+        entradas.forEach(function (x) {
+
+            if (!x.ciudad) return;
+
+            const k = claveNombre(x.ciudad);
+
+            if (vistasCiudades[k]) {
+                x.ciudad = vistasCiudades[k];      // todas usan el mismo nombre
+                return;
+            }
+
+            vistasCiudades[k] = x.ciudad;
+            ciudades.push(x.ciudad);
+
+        });
+
+        ciudades.sort(function (a, b) { return a.localeCompare(b, "es"); });
+
+        return { entradas: entradas, rubros: rubros, ciudades: ciudades, omitidas: omitidas };
 
     }
 
@@ -360,7 +412,9 @@
         normalizarEntradas: normalizarEntradas,
         ordenar: ordenar,
         letraDe: letraDe,
-        claveNombre: claveNombre
+        claveNombre: claveNombre,
+        crearSlug: crearSlug,
+        ciudadDeUbicacion: ciudadDeUbicacion
     };
 
     if (typeof module !== "undefined" && module.exports) {

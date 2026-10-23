@@ -7215,3 +7215,519 @@ html[data-theme="dark"] .verif[data-tip]::after,
     .verif[data-tip]::after { transition: none; }
 }
 
+
+
+/* =====================================================
+   BUSCADOR GENERAL (búsqueda + rubro + ciudad)
+   Arriba de "Mipymes destacadas". Lo maneja js/buscador.js.
+===================================================== */
+
+.buscador {
+    --b-sup: #FFFFFF;
+    --b-borde: #D3D8E2;
+    --b-texto: #0B0D12;
+    --b-sec: #485063;
+    --b-ter: #566075;
+    --b-acento: #0A6FA3;
+    --b-fondo2: #EEF1F6;
+
+    margin: 4px 0 34px;
+}
+
+html[data-theme="dark"] .buscador {
+    --b-sup: #0E1016;
+    --b-borde: #2D3345;
+    --b-texto: #ECEEF3;
+    --b-sec: #A7B0C5;
+    --b-ter: #8B93A7;
+    --b-acento: #67D4FF;
+    --b-fondo2: #151822;
+}
+
+.buscador[hidden] { display: none; }
+
+.buscador-fila {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: stretch;
+}
+
+.buscador-caja {
+    position: relative;
+    display: block;
+    flex: 1 1 340px;
+    min-width: 0;
+}
+
+.buscador-caja svg {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    width: 18px;
+    height: 18px;
+    transform: translateY(-50%);
+    color: var(--b-ter);
+    pointer-events: none;
+}
+
+.buscador-caja input,
+.buscador-sel select {
+    width: 100%;
+    height: 100%;
+    min-height: 50px;
+    border: 1px solid var(--b-borde);
+    border-radius: 14px;
+    background-color: var(--b-sup);
+    color: var(--b-texto);
+    font: 500 0.98rem inherit;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.buscador-caja input {
+    padding: 0 16px 0 46px;
+}
+
+.buscador-caja input::placeholder { color: var(--b-ter); }
+
+.buscador-sel {
+    display: block;
+    flex: 0 1 230px;
+    min-width: 170px;
+}
+
+.buscador-sel[hidden] { display: none; }
+
+.buscador-sel select {
+    padding: 0 40px 0 16px;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23788096' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    background-size: 18px;
+}
+
+.buscador-caja input:focus,
+.buscador-sel select:focus {
+    border-color: var(--b-acento);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--b-acento) 22%, transparent);
+}
+
+.buscador-limpiar {
+    flex: 0 0 auto;
+    padding: 0 18px;
+    border: 1px solid var(--b-borde);
+    border-radius: 14px;
+    background: transparent;
+    color: var(--b-sec);
+    font: 700 0.9rem inherit;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.buscador-limpiar[hidden] { display: none; }
+
+.buscador-limpiar:hover {
+    background: var(--b-fondo2);
+    color: var(--b-texto);
+}
+
+.buscador-limpiar:focus-visible {
+    outline: 3px solid var(--celeste, #50C7E7);
+    outline-offset: 2px;
+}
+
+.buscador-estado {
+    margin: 12px 2px 0;
+    color: var(--b-ter);
+    font: 500 0.78rem 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    letter-spacing: 0.02em;
+    max-width: none;
+}
+
+/* "Explorar por rubro y por ciudad": enlaces a las páginas de cada rubro y ciudad */
+.buscador-explorar {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: 16px;
+    font-size: 0.9rem;
+}
+
+.buscador-explorar p {
+    margin: 0;
+    max-width: none;
+    color: var(--b-sec);
+    line-height: 1.9;
+}
+
+.buscador-explorar strong {
+    margin-right: 6px;
+    color: var(--b-ter);
+    font: 600 0.72rem 'JetBrains Mono', ui-monospace, monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.buscador-explorar a {
+    display: inline-block;
+    margin: 0 4px 4px 0;
+    padding: 2px 11px;
+    border: 1px solid var(--b-borde);
+    border-radius: 999px;
+    color: var(--b-texto);
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.buscador-explorar a:hover {
+    border-color: var(--b-acento);
+    color: var(--b-acento);
+}
+
+/* cuando ninguna destacada coincide con la búsqueda */
+.buscador-vacio {
+    padding: 34px 24px;
+    border: 1px dashed var(--b-borde, #D3D8E2);
+    border-radius: 20px;
+    text-align: center;
+}
+
+.buscador-vacio strong { display: block; margin-bottom: 6px; }
+
+.buscador-vacio p {
+    margin: 0 auto 16px;
+    max-width: 440px;
+    color: var(--texto);
+    opacity: 0.78;
+}
+
+.buscador-vacio a { color: var(--celeste-oscuro, #0A6FA3); font-weight: 700; }
+
+.buscador-vacio-limpiar {
+    padding: 10px 20px;
+    border: 1px solid currentColor;
+    border-radius: 12px;
+    background: transparent;
+    color: inherit;
+    font: 700 0.9rem inherit;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+@media (max-width: 700px) {
+
+    .buscador-sel { flex: 1 1 calc(50% - 6px); min-width: 0; }
+    .buscador-caja { flex-basis: 100%; }
+    .buscador-limpiar { flex: 1 1 100%; min-height: 44px; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .buscador-caja input,
+    .buscador-sel select,
+    .buscador-explorar a { transition: none; }
+
+}
+
+
+/* =====================================================
+   PÁGINAS POR RUBRO Y CIUDAD (rubros/..., ciudades/...)
+   y bloque "Más mipymes" al final de cada ficha.
+   Las páginas las arma tools/generar-seo.js.
+===================================================== */
+
+.lp-section,
+.ficha-mas {
+    --lp-sup: #FFFFFF;
+    --lp-borde: #E3E6EC;
+    --lp-borde2: #D3D8E2;
+    --lp-texto: #0B0D12;
+    --lp-sec: #485063;
+    --lp-ter: #566075;
+    --lp-acento: #0A6FA3;
+    --lp-fondo2: #EEF1F6;
+}
+
+html[data-theme="dark"] .lp-section,
+html[data-theme="dark"] .ficha-mas {
+    --lp-sup: #0E1016;
+    --lp-borde: #232734;
+    --lp-borde2: #2D3345;
+    --lp-texto: #ECEEF3;
+    --lp-sec: #A7B0C5;
+    --lp-ter: #8B93A7;
+    --lp-acento: #67D4FF;
+    --lp-fondo2: #151822;
+}
+
+.lp-section {
+    padding: 56px 0 96px;
+}
+
+.lp-container {
+    max-width: 900px;
+}
+
+.lp-migas {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 20px;
+    color: var(--lp-ter);
+    font: 500 0.78rem 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    letter-spacing: 0.02em;
+}
+
+.lp-migas a {
+    color: var(--lp-ter);
+    text-decoration: none;
+}
+
+.lp-migas a:hover { color: var(--lp-acento); text-decoration: underline; }
+
+.lp-migas [aria-current="page"] { color: var(--lp-texto); }
+
+.lp-sep { opacity: 0.55; }
+
+.lp-section h1 {
+    margin: 0 0 14px;
+    font-size: clamp(2rem, 4.6vw, 3rem);
+    line-height: 1.08;
+    letter-spacing: -0.035em;
+}
+
+.lp-intro {
+    margin: 0 0 12px;
+    max-width: 680px;
+    color: var(--lp-sec);
+    line-height: 1.6;
+}
+
+.lp-subtitulo {
+    margin: 36px 0 14px;
+    color: var(--lp-ter);
+    font: 600 0.75rem 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.lp-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.lp-item {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr) auto;
+    gap: 18px;
+    align-items: center;
+    padding: 18px 20px;
+    background: var(--lp-sup);
+    border: 1px solid var(--lp-borde);
+    border-radius: 18px;
+}
+
+.lp-lista-guia .lp-item { padding: 14px 20px; }
+
+.lp-avatar {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    object-fit: cover;
+    background: var(--lp-fondo2);
+}
+
+.lp-inicial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--lp-ter);
+    font-size: 1.3rem;
+    font-weight: 800;
+}
+
+.lp-info { min-width: 0; }
+
+.lp-nombre {
+    margin: 0;
+    font-size: 1.12rem;
+    line-height: 1.25;
+}
+
+.lp-nombre a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.lp-nombre a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+.lp-meta {
+    margin: 3px 0 0;
+    color: var(--lp-ter);
+    font-size: 0.84rem;
+    font-weight: 600;
+    max-width: none;
+}
+
+.lp-desc {
+    margin: 8px 0 0;
+    max-width: 520px;
+    color: var(--lp-sec);
+    font-size: 0.92rem;
+    line-height: 1.5;
+}
+
+.lp-acciones {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.lp-ver {
+    padding: 9px 18px;
+    font-size: 0.88rem;
+}
+
+.lp-redes {
+    display: flex;
+    gap: 6px;
+}
+
+.lp-red {
+    padding: 5px 12px;
+    border: 1px solid var(--lp-borde2);
+    border-radius: 999px;
+    color: var(--lp-texto);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.lp-red:hover { border-color: var(--lp-acento); color: var(--lp-acento); }
+
+.lp-mas { margin-top: 48px; }
+
+.lp-grupo { margin-top: 18px; }
+
+.lp-grupo h3,
+.ficha-mas h2 {
+    margin: 0 0 8px;
+    color: var(--lp-ter);
+    font: 600 0.72rem 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.lp-chips {
+    margin: 0;
+    max-width: none;
+    line-height: 2;
+}
+
+.lp-chips a {
+    display: inline-block;
+    margin: 0 6px 6px 0;
+    padding: 3px 13px;
+    border: 1px solid var(--lp-borde2);
+    border-radius: 999px;
+    color: var(--lp-texto);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+}
+
+.lp-chips a:hover { border-color: var(--lp-acento); color: var(--lp-acento); }
+
+.lp-todas { margin: 20px 0 0; max-width: none; }
+
+.lp-todas a { color: var(--lp-acento); font-weight: 700; text-decoration: none; }
+
+.lp-todas a:hover { text-decoration: underline; }
+
+.lp-cta {
+    margin-top: 48px;
+    padding: 28px;
+    border: 1px dashed var(--lp-borde2);
+    border-radius: 20px;
+}
+
+.lp-cta strong { display: block; margin-bottom: 6px; font-size: 1.12rem; }
+
+.lp-cta p { margin: 0 0 18px; max-width: 520px; color: var(--lp-sec); line-height: 1.55; }
+
+/* "Más mipymes" al final de cada ficha */
+.ficha-mas {
+    margin-top: 42px;
+    padding-top: 24px;
+    border-top: 1px solid var(--lp-borde);
+}
+
+.focus-visible-lp:focus-visible,
+.lp-nombre a:focus-visible,
+.lp-chips a:focus-visible,
+.lp-red:focus-visible,
+.lp-migas a:focus-visible,
+.lp-todas a:focus-visible {
+    outline: 3px solid var(--celeste, #50C7E7);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+@media (max-width: 700px) {
+
+    .lp-section { padding: 36px 0 72px; }
+
+    .lp-item {
+        grid-template-columns: 48px minmax(0, 1fr);
+        gap: 12px 14px;
+        padding: 16px;
+    }
+
+    .lp-avatar { width: 48px; height: 48px; align-self: start; }
+
+    .lp-acciones {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+    }
+
+    .lp-lista-guia .lp-acciones { display: none; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .lp-red,
+    .lp-chips a { transition: none; }
+
+}
+
+
+/* Los rótulos chicos de las páginas por rubro/ciudad y de "Más mipymes": la regla
+   general de títulos (html[data-tema="dk"] h1, h2, h3…) tiene más prioridad que las
+   de arriba, así que acá se refuerza para que se vean con su tipografía técnica. */
+html[data-tema] .lp-grupo h3,
+html[data-tema] .ficha-mas h2,
+html[data-tema] .lp-subtitulo {
+    font-family: 'JetBrains Mono', ui-monospace, 'Courier New', monospace;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+}
+
+html[data-tema] .lp-subtitulo { letter-spacing: 0.12em; }

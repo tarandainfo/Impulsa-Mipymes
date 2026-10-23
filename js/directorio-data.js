@@ -24,6 +24,10 @@
 //
 //   nombre   El nombre de la mipyme (hasta 80 letras).
 //   rubro    Uno de la lista DIRECTORIO_RUBROS de abajo (o uno nuevo: se crea solo).
+//   ciudad   (Opcional) La ciudad de la mipyme, ej.: "Asunción". Sirve para el filtro por
+//            ciudad y para la página de cada ciudad. Si falta, igual aparece en la guía
+//            (solo que no sale cuando se filtra por una ciudad). Escribila siempre igual
+//            ("Asunción", no "asuncion"); las destacadas la toman de su "ubicacion".
 //   red      Una de estas: "instagram", "facebook", "tiktok", "whatsapp", "web".
 //   usuario  Según la red:
 //              instagram / tiktok → el usuario, sin @   (ej.: "sabores.del.chaco")

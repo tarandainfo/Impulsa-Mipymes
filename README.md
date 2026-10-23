@@ -346,3 +346,43 @@ Solo lo ve quien escribe la dirección: no cambia nada para el público.
 
 **Qué no hace:** no ordena por clics ni por plan de pago. Si más adelante se quiere dar más presencia a algún plan, se puede hacer con turnos (por ejemplo, que entre dos veces por vuelta) y no con sorteo, para que el reparto siga siendo previsible.
 
+
+---
+
+## Buscador, páginas por rubro y ciudad, y vista previa en WhatsApp
+
+### 1) Buscador y filtros (arriba de "Mipymes destacadas")
+Una sola búsqueda para toda la página: buscador de texto, filtro por **rubro** y filtro por **ciudad**. Filtra a la vez las tarjetas de las destacadas y la guía de mipymes.
+
+- **Busca por palabras sueltas, en cualquier orden y sin importar tildes ni mayúsculas:** "asuncion gastronomia" encuentra las mipymes de gastronomía de Asunción. Busca en el nombre, rubro, ciudad y (en las destacadas) en la descripción.
+- **Los contadores acompañan lo que elegiste:** si elegís "Asunción", cada rubro muestra cuántas mipymes tiene *en Asunción*. Las opciones sin resultados quedan apagadas.
+- **Queda en la dirección de la web:** `?q=luna&rubro=Gastronomía&ciudad=Asunción`. Sirve para compartir una búsqueda con un link.
+- **El orden por turnos se mantiene** dentro de lo que se filtra.
+- **La ciudad de cada mipyme:** las destacadas la toman de su `ubicacion` (lo que va antes de la coma: "Asunción, Paraguay" → Asunción). Las de la guía gratuita pueden tener un campo opcional `ciudad` en `js/directorio-data.js` (el generador de la guía, `admin/generador-directorio.html`, tiene el casillero). Las que no tienen ciudad aparecen igual, salvo cuando se filtra por una ciudad.
+
+### 2) Páginas fijas por mipyme (vista previa en WhatsApp)
+WhatsApp, Facebook, X y LinkedIn no ejecutan JavaScript: para mostrar la foto y el nombre al compartir un link, leen el HTML tal cual. Por eso cada mipyme destacada tiene **su propia página fija en `mipymes/<nombre>/`**, igual a la ficha pero con su título, descripción e imagen escritos en el HTML.
+
+- La web, el sitemap y los links nuevos apuntan a esa página. Los links viejos (`ficha.html?mipyme=...`) siguen funcionando y llevan solos a la página nueva.
+- **La imagen de la vista previa** (1200×630) se guarda en `assets/og/<nombre>.jpg`. Se crea con `admin/imagen-compartir.html`: elegís la mipyme, descargás la imagen y la guardás en esa carpeta. Si una mipyme no tiene la suya, se usa su foto principal.
+- **WhatsApp guarda una copia de cada link** durante un tiempo: si cambiás la imagen y el link ya se había compartido, puede seguir mostrando la vieja un rato. Para ver el cambio al instante, pegá el link con algo extra al final (por ejemplo `?v=2`).
+
+### 3) Páginas por rubro y por ciudad
+`rubros/gastronomia/`, `ciudades/asuncion/` y `rubros/gastronomia/asuncion/`: la lista de mipymes de cada rubro, ciudad y combinación. Sirven para que Google las encuentre ("gastronomía en Asunción") y para compartir un link directo.
+
+- Las destacadas van primero (con la **rotación por turnos** de la portada) y después las de la guía, de la A a la Z.
+- Una combinación rubro + ciudad solo se arma con 2 mipymes o más.
+- **Una página con una sola mipyme se puede visitar, pero no se le pide a Google que la guarde** (`noindex`, y no entra al sitemap). Apenas tiene 2 mipymes, pasa a ser indexable sola.
+- En la portada, debajo del buscador, hay enlaces "Por rubro" y "Por ciudad" a todas estas páginas. Cada ficha enlaza a las de su rubro y ciudad.
+
+### Cómo se actualiza todo
+Cada vez que agregues, cambies o borres una mipyme o un nombre de la guía:
+
+    node tools/generar-seo.js
+
+Después subí **todo** lo que cambió (`git add .`, commit y push): `index.html`, `sitemap.xml`, `js/paginas-generadas.js` y las carpetas `mipymes/`, `rubros/` y `ciudades/`.
+
+- Las carpetas `mipymes/`, `rubros/` y `ciudades/` las maneja por completo el script: se borran y se escriben de nuevo cada vez. **No las edites a mano.** Si una de esas carpetas ya existiera y no la hubiera creado el script, no se borra: avisa y se detiene.
+- **Si cambiás `ficha.html`, `css/` o `js/`, volvé a correr el script.** Las páginas generadas copian los números de versión de esos archivos (`?v=...`); sin volver a generarlas, los navegadores podrían seguir usando una copia vieja hasta 7 días.
+- **Si te olvidás de correr el script** después de cargar una mipyme nueva, no se rompe nada: su tarjeta enlaza a la ficha de siempre (`ficha.html?mipyme=...`) y funciona igual; solo que sin vista previa propia en WhatsApp hasta que corras el script.
+

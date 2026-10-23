@@ -35,8 +35,10 @@ function crearSlug(texto) {
 
 function obtenerMipymeDesdeURL() {
 
+    // En las páginas fijas (mipymes/<nombre>/) la mipyme viene escrita en la página
+    // (window.MIPYME_SLUG); en la ficha de siempre, en la dirección (?mipyme=...)
     const params = new URLSearchParams(window.location.search);
-    const slug = params.get("mipyme");
+    const slug = window.MIPYME_SLUG || params.get("mipyme");
 
     if (!slug || typeof MIPYMES_DATA === "undefined") return null;
 
@@ -128,6 +130,10 @@ function seoPonerJsonLd(id, datos) {
 }
 
 function actualizarSEO(m) {
+
+    // La página fija (mipymes/<nombre>/) ya trae el título, la descripción, la imagen para
+    // compartir y los datos estructurados escritos en el HTML: no hay nada que reemplazar.
+    if (window.MIPYME_SLUG) return;
 
     const nombre = String(m.nombre).trim();
     const slug = crearSlug(m.nombre);
@@ -263,6 +269,15 @@ function mostrarFicha() {
 
     }
 
+    // Un link viejo (ficha.html?mipyme=...) de una mipyme que ya tiene su página fija se lleva a ella,
+    // así lo que se copia y comparte desde la barra del navegador ya muestra la vista previa en WhatsApp.
+    const slugDeEsta = crearSlug(mipyme.nombre);
+
+    if (!window.MIPYME_SLUG && typeof PAGINAS_GENERADAS !== "undefined" && PAGINAS_GENERADAS.fichas.indexOf(slugDeEsta) >= 0) {
+        window.location.replace("./mipymes/" + slugDeEsta + "/" + window.location.hash);
+        return;
+    }
+
     actualizarSEO(mipyme);
 
     // ---------- encabezado ----------
@@ -364,7 +379,48 @@ function mostrarFicha() {
 
     }
 
+    agregarMasMipymes(mipyme, contenedor);
+
     activarCarrusel(fotos.length);
+
+}
+
+// "Más mipymes": enlaces a la página del rubro y de la ciudad de esta mipyme
+// (solo a las que ya existen; las arma tools/generar-seo.js)
+function agregarMasMipymes(mipyme, contenedor) {
+
+    if (!contenedor || typeof PAGINAS_GENERADAS === "undefined" || !PAGINAS_GENERADAS.destacadas) return;
+
+    const info = PAGINAS_GENERADAS.destacadas[crearSlug(mipyme.nombre)];
+
+    if (!info) return;
+
+    const enlaces = [];
+
+    if (info.combinada) enlaces.push({ nombre: info.combinada.nombre, ruta: info.combinada.ruta });
+    if (info.rubro) enlaces.push({ nombre: info.rubro.nombre + " en Paraguay", ruta: info.rubro.ruta });
+    if (info.ciudad) enlaces.push({ nombre: "Mipymes en " + info.ciudad.nombre, ruta: info.ciudad.ruta });
+
+    if (!enlaces.length) return;
+
+    const escapar = function (t) {
+        return String(t).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+    };
+
+    const bloque = document.createElement("section");
+
+    bloque.className = "ficha-mas";
+    bloque.setAttribute("aria-label", "Más mipymes");
+
+    bloque.innerHTML =
+        "<h2>Más mipymes</h2>" +
+        '<p class="lp-chips">' +
+        enlaces.map(function (e) {
+            return '<a href="' + escapar(e.ruta) + '">' + escapar(e.nombre) + "</a>";
+        }).join("") +
+        "</p>";
+
+    contenedor.appendChild(bloque);
 
 }
 

@@ -6,58 +6,83 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=baez-maldonado-y-bolla-consulting</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/pedacitos-de-luna/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=eventos-paraguay</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/map-crochet/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=fatima-sosa-organizacion-y-ambientacion-de-eventos</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/el-fogon-del-patio/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=ag-organizacion-contable</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/creaciones-pascuala/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=hey</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/che-reta-resto-cafe/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=ruben-cardus-fotografia</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/ruben-cardus-fotografia/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=che-reta-resto-cafe</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/hey/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=el-fogon-del-patio</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/ag-organizacion-contable/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=map-crochet</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/fatima-sosa-organizacion-y-ambientacion-de-eventos/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=creaciones-pascuala</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/baez-maldonado-y-bolla-consulting/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.impulsamipymes.com.py/ficha.html?mipyme=pedacitos-de-luna</loc>
+    <loc>https://www.impulsamipymes.com.py/mipymes/eventos-paraguay/</loc>
     <lastmod>2026-10-22</lastmod>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.impulsamipymes.com.py/rubros/gastronomia/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.impulsamipymes.com.py/rubros/moda-y-diseno/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.impulsamipymes.com.py/ciudades/asuncion/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://www.impulsamipymes.com.py/rubros/gastronomia/asuncion/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://www.impulsamipymes.com.py/rubros/moda-y-diseno/asuncion/</loc>
+    <lastmod>2026-10-22</lastmod>
+    <priority>0.6</priority>
   </url>
 </urlset>
