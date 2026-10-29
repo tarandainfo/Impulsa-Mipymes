@@ -133,6 +133,7 @@ const DIRECTORIO_DATA = [
     {nombre: "AG Organización Contable", rubro: "Servicios contables", red: "Instagram", usuario: "agorganizacioncontable"},
     {nombre: "Fátima Sosa Organización y ambientación de eventos", rubro: "Organización de eventos", red: "Instagram", usuario: "fatimasosaeventos"},
     {nombre: "Báez Maldonado y Bolla Consulting", rubro: "Consultoría", red: "Instagram", usuario: "bmbconsulting"},
-    {nombre: "Eventos Paraguay", rubro: "Servicios para eventos", red: "Instagram", usuario: "eventosparaguay_"}
+    {nombre: "Eventos Paraguay", rubro: "Servicios para eventos", red: "Instagram", usuario: "eventosparaguay_"},
+    {nombre: "Fabricante Muebles", rubro: "Artesanía", red: "Instagram", usuario: "fabricante_muebles"}
 
 ];

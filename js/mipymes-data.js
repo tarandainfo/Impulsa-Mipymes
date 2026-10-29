@@ -93,6 +93,46 @@ const MIPYMES_DATA = [
     },
 
     {
+        nombre: "Fabricante Muebles",
+        categoria: "Artesanía",
+        verificada: true,
+
+        descripcion:
+            "Empresa paraguaya dedicada a la fabricación y comercialización de muebles para hogares, oficinas y espacios comerciales, con más de 300 opciones en stock y diseños a medida.",
+
+        descripcionLarga: [
+            "Fabricante Muebles, liderada por Rodrigo Sosa y Yeni Cabral, es una empresa paraguaya con más de 23 años de trayectoria en el sector del mobiliario. Se especializa en la fabricación y comercialización de muebles para el hogar, oficinas y comercios, con una amplia variedad de productos que incluye juegos de comedor, sofás, camas, placares, escritorios y soluciones de almacenamiento. Además, ofrece fabricación a medida, asesoramiento personalizado y toma de medidas sin costo para proyectos especiales.",
+            "A lo largo de su trayectoria, la empresa ha logrado consolidarse tanto en el mercado minorista como en el corporativo, trabajando con empresas como Tupi Electrodomésticos, Electrojet, Big Center y Wilmar Center. Con fabricación propia, precios competitivos y atención personalizada, Fabricante Muebles busca continuar creciendo, innovando y ofreciendo soluciones funcionales y accesibles para más hogares y empresas paraguayas."
+        ],
+
+        ubicacion: "Asunción, Paraguay",
+
+        whatsapp: "595983780446",
+
+        instagram: "https://www.instagram.com/fabricante_muebles/",
+
+        productoImagen:
+            "./assets/img/fabricante-muebles/foto-principal.jpg",
+
+        perfilImagen:
+            "./assets/img/fabricante-muebles/perfil.jpeg",
+
+        fotosCarrusel: [
+            "./assets/img/fabricante-muebles/foto-1.jpg",
+            "./assets/img/fabricante-muebles/foto-2.jpg",
+            "./assets/img/fabricante-muebles/foto-3.jpg",
+            "./assets/img/fabricante-muebles/foto-4.jpg",
+            "./assets/img/fabricante-muebles/foto-5.jpg"
+        ],
+
+        promocion:
+            "Consultá por los servicios disponibles.",
+
+        notaPeriodistica: ""
+
+    },
+
+    {
         nombre: "Eventos Paraguay",
         categoria: "Servicios para eventos",
         verificada: true,
