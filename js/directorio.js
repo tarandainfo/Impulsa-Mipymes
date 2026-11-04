@@ -12,6 +12,11 @@
 //     social, búsqueda, y los nombres de la A a la Z.
 //   - Si la lista está vacía, la sección queda oculta (y su
 //     enlace del menú también).
+//   - La guía es DESPLEGABLE: cerrada muestra solo el buscador y
+//     los rubros. Se abre sola al escribir en su buscador, al tocar
+//     un rubro, o al llegar desde el menú "Directorio" (#directorio).
+//     Para que arranque abierta, en js/directorio-data.js, dentro de
+//     DIRECTORIO_CONFIG, agregá:   abiertaAlCargar: true,
 // ==========================================
 
 (function () {
@@ -25,7 +30,7 @@
     const ENLACES = window.DirectorioEnlaces;
 
     const config = Object.assign(
-        { filasIniciales: 14, incluirDestacadas: true },
+        { filasIniciales: 14, incluirDestacadas: true, abiertaAlCargar: false },
         (typeof DIRECTORIO_CONFIG !== "undefined") ? DIRECTORIO_CONFIG : {}
     );
 
@@ -65,6 +70,15 @@
     const contador = document.getElementById("dir-contador");
     const vacio = document.getElementById("dir-vacio");
     const buscador = document.getElementById("dir-q");
+
+    // La parte desplegable (si falta en el HTML, la guía queda siempre abierta, como antes)
+    const toggle = document.getElementById("dir-toggle");
+    const toggleTxt = document.getElementById("dir-toggle-txt");
+    const cerrarBtn = document.getElementById("dir-cerrar");
+    const chipsRubros = document.getElementById("dir-chips");
+    const hayDesplegable = !!(toggle && toggleTxt && chipsRubros);
+
+    if (!hayDesplegable) seccion.classList.remove("is-cerrada");
 
     // Lo único propio de la guía: el filtro por red social y el "Ver las N restantes"
     const estado = { red: "todas", verTodo: false };
@@ -185,6 +199,8 @@
         const cuentasRubro = BUSC.contar("rubro");
         const totalRubros = Object.keys(cuentasRubro).reduce(function (suma, k) { return suma + cuentasRubro[k]; }, 0);
 
+        actualizarChips(cuentasRubro, busqueda.rubro);
+
         let botonesRubro =
             '<button type="button" class="dir-btn" data-rubro="todos" aria-pressed="' + (!busqueda.rubro) + '">Todos <span>' + totalRubros + '</span></button>';
 
@@ -272,6 +288,105 @@
 
         vacio.hidden = lista.length > 0;
 
+        ultimo = { cantidad: lista.length, sinFiltros: sinFiltros };
+        actualizarBoton();
+
+    }
+
+    // ----- los rubros como botones (se ven con la guía cerrada) -----
+    // Se arman una sola vez y después solo se actualizan: así no se pierde el lugar
+    // de la fila deslizable en el celular cada vez que se escribe una letra.
+    function prepararChips() {
+
+        if (!chipsRubros) return;
+
+        chipsRubros.innerHTML = RUBROS.map(function (r) {
+            return '<button type="button" class="dir-chip dd-c-chip" data-rubro-chip="' + esc(r) + '" aria-pressed="false">' + esc(r) + ' <span>0</span></button>';
+        }).join("");
+
+    }
+
+    function actualizarChips(cuentas, elegido) {
+
+        if (!chipsRubros) return;
+
+        Array.prototype.forEach.call(chipsRubros.children, function (b) {
+
+            const r = b.getAttribute("data-rubro-chip");
+            const n = cuentas[r] || 0;
+
+            b.setAttribute("aria-pressed", elegido === r ? "true" : "false");
+            b.disabled = n === 0 && elegido !== r;
+            b.lastElementChild.textContent = n;
+
+        });
+
+    }
+
+    // ----- abrir y cerrar la guía -----
+    const reducirMovimiento = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let temporizador = null;
+    let ultimo = { cantidad: ENTRADAS.length, sinFiltros: true };
+
+    function estaCerrada() {
+
+        return seccion.classList.contains("is-cerrada");
+
+    }
+
+    // El texto del botón: "Ver toda la guía", "Ver los 3 resultados" o "Ocultar la lista"
+    function actualizarBoton() {
+
+        if (!hayDesplegable) return;
+
+        if (!estaCerrada()) {
+            toggleTxt.textContent = "Ocultar la lista";
+        } else if (!ultimo.sinFiltros && ultimo.cantidad > 0) {
+            toggleTxt.textContent = ultimo.cantidad === 1 ? "Ver el resultado" : "Ver los " + ultimo.cantidad + " resultados";
+        } else {
+            toggleTxt.textContent = "Ver toda la guía";
+        }
+
+    }
+
+    function poner(abrir, opciones) {
+
+        if (!hayDesplegable) return;
+
+        opciones = opciones || {};
+
+        if (abrir === !estaCerrada()) return;
+
+        clearTimeout(temporizador);
+
+        if (opciones.sinAnimar) {
+            // sin animación (por ejemplo, al llegar con #directorio): se apaga un instante
+            seccion.classList.add("dd-medir");
+            requestAnimationFrame(function () { requestAnimationFrame(function () { seccion.classList.remove("dd-medir"); }); });
+        }
+
+        if (abrir) {
+
+            seccion.classList.remove("is-cerrada");
+
+            // cuando termina de abrirse, el contenido deja de recortarse (así la columna de rubros puede quedar fija al bajar)
+            temporizador = setTimeout(function () { seccion.classList.add("dd-fin"); }, (opciones.sinAnimar || reducirMovimiento) ? 0 : 620);
+
+        } else {
+
+            seccion.classList.remove("dd-fin");
+            seccion.classList.add("is-cerrada");
+
+            // si al cerrar el comienzo de la sección quedó arriba, fuera de la pantalla, se vuelve a él
+            if (opciones.volver && seccion.getBoundingClientRect().top < 0) {
+                seccion.scrollIntoView({ block: "start", behavior: reducirMovimiento ? "auto" : "smooth" });
+            }
+
+        }
+
+        toggle.setAttribute("aria-expanded", abrir ? "true" : "false");
+        actualizarBoton();
+
     }
 
     // Después de volver a dibujar, el foco vuelve al botón que se tocó
@@ -311,6 +426,19 @@
 
         BUSC.cambiar({ q: e.target.value });
 
+        // al escribir en el buscador de la guía, la lista se abre sola
+        if (e.target.value.trim()) poner(true);
+
+    });
+
+    buscador.addEventListener("keydown", function (e) {
+
+        if (e.key === "Escape" && buscador.value) {
+            e.preventDefault();
+            buscador.value = "";
+            BUSC.cambiar({ q: "" });
+        }
+
     });
 
     BUSC.suscribir(function () {
@@ -326,6 +454,24 @@
     buscador.value = BUSC.obtener().q;
 
     seccion.addEventListener("click", function (e) {
+
+        // un rubro de la fila de arriba: filtra y, si se eligió uno, abre la lista
+        const chipRubro = e.target.closest(".dd-c-chip");
+
+        if (chipRubro) {
+
+            if (chipRubro.disabled) return;
+
+            const r = chipRubro.getAttribute("data-rubro-chip");
+            const nuevo = BUSC.obtener().rubro === r ? "" : r;
+
+            BUSC.cambiar({ rubro: nuevo });
+
+            if (nuevo) poner(true);
+
+            return;
+
+        }
 
         const enlace = e.target.closest("a.dir-enlace");
 
@@ -363,6 +509,44 @@
     });
 
 
+    // ---------- abrir y cerrar a mano ----------
+
+    if (hayDesplegable) {
+
+        toggle.addEventListener("click", function () { poner(estaCerrada()); });
+
+        if (cerrarBtn) {
+            cerrarBtn.addEventListener("click", function () {
+                poner(false, { volver: true });
+                toggle.focus({ preventScroll: true });
+            });
+        }
+
+    }
+
+    // Llegar con el enlace #directorio (menú, pie de página o un link compartido) abre la guía
+    function abrirSiPidenElDirectorio(alCargar) {
+
+        if (window.location.hash !== "#directorio") return;
+
+        poner(true, { sinAnimar: alCargar });
+
+        if (alCargar) seccion.scrollIntoView({ block: "start" });
+
+    }
+
+    window.addEventListener("hashchange", function () { abrirSiPidenElDirectorio(false); });
+
+    // tocar de nuevo un enlace a #directorio cuando la dirección ya lo tiene (no cambia el hash, pero tiene que abrir)
+    document.addEventListener("click", function (e) {
+
+        const a = e.target.closest && e.target.closest('a[href="#directorio"]');
+
+        if (a) poner(true);
+
+    });
+
+
     // ---------- botón "Quiero estar en la guía" (WhatsApp) ----------
 
     const unirse = document.getElementById("dir-unirse");
@@ -390,9 +574,20 @@
         a.hidden = false;
     });
 
+    prepararChips();
     dibujar();
 
+    if (config.abiertaAlCargar) poner(true, { sinAnimar: true });
+
+    abrirSiPidenElDirectorio(true);
+
     // Para poder probar la lógica
-    window.Directorio = { entradas: ENTRADAS, rubros: RUBROS };
+    window.Directorio = {
+        entradas: ENTRADAS,
+        rubros: RUBROS,
+        abrir: function () { poner(true); },
+        cerrar: function () { poner(false); },
+        estaCerrada: estaCerrada
+    };
 
 })();

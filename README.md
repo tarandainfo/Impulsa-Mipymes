@@ -386,3 +386,30 @@ Después subí **todo** lo que cambió (`git add .`, commit y push): `index.html
 - **Si cambiás `ficha.html`, `css/` o `js/`, volvé a correr el script.** Las páginas generadas copian los números de versión de esos archivos (`?v=...`); sin volver a generarlas, los navegadores podrían seguir usando una copia vieja hasta 7 días.
 - **Si te olvidás de correr el script** después de cargar una mipyme nueva, no se rompe nada: su tarjeta enlaza a la ficha de siempre (`ficha.html?mipyme=...`) y funciona igual; solo que sin vista previa propia en WhatsApp hasta que corras el script.
 
+
+---
+
+## Guía de mipymes desplegable
+
+La guía ya no está siempre abierta. **Cerrada** muestra el título, el buscador y los rubros (con cuántas mipymes tiene cada uno), y ocupa unos 450 px en escritorio (antes, más de 1.600). La lista completa se despliega:
+
+- **al escribir** en el buscador de la guía,
+- **al tocar un rubro** (queda filtrado por ese rubro),
+- **con el botón** "Ver toda la guía" / "Ocultar la lista",
+- **al llegar con el enlace `#directorio`** (el menú "Directorio", el pie de página o un link compartido): se abre y baja hasta ella.
+
+**El buscador de arriba (el de "Mipymes destacadas") no abre la guía.** Si hay una búsqueda activa, la guía cerrada lo avisa sola: el contador dice, por ejemplo, "3 resultados", los rubros muestran cuántas mipymes tienen *con esa búsqueda* (los que quedan en cero se apagan) y el botón dice "Ver los 3 resultados".
+
+**La búsqueda es una sola** para toda la página: el texto, el rubro y la ciudad se comparten entre el buscador de arriba, las tarjetas de las destacadas y la guía. Tocar un rubro en cualquiera de los lugares lo marca en todos.
+
+**Para que arranque abierta**, como antes, en `js/directorio-data.js`, dentro de `DIRECTORIO_CONFIG`, agregá:
+
+    abiertaAlCargar: true,
+
+**Otros detalles:**
+- Funciona con teclado (Enter y barra espaciadora) y avisa a los lectores de pantalla si está abierta o cerrada. Cerrada, la lista no se puede alcanzar con la tecla Tab.
+- Respeta a quienes tienen desactivadas las animaciones en su dispositivo: abre y cierra al instante.
+- En el celular los rubros van en una sola fila que se desliza hacia los costados.
+- Para Google no cambia nada: la lista completa sigue en la versión "sin JavaScript" (que arma `tools/generar-seo.js`) y en las páginas por rubro y por ciudad.
+- Si al cerrar la lista con el botón de abajo el comienzo de la sección quedó arriba, fuera de la pantalla, la vista vuelve sola hasta ahí.
+
