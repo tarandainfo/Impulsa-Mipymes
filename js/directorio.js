@@ -12,11 +12,12 @@
 //     social, búsqueda, y los nombres de la A a la Z.
 //   - Si la lista está vacía, la sección queda oculta (y su
 //     enlace del menú también).
-//   - La guía es DESPLEGABLE: cerrada muestra solo el buscador y
-//     los rubros. Se abre sola al escribir en su buscador, al tocar
-//     un rubro, o al llegar desde el menú "Directorio" (#directorio).
-//     Para que arranque abierta, en js/directorio-data.js, dentro de
-//     DIRECTORIO_CONFIG, agregá:   abiertaAlCargar: true,
+//   - La guía está OCULTA por completo hasta que alguien toca
+//     "Guía de Mipymes" (en el menú de arriba, junto al buscador, en
+//     el pie de página o con un link terminado en #directorio).
+//     Entonces aparece, y el botón "Cerrar la guía" la vuelve a ocultar.
+//     Para que esté siempre a la vista, en js/directorio-data.js, dentro
+//     de DIRECTORIO_CONFIG, agregá:   visibleAlCargar: true,
 // ==========================================
 
 (function () {
@@ -30,7 +31,7 @@
     const ENLACES = window.DirectorioEnlaces;
 
     const config = Object.assign(
-        { filasIniciales: 14, incluirDestacadas: true, abiertaAlCargar: false },
+        { filasIniciales: 14, incluirDestacadas: true, visibleAlCargar: false },
         (typeof DIRECTORIO_CONFIG !== "undefined") ? DIRECTORIO_CONFIG : {}
     );
 
@@ -70,15 +71,6 @@
     const contador = document.getElementById("dir-contador");
     const vacio = document.getElementById("dir-vacio");
     const buscador = document.getElementById("dir-q");
-
-    // La parte desplegable (si falta en el HTML, la guía queda siempre abierta, como antes)
-    const toggle = document.getElementById("dir-toggle");
-    const toggleTxt = document.getElementById("dir-toggle-txt");
-    const cerrarBtn = document.getElementById("dir-cerrar");
-    const chipsRubros = document.getElementById("dir-chips");
-    const hayDesplegable = !!(toggle && toggleTxt && chipsRubros);
-
-    if (!hayDesplegable) seccion.classList.remove("is-cerrada");
 
     // Lo único propio de la guía: el filtro por red social y el "Ver las N restantes"
     const estado = { red: "todas", verTodo: false };
@@ -199,8 +191,6 @@
         const cuentasRubro = BUSC.contar("rubro");
         const totalRubros = Object.keys(cuentasRubro).reduce(function (suma, k) { return suma + cuentasRubro[k]; }, 0);
 
-        actualizarChips(cuentasRubro, busqueda.rubro);
-
         let botonesRubro =
             '<button type="button" class="dir-btn" data-rubro="todos" aria-pressed="' + (!busqueda.rubro) + '">Todos <span>' + totalRubros + '</span></button>';
 
@@ -288,105 +278,6 @@
 
         vacio.hidden = lista.length > 0;
 
-        ultimo = { cantidad: lista.length, sinFiltros: sinFiltros };
-        actualizarBoton();
-
-    }
-
-    // ----- los rubros como botones (se ven con la guía cerrada) -----
-    // Se arman una sola vez y después solo se actualizan: así no se pierde el lugar
-    // de la fila deslizable en el celular cada vez que se escribe una letra.
-    function prepararChips() {
-
-        if (!chipsRubros) return;
-
-        chipsRubros.innerHTML = RUBROS.map(function (r) {
-            return '<button type="button" class="dir-chip dd-c-chip" data-rubro-chip="' + esc(r) + '" aria-pressed="false">' + esc(r) + ' <span>0</span></button>';
-        }).join("");
-
-    }
-
-    function actualizarChips(cuentas, elegido) {
-
-        if (!chipsRubros) return;
-
-        Array.prototype.forEach.call(chipsRubros.children, function (b) {
-
-            const r = b.getAttribute("data-rubro-chip");
-            const n = cuentas[r] || 0;
-
-            b.setAttribute("aria-pressed", elegido === r ? "true" : "false");
-            b.disabled = n === 0 && elegido !== r;
-            b.lastElementChild.textContent = n;
-
-        });
-
-    }
-
-    // ----- abrir y cerrar la guía -----
-    const reducirMovimiento = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    let temporizador = null;
-    let ultimo = { cantidad: ENTRADAS.length, sinFiltros: true };
-
-    function estaCerrada() {
-
-        return seccion.classList.contains("is-cerrada");
-
-    }
-
-    // El texto del botón: "Ver toda la guía", "Ver los 3 resultados" o "Ocultar la lista"
-    function actualizarBoton() {
-
-        if (!hayDesplegable) return;
-
-        if (!estaCerrada()) {
-            toggleTxt.textContent = "Ocultar la lista";
-        } else if (!ultimo.sinFiltros && ultimo.cantidad > 0) {
-            toggleTxt.textContent = ultimo.cantidad === 1 ? "Ver el resultado" : "Ver los " + ultimo.cantidad + " resultados";
-        } else {
-            toggleTxt.textContent = "Ver toda la guía";
-        }
-
-    }
-
-    function poner(abrir, opciones) {
-
-        if (!hayDesplegable) return;
-
-        opciones = opciones || {};
-
-        if (abrir === !estaCerrada()) return;
-
-        clearTimeout(temporizador);
-
-        if (opciones.sinAnimar) {
-            // sin animación (por ejemplo, al llegar con #directorio): se apaga un instante
-            seccion.classList.add("dd-medir");
-            requestAnimationFrame(function () { requestAnimationFrame(function () { seccion.classList.remove("dd-medir"); }); });
-        }
-
-        if (abrir) {
-
-            seccion.classList.remove("is-cerrada");
-
-            // cuando termina de abrirse, el contenido deja de recortarse (así la columna de rubros puede quedar fija al bajar)
-            temporizador = setTimeout(function () { seccion.classList.add("dd-fin"); }, (opciones.sinAnimar || reducirMovimiento) ? 0 : 620);
-
-        } else {
-
-            seccion.classList.remove("dd-fin");
-            seccion.classList.add("is-cerrada");
-
-            // si al cerrar el comienzo de la sección quedó arriba, fuera de la pantalla, se vuelve a él
-            if (opciones.volver && seccion.getBoundingClientRect().top < 0) {
-                seccion.scrollIntoView({ block: "start", behavior: reducirMovimiento ? "auto" : "smooth" });
-            }
-
-        }
-
-        toggle.setAttribute("aria-expanded", abrir ? "true" : "false");
-        actualizarBoton();
-
     }
 
     // Después de volver a dibujar, el foco vuelve al botón que se tocó
@@ -426,19 +317,6 @@
 
         BUSC.cambiar({ q: e.target.value });
 
-        // al escribir en el buscador de la guía, la lista se abre sola
-        if (e.target.value.trim()) poner(true);
-
-    });
-
-    buscador.addEventListener("keydown", function (e) {
-
-        if (e.key === "Escape" && buscador.value) {
-            e.preventDefault();
-            buscador.value = "";
-            BUSC.cambiar({ q: "" });
-        }
-
     });
 
     BUSC.suscribir(function () {
@@ -454,24 +332,6 @@
     buscador.value = BUSC.obtener().q;
 
     seccion.addEventListener("click", function (e) {
-
-        // un rubro de la fila de arriba: filtra y, si se eligió uno, abre la lista
-        const chipRubro = e.target.closest(".dd-c-chip");
-
-        if (chipRubro) {
-
-            if (chipRubro.disabled) return;
-
-            const r = chipRubro.getAttribute("data-rubro-chip");
-            const nuevo = BUSC.obtener().rubro === r ? "" : r;
-
-            BUSC.cambiar({ rubro: nuevo });
-
-            if (nuevo) poner(true);
-
-            return;
-
-        }
 
         const enlace = e.target.closest("a.dir-enlace");
 
@@ -509,44 +369,6 @@
     });
 
 
-    // ---------- abrir y cerrar a mano ----------
-
-    if (hayDesplegable) {
-
-        toggle.addEventListener("click", function () { poner(estaCerrada()); });
-
-        if (cerrarBtn) {
-            cerrarBtn.addEventListener("click", function () {
-                poner(false, { volver: true });
-                toggle.focus({ preventScroll: true });
-            });
-        }
-
-    }
-
-    // Llegar con el enlace #directorio (menú, pie de página o un link compartido) abre la guía
-    function abrirSiPidenElDirectorio(alCargar) {
-
-        if (window.location.hash !== "#directorio") return;
-
-        poner(true, { sinAnimar: alCargar });
-
-        if (alCargar) seccion.scrollIntoView({ block: "start" });
-
-    }
-
-    window.addEventListener("hashchange", function () { abrirSiPidenElDirectorio(false); });
-
-    // tocar de nuevo un enlace a #directorio cuando la dirección ya lo tiene (no cambia el hash, pero tiene que abrir)
-    document.addEventListener("click", function (e) {
-
-        const a = e.target.closest && e.target.closest('a[href="#directorio"]');
-
-        if (a) poner(true);
-
-    });
-
-
     // ---------- botón "Quiero estar en la guía" (WhatsApp) ----------
 
     const unirse = document.getElementById("dir-unirse");
@@ -566,28 +388,109 @@
     }
 
 
-    // ---------- mostrar la sección y su enlace del menú ----------
+    // ---------- la guía aparece cuando se la pide ----------
+    //
+    // Está oculta hasta que alguien toca "Guía de Mipymes". Los enlaces que la abren
+    // (menú, pie de página y el que está junto al buscador) se marcan con data-dir-nav.
 
-    seccion.hidden = false;
+    const enlacesGuia = Array.prototype.slice.call(document.querySelectorAll("[data-dir-nav]"));
+    const cerrarBtn = document.getElementById("dir-cerrar");
+    const reducirMovimiento = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    let temporizador = null;
 
-    document.querySelectorAll("[data-dir-nav]").forEach(function (a) {
+    function marcarEnlaces(abierta) {
+
+        enlacesGuia.forEach(function (a) {
+            a.setAttribute("aria-expanded", abierta ? "true" : "false");
+        });
+
+    }
+
+    function mostrar() {
+
+        marcarEnlaces(true);
+
+        if (!seccion.hidden) return;
+
+        seccion.hidden = false;
+
+        if (!reducirMovimiento) {
+
+            seccion.classList.add("dir-aparece");
+
+            clearTimeout(temporizador);
+            temporizador = setTimeout(function () { seccion.classList.remove("dir-aparece"); }, 700);
+
+        }
+
+    }
+
+    function ocultar() {
+
+        if (seccion.hidden) return;
+
+        // Se guarda el lugar donde estaba, para que al desaparecer la página no "salte":
+        // queda mostrando lo que viene después de la guía.
+        const arriba = seccion.getBoundingClientRect().top + window.scrollY - 72;
+
+        seccion.hidden = true;
+        marcarEnlaces(false);
+
+        if (window.location.hash === "#directorio") {
+            try {
+                window.history.replaceState(null, "", window.location.pathname + window.location.search);
+            } catch (error) { /* sin historial: no pasa nada */ }
+        }
+
+        window.scrollTo({ top: Math.max(0, arriba), behavior: "auto" });
+
+        // el foco vuelve a un enlace de "Guía de Mipymes" que se vea (el del menú no existe en el celular)
+        const visible = enlacesGuia.filter(function (a) { return a.offsetParent !== null; })[0];
+
+        if (visible) visible.focus({ preventScroll: true });
+
+    }
+
+    if (cerrarBtn) cerrarBtn.addEventListener("click", ocultar);
+
+    // Cualquier enlace a #directorio la muestra. Se escucha en la "fase de captura" (el último
+    // parámetro, true) para que la guía ya esté a la vista cuando el desplazamiento suave de
+    // app.js calcule hasta dónde bajar: si no, intentaría bajar hasta una sección todavía oculta.
+    document.addEventListener("click", function (e) {
+
+        const a = e.target.closest && e.target.closest('a[href="#directorio"]');
+
+        if (a) mostrar();
+
+    }, true);
+
+    window.addEventListener("hashchange", function () {
+
+        if (window.location.hash === "#directorio") mostrar();
+
+    });
+
+    enlacesGuia.forEach(function (a) {
         a.hidden = false;
     });
 
-    prepararChips();
     dibujar();
 
-    if (config.abiertaAlCargar) poner(true, { sinAnimar: true });
+    if (config.visibleAlCargar) mostrar();
 
-    abrirSiPidenElDirectorio(true);
+    // Llegar con el link #directorio la muestra y baja hasta ella
+    if (window.location.hash === "#directorio") {
+        mostrar();
+        seccion.scrollIntoView({ block: "start" });
+    }
 
     // Para poder probar la lógica
     window.Directorio = {
         entradas: ENTRADAS,
         rubros: RUBROS,
-        abrir: function () { poner(true); },
-        cerrar: function () { poner(false); },
-        estaCerrada: estaCerrada
+        mostrar: mostrar,
+        ocultar: ocultar,
+        estaVisible: function () { return !seccion.hidden; }
     };
 
 })();

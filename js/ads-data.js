@@ -78,8 +78,9 @@
 
 const ADS_CONFIG = {
 
-    // true = se muestran los banners. false = no se muestra ninguno.
-    activos: true,
+    // true = se muestran los banners. false = no se muestra ninguno (ni se reserva su espacio).
+    // POR AHORA APAGADOS. Para volver a mostrarlos, cambiá  false  por  true.
+    activos: false,
 
     // true = agrega utm_source / utm_medium / utm_campaign / utm_content
     // a los enlaces de los anunciantes (no a los de WhatsApp).

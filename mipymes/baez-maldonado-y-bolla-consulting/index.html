@@ -17,6 +17,12 @@
     -->
     <script src="./js/theme-init.js?v=20261008-claro-oscuro"></script>
 
+    <!-- Publicidad: se lee acá, antes de dibujar la página, para saber si está apagada
+         (ADS_CONFIG.activos = false en js/ads-data.js). Si lo está, sus espacios ni se reservan
+         y la página no "salta" al cargar. -->
+    <script src="./js/ads-data.js?v=20261113-guia"></script>
+    <script>if (typeof ADS_CONFIG !== "undefined" && ADS_CONFIG.activos === false) document.documentElement.classList.add("sin-anuncios");</script>
+
     <!-- ================= SEO =================
          Título, descripción, dirección canónica, imagen para compartir y datos estructurados
          de ESTA página, escritos por tools/generar-seo.js. -->
@@ -179,7 +185,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/styles.css?v=20261110-buscador">
+    <link rel="stylesheet" href="./css/styles.css?v=20261113-guia">
 </head>
 
 <body>
@@ -385,7 +391,6 @@
     <script src="./js/config.js?v=20260811-15" defer></script>
     <script src="./js/verificada.js?v=20261030-verificada" defer></script>
     <script src="./js/mipymes-data.js?v=20261030-verificada" defer></script>
-    <script src="./js/ads-data.js?v=20261020-ads" defer></script>
     <script src="./js/ads.js?v=20261020-ads" defer></script>
     <script src="./js/paginas-generadas.js?v=de88923e" defer></script>
     <script src="./js/ficha.js?v=20261110-buscador" defer></script>

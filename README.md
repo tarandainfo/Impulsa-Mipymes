@@ -389,27 +389,29 @@ Después subí **todo** lo que cambió (`git add .`, commit y push): `index.html
 
 ---
 
-## Guía de mipymes desplegable
+## Guía de mipymes: aparece solo cuando se la pide
 
-La guía ya no está siempre abierta. **Cerrada** muestra el título, el buscador y los rubros (con cuántas mipymes tiene cada uno), y ocupa unos 450 px en escritorio (antes, más de 1.600). La lista completa se despliega:
+La guía **no se ve** al abrir la web. Aparece (con una pequeña animación) cuando alguien toca **"Guía de Mipymes"**:
 
-- **al escribir** en el buscador de la guía,
-- **al tocar un rubro** (queda filtrado por ese rubro),
-- **con el botón** "Ver toda la guía" / "Ocultar la lista",
-- **al llegar con el enlace `#directorio`** (el menú "Directorio", el pie de página o un link compartido): se abre y baja hasta ella.
+- en el **menú de arriba** (antes decía "Directorio"; solo existe en escritorio),
+- en el enlace **"Guía de Mipymes →"** que está **junto al buscador** (sirve en tablet y celular, donde no hay menú arriba),
+- en el **pie de página**,
+- o al llegar con un link terminado en `#directorio`.
 
-**El buscador de arriba (el de "Mipymes destacadas") no abre la guía.** Si hay una búsqueda activa, la guía cerrada lo avisa sola: el contador dice, por ejemplo, "3 resultados", los rubros muestran cuántas mipymes tienen *con esa búsqueda* (los que quedan en cero se apagan) y el botón dice "Ver los 3 resultados".
+Al aparecer, la web baja hasta ella. El botón **"Cerrar la guía"** (al final de la sección) la vuelve a ocultar y deja la pantalla donde estaba, mostrando lo que sigue.
 
-**La búsqueda es una sola** para toda la página: el texto, el rubro y la ciudad se comparten entre el buscador de arriba, las tarjetas de las destacadas y la guía. Tocar un rubro en cualquiera de los lugares lo marca en todos.
+- La lista se arma igual aunque esté oculta, así aparece al instante.
+- El buscador de arriba y la guía comparten la misma búsqueda (texto, rubro y ciudad): si ya filtraste algo, la guía se abre con ese filtro.
+- Si en "Mipymes destacadas" ninguna coincide con tu búsqueda pero sí hay en la guía, el aviso trae un enlace "guía de mipymes" que la abre.
+- **Para que esté siempre a la vista**, como antes, en `js/directorio-data.js`, dentro de `DIRECTORIO_CONFIG`, agregá: `visibleAlCargar: true,`
+- Para Google no cambia la lista "sin JavaScript" ni las páginas por rubro y ciudad, pero **mientras la guía está oculta, su contenido no se ve en pantalla**.
 
-**Para que arranque abierta**, como antes, en `js/directorio-data.js`, dentro de `DIRECTORIO_CONFIG`, agregá:
+---
 
-    abiertaAlCargar: true,
+## Publicidad apagada por ahora
 
-**Otros detalles:**
-- Funciona con teclado (Enter y barra espaciadora) y avisa a los lectores de pantalla si está abierta o cerrada. Cerrada, la lista no se puede alcanzar con la tecla Tab.
-- Respeta a quienes tienen desactivadas las animaciones en su dispositivo: abre y cierra al instante.
-- En el celular los rubros van en una sola fila que se desliza hacia los costados.
-- Para Google no cambia nada: la lista completa sigue en la versión "sin JavaScript" (que arma `tools/generar-seo.js`) y en las páginas por rubro y por ciudad.
-- Si al cerrar la lista con el botón de abajo el comienzo de la sección quedó arriba, fuera de la pantalla, la vista vuelve sola hasta ahí.
+Los banners publicitarios (los 7 espacios) están **apagados**: en `js/ads-data.js`, `ADS_CONFIG.activos` está en `false`. Siguen visibles los banners de **"Empresas que apoyan a las Mipymes"**, que son otra cosa (se cargan en `js/banners-data.js`).
+
+- **Para volver a mostrar la publicidad**, cambiá `activos: false` por `activos: true` en `js/ads-data.js`, y volvé a correr `node tools/generar-seo.js`. Los banners que ya estaban cargados vuelven.
+- Con la publicidad apagada **ni siquiera se reserva su espacio**, así la página no "salta" al cargar. Esto lo hace un pequeño código en la cabecera de `index.html` y `ficha.html` (y de las páginas fijas que arma el generador).
 

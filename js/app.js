@@ -237,7 +237,7 @@ function mostrarMipymes() {
             <div class="buscador-vacio">
                 <strong>Ninguna mipyme destacada coincide con tu búsqueda.</strong>
                 <p>${enLaGuia
-                    ? `Pero encontramos ${enLaGuia} ${enLaGuia === 1 ? "mipyme" : "mipymes"} en la <a href="#directorio">guía de mipymes</a>, más abajo.`
+                    ? `Pero encontramos ${enLaGuia} ${enLaGuia === 1 ? "mipyme" : "mipymes"} en la <a href="#directorio">guía de mipymes</a>.`
                     : "Probá con otra palabra, o con otro rubro o ciudad."}</p>
                 <button type="button" class="buscador-vacio-limpiar">Limpiar la búsqueda</button>
             </div>

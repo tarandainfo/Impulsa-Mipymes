@@ -7733,81 +7733,29 @@ html[data-tema] .lp-subtitulo {
 html[data-tema] .lp-subtitulo { letter-spacing: 0.12em; }
 
 
+
 /* =====================================================
-   GUÍA DE MIPYMES DESPLEGABLE
-   Cerrada muestra el buscador y los rubros; la lista se abre al
-   escribir, tocar un rubro o venir desde el menú. Lo maneja js/directorio.js.
+   GUÍA DE MIPYMES: aparece al tocar "Guía de Mipymes"
+   Oculta por completo hasta entonces (js/directorio.js).
 ===================================================== */
 
 .dir-section { scroll-margin-top: 72px; }
 
-.dd { transition: padding .5s cubic-bezier(.2, .8, .2, 1); }
+.dir-aparece { animation: dir-aparece .5s cubic-bezier(.2, .8, .2, 1) both; }
 
-.dd.is-cerrada { padding-top: 54px; padding-bottom: 54px; }
-
-/* la lista aparece "desplegándose" (sin saltos): de alto 0 a su alto real */
-.dd-plegable {
-    display: grid;
-    grid-template-rows: 0fr;
-    transition: grid-template-rows .55s cubic-bezier(.2, .8, .2, 1), margin .55s cubic-bezier(.2, .8, .2, 1);
+/* solo se desvanece (sin moverse): así el desplazamiento suave calcula bien hasta dónde bajar */
+@keyframes dir-aparece {
+    from { opacity: 0; }
+    to   { opacity: 1; }
 }
 
-.dd-plegable > .dd-interior {
-    min-height: 0;
-    overflow: hidden;
-    visibility: hidden;                     /* cerrada: no se puede tocar ni enfocar con Tab */
-    transition: visibility 0s linear .55s;
-}
+.dir-cerrar-fila { display: flex; justify-content: center; margin-top: 46px; }
 
-.dd:not(.is-cerrada) .dd-plegable { grid-template-rows: 1fr; margin-top: 34px; }
-
-.dd:not(.is-cerrada) .dd-plegable > .dd-interior { visibility: visible; transition-delay: 0s; }
-
-/* ya abierta del todo, el contenido deja de recortarse (así la columna de rubros puede quedar fija al bajar) */
-.dd.dd-fin .dd-plegable > .dd-interior { overflow: visible; }
-
-.dd-medir, .dd-medir * { transition: none !important; }
-
-.dd-chev {
-    display: inline-grid;
-    place-items: center;
-    flex-shrink: 0;
-    width: 44px;
-    height: 44px;
-    border: 1px solid var(--dir-borde2);
-    border-radius: 50%;
-    background: var(--dir-sup);
-    color: var(--dir-texto);
-    transition: transform .45s cubic-bezier(.2, .8, .2, 1);
-}
-
-.dd-chev svg { width: 20px; height: 20px; }
-
-.dd:not(.is-cerrada) .dd-c-ver .dd-chev { transform: rotate(180deg); }
-
-/* barra de arriba: buscador, rubros y botón */
-.dd-c-barra { display: flex; flex-direction: column; gap: 16px; }
-
-.dd-c-barra .dir-herramientas { margin: 0; }
-
-.dd-c-barra .dir-buscar { max-width: 560px; }
-
-.dd-c-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-
-.dd-c-chip span { margin-left: 4px; font: 600 .7rem 'JetBrains Mono', ui-monospace, monospace; opacity: .7; }
-
-.dd-c-chip:disabled { opacity: .4; cursor: default; }
-
-.dd-c-chip:disabled:hover { border-color: var(--dir-borde2); color: var(--dir-sec); }
-
-.dd-c-chip:focus-visible { outline: 3px solid var(--celeste, #50C7E7); outline-offset: 2px; }
-
-.dd-c-ver {
-    align-self: flex-start;
+.dir-cerrar {
     display: inline-flex;
     align-items: center;
     gap: 10px;
-    padding: 8px 10px 8px 20px;
+    padding: 9px 12px 9px 20px;
     border: 1px solid var(--dir-borde2);
     border-radius: 999px;
     background: var(--dir-sup);
@@ -7818,59 +7766,60 @@ html[data-tema] .lp-subtitulo { letter-spacing: 0.12em; }
     transition: border-color .2s;
 }
 
-.dd-c-ver:hover { border-color: var(--dir-acento); }
+.dir-cerrar:hover { border-color: var(--dir-acento); }
 
-.dd-c-ver:focus-visible, .dd-cerrar:focus-visible { outline: 3px solid var(--celeste, #50C7E7); outline-offset: 2px; }
+.dir-cerrar:focus-visible { outline: 3px solid var(--celeste, #50C7E7); outline-offset: 2px; }
 
-.dd-c-ver .dd-chev { width: 34px; height: 34px; border: 0; background: var(--dir-fondo2); }
+.dir-cerrar-ico {
+    display: inline-grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--dir-fondo2);
+}
 
-.dd-cerrar-fila { display: flex; justify-content: center; padding-top: 30px; }
+.dir-cerrar-ico svg { width: 18px; height: 18px; }
 
-.dd-cerrar {
+/* Acceso a la guía junto al buscador (en tablet y celular no hay menú arriba) */
+.buscador-pie {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    margin-top: 12px;
+}
+
+.buscador-pie .buscador-estado { margin: 0; }
+
+.buscador-guia {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    padding: 9px 12px 9px 18px;
-    border: 1px solid var(--dir-borde2);
+    gap: 8px;
+    padding: 7px 16px;
+    border: 1px solid var(--b-borde);
     border-radius: 999px;
-    background: var(--dir-sup);
-    color: var(--dir-texto);
-    font: 700 .88rem inherit;
-    font-family: inherit;
-    cursor: pointer;
+    color: var(--b-texto);
+    font-size: .88rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: border-color .2s, color .2s;
 }
 
-.dd-cerrar:hover { border-color: var(--dir-acento); }
+.buscador-guia[hidden] { display: none; }
 
-.dd-cerrar .dd-chev { width: 30px; height: 30px; border: 0; background: var(--dir-fondo2); transform: rotate(180deg); }
+.buscador-guia:hover { border-color: var(--b-acento); color: var(--b-acento); }
 
-/* celular: los rubros van en una sola fila que se desliza (como en el resto del sitio) */
-@media (max-width: 640px) {
+.buscador-guia:focus-visible { outline: 3px solid var(--celeste, #50C7E7); outline-offset: 2px; }
 
-    .dd-c-chips {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        margin: 0 -16px;
-        padding: 2px 16px 8px;
-        scrollbar-width: none;
-        scroll-snap-type: x proximity;
-    }
-
-    .dd-c-chips::-webkit-scrollbar { display: none; }
-
-    .dd-c-chip { flex: 0 0 auto; scroll-snap-align: start; white-space: nowrap; }
-
-}
-
-/* en pantallas chicas los rubros ya están arriba de todo: la fila repetida dentro de la lista sobra */
-@media (max-width: 860px) {
-
-    .dd .dir-filtros { display: none; }
-
-}
+/* Publicidad apagada (ADS_CONFIG.activos = false): sus espacios ni se reservan, así la página no salta al cargar */
+html.sin-anuncios .ad-slot { display: none !important; }
 
 @media (prefers-reduced-motion: reduce) {
 
-    .dd, .dd-plegable, .dd-plegable > .dd-interior, .dd-chev { transition: none !important; }
+    .dir-aparece { animation: none; }
+
+    .dir-cerrar, .buscador-guia { transition: none; }
 
 }
