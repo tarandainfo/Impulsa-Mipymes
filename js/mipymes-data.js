@@ -93,6 +93,46 @@ const MIPYMES_DATA = [
     },
 
     {
+        nombre: "Pisapisuela Manualidades",
+        categoria: "Artesanía",
+        verificada: true,
+
+        descripcion:
+            "Emprendimiento de costura creativa y confección artesanal de productos textiles personalizados, accesorios para el hogar, bolsos, ajuares para bebés y artículos utilitarios.",
+
+        descripcionLarga: [
+            "Pisapisuela Manualidades, creado por Teresa Cuttier en 2020, nació durante la pandemia como una actividad de terapia ocupacional que, con el tiempo, se convirtió en un emprendimiento dedicado a la costura creativa y la elaboración artesanal de productos textiles. Su propuesta incluye mantelería, ajuares para bebés, bolsos, cartucheras, organizadores, delantales y regalos personalizados, confeccionados con diseños originales y atención a los detalles.",
+            "Actualmente, el emprendimiento cuenta con un taller y showroom donde se elaboran y exhiben sus productos, además de comercializar a través de redes sociales. Junto con una colaboradora, Teresa apuesta por la personalización, el valor de lo hecho a mano y la producción responsable, aprovechando retazos textiles y priorizando materiales como el algodón. Su objetivo es ofrecer piezas únicas que combinen creatividad, funcionalidad y dedicación artesanal."
+        ],
+
+        ubicacion: "Lambaré, Paraguay",
+
+        whatsapp: "595971348143",
+
+        instagram: "https://www.instagram.com/pisapisuela.manualidades/",
+
+        productoImagen:
+            "./assets/img/pisapisuela/principal.jpg",
+
+        perfilImagen:
+            "./assets/img/pisapisuela/perfil.jpg",
+
+        fotosCarrusel: [
+            "./assets/img/pisapisuela/principal.jpg",
+            "./assets/img/pisapisuela/2.jpg",
+            "./assets/img/pisapisuela/3.jpg",
+            "./assets/img/pisapisuela/4.jpg",
+            "./assets/img/pisapisuela/5.jpg"
+        ],
+
+        promocion:
+            "Consultá por los servicios disponibles.",
+
+        notaPeriodistica: ""
+
+    },
+
+    {
         nombre: "Fabricante Muebles",
         categoria: "Artesanía",
         verificada: true,
