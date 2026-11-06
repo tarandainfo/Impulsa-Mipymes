@@ -134,6 +134,37 @@ const DIRECTORIO_DATA = [
     {nombre: "Fátima Sosa Organización y ambientación de eventos", rubro: "Organización de eventos", red: "Instagram", usuario: "fatimasosaeventos"},
     {nombre: "Báez Maldonado y Bolla Consulting", rubro: "Consultoría", red: "Instagram", usuario: "bmbconsulting"},
     {nombre: "Eventos Paraguay", rubro: "Servicios para eventos", red: "Instagram", usuario: "eventosparaguay_"},
-    {nombre: "Fabricante Muebles", rubro: "Artesanía", red: "Instagram", usuario: "fabricante_muebles"}
+    {nombre: "Fabricante Muebles", rubro: "Artesanía", red: "Instagram", usuario: "fabricante_muebles"},
+
+    // ----- Ingresantes: comentarios del posteo de Instagram (guía gratuita, sin palomita) -----
+    {nombre: "Bel Fiore", rubro: "Moda y diseño", red: "Instagram", usuario: "belfiorepy"},
+    {nombre: "Naturella", rubro: "Gastronomía", red: "Instagram", usuario: "naturella.py"},
+    {nombre: "Nesaya LED", rubro: "Publicidad e impresiones", red: "Instagram", usuario: "nesaya.led"},
+    {nombre: "Bema Publicitaria", rubro: "Publicidad e impresiones", red: "Instagram", usuario: "bemapublicitariapy"},
+    {nombre: "ACOCO", rubro: "Moda y diseño", red: "Instagram", usuario: "acoco_py"},
+    {nombre: "Pisa Pisuela", rubro: "Moda y diseño", red: "Instagram", usuario: "pisa.pisuela.py"},
+    {nombre: "Bendita Tierra", rubro: "Artesanía", red: "Instagram", usuario: "benditatierrapy"},
+    {nombre: "Moda Sport", rubro: "Moda y diseño", red: "Instagram", usuario: "modasportoficial"},
+    {nombre: "Ya Impresiones", rubro: "Publicidad e impresiones", red: "Instagram", usuario: "yaimpresionespy"},
+    {nombre: "Ele Bé Studio Branding", rubro: "Moda y diseño", red: "Instagram", usuario: "elebeestudiobranding"},
+    {nombre: "Guay Goods", rubro: "Moda y diseño", red: "Instagram", usuario: "guaygoods.py"},
+    {nombre: "Wine Garden", rubro: "Gastronomía", red: "Instagram", usuario: "winegarden_py"},
+    {nombre: "TAJOS Barberos", rubro: "Belleza y cuidado personal", red: "Instagram", usuario: "tajosbarberos"},
+    {nombre: "Bombones Marité", rubro: "Gastronomía", red: "Instagram", usuario: "bombones_marite"},
+    {nombre: "Lala Kids Clothing", rubro: "Moda y diseño", red: "Instagram", usuario: "lala.kidsclothing"},
+    {nombre: "Aglox", rubro: "Artesanía", red: "Instagram", usuario: "aglox.py"},
+    {nombre: "Eepiscinas", rubro: "Oficios y construcción", red: "Instagram", usuario: "eepiscinas"},
+    {nombre: "La Casa del Repuesto", rubro: "Oficios y construcción", red: "Instagram", usuario: "lacasadelrepuesto_23"},
+    {nombre: "Sofía's Librería", rubro: "Artesanía", red: "Instagram", usuario: "sofias_libreria"},
+    {nombre: "Porto Bello Villamorra", rubro: "Gastronomía", red: "Instagram", usuario: "portobelovillamorra"},
+    {nombre: "Frío Sabor", rubro: "Gastronomía", red: "Instagram", usuario: "frio_sabor_py"},
+    {nombre: "Minerva Clothing", rubro: "Moda y diseño", red: "Instagram", usuario: "minervaclothing.py"}
+
+    // PENDIENTE (el usuario figura «por verificar» en la planilla): descomentá la línea cuando se confirme
+    // {nombre: "Encantada Chic", rubro: "Moda y diseño", red: "Instagram", usuario: "encantadachic"},
+
+    // PENDIENTE (el rubro figura «por confirmar» en la planilla): descomentá la línea cuando se confirme
+    // {nombre: "Nigui", rubro: "Regalos y detalles", red: "Instagram", usuario: "niguipy"},
+
 
 ];

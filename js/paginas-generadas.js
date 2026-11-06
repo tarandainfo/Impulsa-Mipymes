@@ -12,17 +12,22 @@ const PAGINAS_GENERADAS = {
     "ag-organizacion-contable",
     "fatima-sosa-organizacion-y-ambientacion-de-eventos",
     "baez-maldonado-y-bolla-consulting",
-    "eventos-paraguay"
+    "eventos-paraguay",
+    "fabricante-muebles"
   ],
   "rubros": {
     "gastronomia": "Gastronomía",
     "moda-y-diseno": "Moda y diseño",
+    "belleza-y-cuidado-personal": "Belleza y cuidado personal",
+    "oficios-y-construccion": "Oficios y construcción",
     "decoracion-y-productos-para-exteriores": "Decoración y productos para exteriores",
     "servicios-audiovisuales": "Servicios audiovisuales",
     "servicios-contables": "Servicios contables",
     "organizacion-de-eventos": "Organización de eventos",
     "consultoria": "Consultoría",
-    "servicios-para-eventos": "Servicios para eventos"
+    "servicios-para-eventos": "Servicios para eventos",
+    "artesania": "Artesanía",
+    "publicidad-e-impresiones": "Publicidad e impresiones"
   },
   "ciudades": {
     "asuncion": "Asunción",
@@ -160,6 +165,17 @@ const PAGINAS_GENERADAS = {
       "rubro": {
         "nombre": "Servicios para eventos",
         "ruta": "rubros/servicios-para-eventos/"
+      },
+      "ciudad": {
+        "nombre": "Asunción",
+        "ruta": "ciudades/asuncion/"
+      },
+      "combinada": null
+    },
+    "fabricante-muebles": {
+      "rubro": {
+        "nombre": "Artesanía",
+        "ruta": "rubros/artesania/"
       },
       "ciudad": {
         "nombre": "Asunción",
