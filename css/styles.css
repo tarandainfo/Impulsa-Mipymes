@@ -7823,3 +7823,121 @@ html.sin-anuncios .ad-slot { display: none !important; }
     .dir-cerrar, .buscador-guia { transition: none; }
 
 }
+
+
+/* =====================================================
+   Sin desborde lateral en el celular
+   El globo de ayuda de la palomita de "mipyme verificada" es un texto de una sola línea,
+   centrado sobre ella e invisible hasta que se pasa el mouse. Cuando la palomita estaba
+   cerca del borde derecho, ese texto invisible sobresalía y el navegador del celular
+   ensanchaba toda la página (y aparecía un desplazamiento lateral).
+===================================================== */
+
+/* En pantallas táctiles o angostas el globo de ayuda de la palomita no se puede "pasar el mouse por encima",
+   y su texto invisible sobresale por la derecha ensanchando la página. En escritorio sigue igual. */
+@media (hover: none), (max-width: 760px) {
+
+    .verif[data-tip]::after { display: none; }
+
+}
+
+
+
+/* =====================================================
+   GUÍA DE MIPYMES: una línea que se despliega
+   Siempre se ve una sola línea; al tocarla se despliega toda la guía (js/directorio.js).
+===================================================== */
+
+.dir-section { padding: 26px 0; }
+
+.dir-section.dir-abierta { padding: 26px 0 84px; }
+
+.dir-linea-h { margin: 0; font: inherit; letter-spacing: 0; }
+
+.dir-linea {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    width: 100%;
+    min-height: 68px;
+    padding: 10px 14px 10px 24px;
+    border: 1px solid var(--dir-borde2);
+    border-radius: 20px;
+    background: var(--dir-sup);
+    color: var(--dir-texto);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: border-color .2s ease, box-shadow .25s ease;
+}
+
+.dir-linea:hover { border-color: var(--dir-acento); box-shadow: 0 12px 30px rgba(11, 13, 18, .09); }
+
+html[data-theme="dark"] .dir-linea:hover { box-shadow: 0 12px 30px rgba(0, 0, 0, .5); }
+
+.dir-linea:focus-visible { outline: 3px solid var(--celeste, #50C7E7); outline-offset: 3px; }
+
+.dir-linea-izq { display: flex; align-items: center; gap: 14px; min-width: 0; flex: 1; }
+
+.dir-linea-tag {
+    font: 600 .68rem 'JetBrains Mono', ui-monospace, monospace;
+    letter-spacing: .12em;
+    color: var(--dir-ter);
+    white-space: nowrap;
+}
+
+.dir-linea-tit {
+    font: 800 1.2rem 'Manrope', Arial, sans-serif;
+    letter-spacing: -.02em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dir-linea-n {
+    min-width: 6.4em;
+    padding: 4px 11px;
+    border-radius: 999px;
+    background: var(--dir-fondo2);
+    color: var(--dir-sec);
+    font: 600 .76rem 'JetBrains Mono', ui-monospace, monospace;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.dir-linea-der { display: flex; align-items: center; gap: 12px; flex-shrink: 0; color: var(--dir-sec); font-weight: 700; font-size: .9rem; }
+
+.dir-linea-ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; background: var(--dir-fondo2); }
+
+.dir-linea-ico svg { width: 20px; height: 20px; transition: transform .4s cubic-bezier(.2, .8, .2, 1); }
+
+.dir-linea[aria-expanded="true"] .dir-linea-ico svg { transform: rotate(180deg); }
+
+.dir-contenido { margin-top: 34px; }
+
+.dir-intro { margin: 0 0 22px; color: var(--dir-sec); line-height: 1.55; }
+
+@media (max-width: 640px) {
+
+    .dir-section { padding: 18px 0; }
+
+    .dir-section.dir-abierta { padding: 18px 0 64px; }
+
+    .dir-linea { min-height: 60px; padding-left: 18px; }
+
+    .dir-linea-tag, .dir-linea-txt { display: none; }
+
+    .dir-linea-tit { font-size: 1.08rem; }
+
+    .dir-linea-n { min-width: 0; }
+
+    .dir-contenido { margin-top: 26px; }
+
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .dir-linea, .dir-linea-ico svg { transition: none; }
+
+}

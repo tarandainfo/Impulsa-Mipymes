@@ -388,38 +388,54 @@
     }
 
 
-    // ---------- la guía aparece cuando se la pide ----------
+    // ---------- la guía: una línea que se despliega ----------
     //
-    // Está oculta hasta que alguien toca "Guía de Mipymes". Los enlaces que la abren
-    // (menú, pie de página y el que está junto al buscador) se marcan con data-dir-nav.
+    // Siempre se ve una sola línea ("Guía de mipymes · N mipymes · Desplegar"). Al tocarla se
+    // despliega toda la guía. Los enlaces que también la abren (menú, pie de página y el que
+    // está junto al buscador) se marcan con data-dir-nav.
 
     const enlacesGuia = Array.prototype.slice.call(document.querySelectorAll("[data-dir-nav]"));
     const cerrarBtn = document.getElementById("dir-cerrar");
+    const linea = document.getElementById("dir-linea");
+    const lineaTxt = document.getElementById("dir-linea-txt");
+    const lineaN = document.getElementById("dir-linea-n");
+    const contenido = document.getElementById("dir-contenido");
     const reducirMovimiento = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let temporizador = null;
 
-    function marcarEnlaces(abierta) {
+    if (lineaN) lineaN.textContent = ENTRADAS.length + (ENTRADAS.length === 1 ? " mipyme" : " mipymes");
+
+    function estaAbierta() {
+        return !contenido.hidden;
+    }
+
+    function marcar(abierta) {
 
         enlacesGuia.forEach(function (a) {
             a.setAttribute("aria-expanded", abierta ? "true" : "false");
         });
 
+        if (linea) linea.setAttribute("aria-expanded", abierta ? "true" : "false");
+        if (lineaTxt) lineaTxt.textContent = abierta ? "Plegar" : "Desplegar";
+
+        seccion.classList.toggle("dir-abierta", abierta);
+
     }
 
     function mostrar() {
 
-        marcarEnlaces(true);
+        marcar(true);
 
-        if (!seccion.hidden) return;
+        if (estaAbierta()) return;
 
-        seccion.hidden = false;
+        contenido.hidden = false;
 
         if (!reducirMovimiento) {
 
-            seccion.classList.add("dir-aparece");
+            contenido.classList.add("dir-aparece");
 
             clearTimeout(temporizador);
-            temporizador = setTimeout(function () { seccion.classList.remove("dir-aparece"); }, 700);
+            temporizador = setTimeout(function () { contenido.classList.remove("dir-aparece"); }, 700);
 
         }
 
@@ -427,14 +443,13 @@
 
     function ocultar() {
 
-        if (seccion.hidden) return;
+        if (!estaAbierta()) return;
 
-        // Se guarda el lugar donde estaba, para que al desaparecer la página no "salte":
-        // queda mostrando lo que viene después de la guía.
-        const arriba = seccion.getBoundingClientRect().top + window.scrollY - 72;
+        // La línea queda donde estaba en la pantalla, para que al plegar la página no "salte".
+        const antes = linea.getBoundingClientRect().top;
 
-        seccion.hidden = true;
-        marcarEnlaces(false);
+        contenido.hidden = true;
+        marcar(false);
 
         if (window.location.hash === "#directorio") {
             try {
@@ -442,20 +457,41 @@
             } catch (error) { /* sin historial: no pasa nada */ }
         }
 
-        window.scrollTo({ top: Math.max(0, arriba), behavior: "auto" });
+        const lugar = Math.min(Math.max(antes, 96), Math.max(96, window.innerHeight - 140));
 
-        // el foco vuelve a un enlace de "Guía de Mipymes" que se vea (el del menú no existe en el celular)
-        const visible = enlacesGuia.filter(function (a) { return a.offsetParent !== null; })[0];
+        window.scrollBy({ top: linea.getBoundingClientRect().top - lugar, behavior: "auto" });
 
-        if (visible) visible.focus({ preventScroll: true });
+        linea.focus({ preventScroll: true });
+
+    }
+
+    if (linea) {
+
+        linea.addEventListener("click", function () {
+
+            if (estaAbierta()) {
+                ocultar();
+                return;
+            }
+
+            mostrar();
+
+            // Si la línea quedó abajo en la pantalla, se sube para que se vea la guía que se abrió
+            const arriba = linea.getBoundingClientRect().top;
+
+            if (arriba > window.innerHeight * 0.45) {
+                window.scrollBy({ top: arriba - 96, behavior: reducirMovimiento ? "auto" : "smooth" });
+            }
+
+        });
 
     }
 
     if (cerrarBtn) cerrarBtn.addEventListener("click", ocultar);
 
-    // Cualquier enlace a #directorio la muestra. Se escucha en la "fase de captura" (el último
-    // parámetro, true) para que la guía ya esté a la vista cuando el desplazamiento suave de
-    // app.js calcule hasta dónde bajar: si no, intentaría bajar hasta una sección todavía oculta.
+    // Cualquier enlace a #directorio la despliega. Se escucha en la "fase de captura" (el último
+    // parámetro, true) para que la guía ya esté abierta cuando el desplazamiento suave de
+    // app.js calcule hasta dónde bajar.
     document.addEventListener("click", function (e) {
 
         const a = e.target.closest && e.target.closest('a[href="#directorio"]');
@@ -478,7 +514,7 @@
 
     if (config.visibleAlCargar) mostrar();
 
-    // Llegar con el link #directorio la muestra y baja hasta ella
+    // Llegar con el link #directorio la despliega y baja hasta ella
     if (window.location.hash === "#directorio") {
         mostrar();
         seccion.scrollIntoView({ block: "start" });
@@ -490,7 +526,7 @@
         rubros: RUBROS,
         mostrar: mostrar,
         ocultar: ocultar,
-        estaVisible: function () { return !seccion.hidden; }
+        estaVisible: estaAbierta
     };
 
 })();

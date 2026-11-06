@@ -120,7 +120,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="./css/styles.css?v=20261113-guia">
+    <link rel="stylesheet" href="./css/styles.css?v=20261122-linea">
 </head>
 
 <body>
@@ -376,7 +376,7 @@
 
                     <!-- SEO:EXPLORAR-INICIO -->
                     <nav class="buscador-explorar" aria-label="Explorar por rubro y por ciudad">
-                        <p><strong>Por rubro</strong> <a href="rubros/gastronomia/">Gastronomía</a> <a href="rubros/moda-y-diseno/">Moda y diseño</a> <a href="rubros/decoracion-y-productos-para-exteriores/">Decoración y productos para exteriores</a> <a href="rubros/servicios-audiovisuales/">Servicios audiovisuales</a> <a href="rubros/servicios-contables/">Servicios contables</a> <a href="rubros/organizacion-de-eventos/">Organización de eventos</a> <a href="rubros/consultoria/">Consultoría</a> <a href="rubros/servicios-para-eventos/">Servicios para eventos</a></p>
+                        <p><strong>Por rubro</strong> <a href="rubros/gastronomia/">Gastronomía</a> <a href="rubros/moda-y-diseno/">Moda y diseño</a> <a href="rubros/decoracion-y-productos-para-exteriores/">Decoración y productos para exteriores</a> <a href="rubros/servicios-audiovisuales/">Servicios audiovisuales</a> <a href="rubros/servicios-contables/">Servicios contables</a> <a href="rubros/organizacion-de-eventos/">Organización de eventos</a> <a href="rubros/consultoria/">Consultoría</a> <a href="rubros/servicios-para-eventos/">Servicios para eventos</a> <a href="rubros/artesania/">Artesanía</a></p>
                         <p><strong>Por ciudad</strong> <a href="ciudades/asuncion/">Asunción</a> <a href="ciudades/hernandarias/">Hernandarias</a> <a href="ciudades/san-lorenzo/">San Lorenzo</a></p>
                     </nav>
                     <!-- SEO:EXPLORAR-FIN -->
@@ -592,17 +592,27 @@
              Mientras esa lista esté vacía, esta sección no se ve.
         ========================== -->
 
-        <section id="directorio" class="dir-section" aria-labelledby="dir-titulo" hidden>
+        <section id="directorio" class="dir-section" aria-labelledby="dir-titulo">
             <div class="container">
 
-                <div class="section-heading">
-                    <div>
-                        <span class="section-tag">GUÍA GRATUITA</span>
-                        <h2 id="dir-titulo">Guía de mipymes</h2>
-                    </div>
-                    <p>Más emprendimientos de todo Paraguay, por rubro.
-                       Tocá un nombre para ir a su red social.</p>
-                </div>
+                <!-- Una sola línea siempre visible: al tocarla se despliega toda la guía -->
+                <h2 class="dir-linea-h" id="dir-titulo">
+                    <button type="button" class="dir-linea" id="dir-linea" aria-expanded="false" aria-controls="dir-contenido">
+                        <span class="dir-linea-izq">
+                            <span class="dir-linea-tag">GUÍA GRATUITA</span>
+                            <span class="dir-linea-tit">Guía de mipymes</span>
+                            <span class="dir-linea-n" id="dir-linea-n"></span>
+                        </span>
+                        <span class="dir-linea-der">
+                            <span class="dir-linea-txt" id="dir-linea-txt">Desplegar</span>
+                            <span class="dir-linea-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+                        </span>
+                    </button>
+                </h2>
+
+                <div class="dir-contenido" id="dir-contenido" hidden>
+
+                <p class="dir-intro">Más emprendimientos de todo Paraguay, por rubro. Tocá un nombre para ir a su red social.</p>
 
                 <div class="dir-herramientas">
                     <label class="dir-buscar">
@@ -631,7 +641,9 @@
                 </div>
 
                 <div class="dir-cerrar-fila">
-                    <button type="button" class="dir-cerrar" id="dir-cerrar">Cerrar la guía <span class="dir-cerrar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></span></button>
+                    <button type="button" class="dir-cerrar" id="dir-cerrar">Plegar la guía <span class="dir-cerrar-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 15l6-6 6 6"/></svg></span></button>
+                </div>
+
                 </div>
 
             </div>
@@ -864,6 +876,7 @@
                 <h2>Mipymes de Paraguay</h2>
                 <ul>
                     <li><a href="mipymes/baez-maldonado-y-bolla-consulting/">Báez Maldonado y Bolla Consulting</a> — Consultoría · Asunción, Paraguay</li>
+                    <li><a href="mipymes/fabricante-muebles/">Fabricante Muebles</a> — Artesanía · Asunción, Paraguay</li>
                     <li><a href="mipymes/eventos-paraguay/">Eventos Paraguay</a> — Servicios para eventos · Asunción, Paraguay</li>
                     <li><a href="mipymes/fatima-sosa-organizacion-y-ambientacion-de-eventos/">Fátima Sosa Organización y ambientación de eventos</a> — Organización de eventos · Asunción, Paraguay</li>
                     <li><a href="mipymes/ag-organizacion-contable/">AG Organización Contable</a> — Servicios contables empresariales · Hernandarias, Paraguay</li>
@@ -919,6 +932,10 @@
                     <h3>Servicios para eventos</h3>
                     <ul>
                         <li><a href="https://www.instagram.com/eventosparaguay_/" target="_blank" rel="nofollow noopener noreferrer">Eventos Paraguay</a> (mipyme verificada) — Asunción — Instagram</li>
+                    </ul>
+                    <h3>Artesanía</h3>
+                    <ul>
+                        <li><a href="https://www.instagram.com/fabricante_muebles/" target="_blank" rel="nofollow noopener noreferrer">Fabricante Muebles</a> (mipyme verificada) — Asunción — Instagram</li>
                     </ul>
                 </div>
             </section>
@@ -1029,12 +1046,12 @@
     <script src="./js/mipymes-data.js?v=20261030-verificada" defer></script>
     <script src="./js/banners-data.js?v=20260811-15" defer></script>
     <script src="./js/ads.js?v=20261020-ads" defer></script>
-    <script src="./js/paginas-generadas.js?v=de88923e" defer></script>
+    <script src="./js/paginas-generadas.js?v=f4497636" defer></script>
     <script src="./js/orden.js?v=20261110-buscador" defer></script>
     <script src="./js/directorio-enlaces.js?v=20261110-buscador" defer></script>
     <script src="./js/directorio-data.js?v=20261110-buscador" defer></script>
     <script src="./js/buscador.js?v=20261110-buscador" defer></script>
-    <script src="./js/directorio.js?v=20261113-guia" defer></script>
+    <script src="./js/directorio.js?v=20261122-linea" defer></script>
     <script src="./js/app.js?v=20261113-guia" defer></script>
     <script src="./js/theme.js?v=20260828-17" defer></script>
     <script src="./js/chatbot-preguntas.js?v=20260811-15" defer></script>

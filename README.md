@@ -283,7 +283,7 @@ Una lista de nombres de mipymes que **no pagaron** por aparecer, agrupadas por r
 - Los rubros están en `DIRECTORIO_RUBROS` (arriba de ese mismo archivo). Un rubro nuevo se crea solo con usarlo.
 - Las líneas mal cargadas (sin nombre o rubro, o con un link inválido) **no se muestran**; la consola del navegador (F12) dice cuál se omitió y por qué.
 
-**Para probar cómo queda llena:** copiá las líneas de `tools/directorio-ejemplo.js` (son nombres inventados) dentro de `DIRECTORIO_DATA`, mirá la web y **volvé a vaciar la lista antes de publicar**.
+**Para probar cómo queda llena:** agregá unos nombres de prueba dentro de `DIRECTORIO_DATA`, mirá la web y **sacalos antes de publicar**.
 
 **Reglas que ya cumple la guía:**
 - Todos los links se abren en una pestaña nueva con `rel="nofollow noopener noreferrer"` (no son pagos y no avalamos esas páginas).
@@ -389,22 +389,22 @@ Después subí **todo** lo que cambió (`git add .`, commit y push): `index.html
 
 ---
 
-## Guía de mipymes: aparece solo cuando se la pide
+## Guía de mipymes: una línea que se despliega
 
-La guía **no se ve** al abrir la web. Aparece (con una pequeña animación) cuando alguien toca **"Guía de Mipymes"**:
+La guía se ve como **una sola línea** ("Guía de mipymes · N mipymes · Desplegar"). Al tocarla, **se despliega toda la guía** (con una pequeña animación); al tocarla de nuevo, se pliega. También se despliega cuando alguien toca **"Guía de Mipymes"**:
 
 - en el **menú de arriba** (antes decía "Directorio"; solo existe en escritorio),
 - en el enlace **"Guía de Mipymes →"** que está **junto al buscador** (sirve en tablet y celular, donde no hay menú arriba),
 - en el **pie de página**,
 - o al llegar con un link terminado en `#directorio`.
 
-Al aparecer, la web baja hasta ella. El botón **"Cerrar la guía"** (al final de la sección) la vuelve a ocultar y deja la pantalla donde estaba, mostrando lo que sigue.
+Al desplegarse desde esos enlaces, la web baja hasta ella. El botón **"Plegar la guía"** (al final de la sección) la vuelve a plegar y deja la línea a la vista, sin perder el lugar.
 
-- La lista se arma igual aunque esté oculta, así aparece al instante.
+- La lista se arma igual aunque esté plegada, así aparece al instante.
 - El buscador de arriba y la guía comparten la misma búsqueda (texto, rubro y ciudad): si ya filtraste algo, la guía se abre con ese filtro.
 - Si en "Mipymes destacadas" ninguna coincide con tu búsqueda pero sí hay en la guía, el aviso trae un enlace "guía de mipymes" que la abre.
-- **Para que esté siempre a la vista**, como antes, en `js/directorio-data.js`, dentro de `DIRECTORIO_CONFIG`, agregá: `visibleAlCargar: true,`
-- Para Google no cambia la lista "sin JavaScript" ni las páginas por rubro y ciudad, pero **mientras la guía está oculta, su contenido no se ve en pantalla**.
+- **Para que la guía ya se vea desplegada al entrar**, en `js/directorio-data.js`, dentro de `DIRECTORIO_CONFIG`, agregá: `visibleAlCargar: true,`
+- Para Google no cambia la lista "sin JavaScript" ni las páginas por rubro y ciudad, pero **mientras la guía está plegada, solo se ve la línea en pantalla**.
 
 ---
 
