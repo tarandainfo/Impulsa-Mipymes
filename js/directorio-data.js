@@ -142,7 +142,6 @@ const DIRECTORIO_DATA = [
     {nombre: "Nesaya LED", rubro: "Publicidad e impresiones", red: "Instagram", usuario: "nesaya.led"},
     {nombre: "Bema Publicitaria", rubro: "Publicidad e impresiones", red: "Instagram", usuario: "bemapublicitariapy"},
     {nombre: "ACOCO", rubro: "Moda y diseño", red: "Instagram", usuario: "acoco_py"},
-    {nombre: "Pisa Pisuela", rubro: "Moda y diseño", red: "Instagram", usuario: "pisa.pisuela.py"},
     {nombre: "Bendita Tierra", rubro: "Artesanía", red: "Instagram", usuario: "benditatierrapy"},
     {nombre: "Moda Sport", rubro: "Moda y diseño", red: "Instagram", usuario: "modasportoficial"},
     {nombre: "Ya Impresiones", rubro: "Publicidad e impresiones", red: "Instagram", usuario: "yaimpresionespy"},
