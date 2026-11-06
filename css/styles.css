@@ -7941,3 +7941,85 @@ html[data-theme="dark"] .dir-linea:hover { box-shadow: 0 12px 30px rgba(0, 0, 0,
     .dir-linea, .dir-linea-ico svg { transition: none; }
 
 }
+
+
+
+/* =====================================================
+   GUÍA DE MIPYMES: páginas de a 12
+   La lista se muestra de a 12 mipymes; el paginador aparece solo cuando hay más de 12.
+===================================================== */
+
+.dir-section .dir-panel { scroll-margin-top: 96px; }
+
+.dir-paginacion-estado {
+    margin: 0;
+    padding: 14px 20px 4px;
+    color: var(--dir-ter);
+    font: 500 .78rem 'JetBrains Mono', ui-monospace, monospace;
+    outline: none;
+}
+
+.dir-paginas {
+    display: flex;
+    justify-content: center;
+    padding: 20px 16px 22px;
+    border-top: 1px solid var(--dir-borde);
+    background: var(--dir-fondo2);
+}
+
+.dir-paginas-botones { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 6px; }
+
+.dir-pag {
+    min-width: 42px;
+    height: 42px;
+    padding: 0 14px;
+    border: 1px solid var(--dir-borde2);
+    border-radius: 12px;
+    background: var(--dir-sup);
+    color: var(--dir-texto);
+    font: 700 .9rem 'Manrope', Arial, sans-serif;
+    cursor: pointer;
+    transition: border-color .2s ease, background .2s ease;
+}
+
+.dir-pag:hover:not(:disabled):not([aria-current="page"]) { border-color: var(--dir-acento); }
+
+.dir-pag[aria-current="page"] { background: var(--dir-texto); border-color: var(--dir-texto); color: var(--dir-sup); cursor: default; }
+
+.dir-pag:disabled { opacity: .38; cursor: not-allowed; }
+
+.dir-pag:focus-visible { outline: 3px solid var(--celeste, #50C7E7); outline-offset: 2px; }
+
+.dir-pag-pts { padding: 0 4px; color: var(--dir-ter); }
+
+.dir-pag-estado { display: none; padding: 0 8px; color: var(--dir-sec); font-weight: 700; font-size: .9rem; white-space: nowrap; }
+
+@media (max-width: 560px) {
+
+    /* En el celular: Anterior · Página 2 de 4 · Siguiente */
+    .dir-pag-num, .dir-pag-pts { display: none; }
+
+    .dir-pag-estado { display: inline; padding: 0 2px; font-size: .84rem; }
+
+    .dir-paginacion-estado { padding-left: 16px; }
+
+    /* una sola fila, también en 320 px */
+    .dir-paginas { padding: 18px 10px 20px; }
+
+    .dir-paginas-botones { flex-wrap: nowrap; gap: 4px; }
+
+    .dir-pag-flecha { min-width: 0; padding: 0 11px; font-size: .84rem; white-space: nowrap; }
+
+}
+
+@media (prefers-reduced-motion: reduce) { .dir-pag { transition: none; } }
+
+
+/* En pantallas muy angostas, las flechas van solas ("‹" y "›") para que el paginador entre en una fila */
+@media (max-width: 380px) {
+
+    .dir-pag-txt { display: none; }
+
+    .dir-pag-flecha { min-width: 46px; font-size: 1.15rem; }
+
+}

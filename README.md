@@ -290,7 +290,7 @@ Una lista de nombres de mipymes que **no pagaron** por aparecer, agrupadas por r
 - Solo se aceptan links `http://` y `https://`: cualquier otra cosa (por ejemplo `javascript:`) se rechaza. El texto de los nombres nunca se interpreta como código.
 - Si el sitio tiene Google Analytics, cada clic se informa como `directorio_click` (con nombre, rubro y red).
 - Al final de la sección hay dos invitaciones: **"Quiero estar en la guía"** (abre tu WhatsApp con un mensaje armado, editable en `mensajeQuieroEstarEnLaGuia` de `js/config.js`) y **"Conocé cómo aparecer destacada"** (lleva a "participar").
-- Se ven 14 nombres al principio y el resto con "Ver las N mipymes restantes" (se cambia en `filasIniciales`); con búsqueda o filtros se ven todos.
+- La lista se ve **de a 12 mipymes**. Cuando hay más de 12 aparece el paginador (Anterior · 1 2 3 … · Siguiente) y, al cambiar de página, la web vuelve al principio de la lista. También se pagina cuando se busca o se filtra (y se vuelve a la página 1). El tamaño de página se cambia con `porPagina` en `DIRECTORIO_CONFIG` de `js/directorio-data.js` (si ese archivo todavía dice `filasIniciales`, ya no se usa: se puede borrar esa línea).
 
 **Después de cargar mipymes**, corré `node tools/generar-seo.js`: además del sitemap, actualiza la versión de la guía "sin JavaScript" (la que leen algunos buscadores).
 

@@ -31,7 +31,7 @@
     const ENLACES = window.DirectorioEnlaces;
 
     const config = Object.assign(
-        { filasIniciales: 14, incluirDestacadas: true, visibleAlCargar: false },
+        { porPagina: 12, incluirDestacadas: true, visibleAlCargar: false },
         (typeof DIRECTORIO_CONFIG !== "undefined") ? DIRECTORIO_CONFIG : {}
     );
 
@@ -73,7 +73,7 @@
     const buscador = document.getElementById("dir-q");
 
     // Lo único propio de la guía: el filtro por red social y el "Ver las N restantes"
-    const estado = { red: "todas", verTodo: false };
+    const estado = { red: "todas", pagina: 1 };
 
     // Qué redes se usan (para armar los filtros de red)
     const redesUsadas = [];
@@ -184,8 +184,16 @@
 
         const busqueda = BUSC.obtener();
         const sinFiltros = !BUSC.hayFiltros() && estado.red === "todas";
-        const tope = config.filasIniciales;
-        const visibles = (sinFiltros && !estado.verTodo) ? lista.slice(0, tope) : lista;
+
+        // La lista se muestra de a "porPagina" (12). El paginador aparece solo si hay más de una página.
+        const porPagina = Math.max(1, parseInt(config.porPagina, 10) || 12);
+        const totalPaginas = Math.max(1, Math.ceil(lista.length / porPagina));
+
+        if (estado.pagina > totalPaginas) estado.pagina = totalPaginas;
+        if (estado.pagina < 1) estado.pagina = 1;
+
+        const desde = (estado.pagina - 1) * porPagina;
+        const visibles = lista.slice(desde, desde + porPagina);
 
         // ----- rubros (columna izquierda) -----
         const cuentasRubro = BUSC.contar("rubro");
@@ -250,15 +258,50 @@
 
         if (listaAbierta) html += "</ul>";
 
-        // ----- botón "Ver las N restantes" -----
-        let verMas = "";
+        // ----- paginador (solo si hay más de una página) -----
+        let paginador = "";
+        let estadoPagina = "";
 
-        if (sinFiltros && lista.length > tope) {
+        if (totalPaginas > 1) {
 
-            verMas =
-                '<button type="button" class="dir-vermas" aria-expanded="' + estado.verTodo + '">' +
-                (estado.verTodo ? "Ver menos" : "Ver las " + (lista.length - tope) + " mipymes restantes") +
-                "</button>";
+            const hasta = Math.min(desde + porPagina, lista.length);
+
+            estadoPagina =
+                '<p class="dir-paginacion-estado" id="dir-paginacion-estado" tabindex="-1" role="status">' +
+                "Mostrando " + (desde + 1) + " a " + hasta + " de " + lista.length + " mipymes" +
+                "</p>";
+
+            // 1 … anterior, actual, siguiente … última
+            const mostrar = {};
+
+            [1, totalPaginas, estado.pagina - 1, estado.pagina, estado.pagina + 1].forEach(function (n) {
+                if (n >= 1 && n <= totalPaginas) mostrar[n] = true;
+            });
+
+            let numeros = "";
+            let previo = 0;
+
+            Object.keys(mostrar).map(Number).sort(function (a, b) { return a - b; }).forEach(function (n) {
+
+                if (previo && n - previo > 1) numeros += '<span class="dir-pag-pts" aria-hidden="true">…</span>';
+
+                numeros +=
+                    '<button type="button" class="dir-pag dir-pag-num" data-pag="' + n + '"' +
+                    (n === estado.pagina ? ' aria-current="page"' : "") +
+                    ' aria-label="Página ' + n + ' de ' + totalPaginas + '">' + n + "</button>";
+
+                previo = n;
+
+            });
+
+            paginador =
+                '<nav class="dir-paginas" aria-label="Páginas de la guía">' +
+                '<div class="dir-paginas-botones">' +
+                '<button type="button" class="dir-pag dir-pag-flecha" data-pag="' + (estado.pagina - 1) + '"' + (estado.pagina === 1 ? " disabled" : "") + ' aria-label="Página anterior">‹<span class="dir-pag-txt"> Anterior</span></button>' +
+                numeros +
+                '<span class="dir-pag-estado" aria-hidden="true">Página ' + estado.pagina + " de " + totalPaginas + "</span>" +
+                '<button type="button" class="dir-pag dir-pag-flecha" data-pag="' + (estado.pagina + 1) + '"' + (estado.pagina === totalPaginas ? " disabled" : "") + ' aria-label="Página siguiente"><span class="dir-pag-txt">Siguiente </span>›</button>' +
+                "</div></nav>";
 
         }
 
@@ -268,7 +311,7 @@
             '<div class="dir-filtros"><h3>Rubros</h3><div class="dir-rubros">' + botonesRubro + '</div></div>' +
             '<div class="dir-panel">' +
             '<div class="dir-redes" role="group" aria-label="Filtrar por red social">' + chips + '</div>' +
-            html + verMas +
+            estadoPagina + html + paginador +
             '</div>';
 
         // ----- contador y mensaje de "sin resultados" -----
@@ -325,6 +368,8 @@
 
         if (document.activeElement !== buscador && buscador.value !== q) buscador.value = q;
 
+        estado.pagina = 1;
+
         dibujar();
 
     });
@@ -340,13 +385,24 @@
             return;
         }
 
-        const verMas = e.target.closest(".dir-vermas");
+        const pag = e.target.closest(".dir-pag");
 
-        if (verMas) {
-            estado.verTodo = !estado.verTodo;
+        if (pag) {
+
+            if (pag.disabled) return;
+
+            estado.pagina = parseInt(pag.dataset.pag, 10) || 1;
             dibujar();
-            devolverFoco(".dir-vermas");
+
+            // Se vuelve al principio de la lista y el foco queda ahí ("Mostrando 13 a 24 de…")
+            const panel = cuerpo.querySelector(".dir-panel");
+            const aviso = document.getElementById("dir-paginacion-estado");
+
+            if (panel) panel.scrollIntoView({ behavior: reducirMovimiento ? "auto" : "smooth", block: "start" });
+            if (aviso) aviso.focus({ preventScroll: true });
+
             return;
+
         }
 
         const rubro = e.target.closest(".dir-btn");
@@ -362,6 +418,7 @@
 
         if (red) {
             estado.red = red.dataset.red;
+            estado.pagina = 1;
             dibujar();
             devolverFoco('.dir-chip[aria-pressed="true"]');
         }
