@@ -8023,3 +8023,19 @@ html[data-theme="dark"] .dir-linea:hover { box-shadow: 0 12px 30px rgba(0, 0, 0,
     .dir-pag-flecha { min-width: 46px; font-size: 1.15rem; }
 
 }
+
+
+
+/* =====================================================
+   Paginador de las mipymes destacadas en celulares angostos
+   Con 5 páginas (o más) más el botón "Siguiente" no entraba en 320 px y ensanchaba toda la portada.
+   Se achican un poco los botones y, si aun así no entran (más páginas), pasan a un segundo renglón.
+===================================================== */
+
+@media (max-width: 400px) {
+
+    .paginacion-lista { flex-wrap: wrap; justify-content: center; gap: 4px; }
+
+    .paginacion-num { width: 34px; height: 34px; font-size: 14px; }
+
+}

@@ -13,7 +13,8 @@ const PAGINAS_GENERADAS = {
     "fatima-sosa-organizacion-y-ambientacion-de-eventos",
     "baez-maldonado-y-bolla-consulting",
     "eventos-paraguay",
-    "fabricante-muebles"
+    "fabricante-muebles",
+    "pisapisuela-manualidades"
   ],
   "rubros": {
     "gastronomia": "Gastronomía",
@@ -27,11 +28,16 @@ const PAGINAS_GENERADAS = {
     "consultoria": "Consultoría",
     "servicios-para-eventos": "Servicios para eventos",
     "artesania": "Artesanía",
-    "publicidad-e-impresiones": "Publicidad e impresiones"
+    "publicidad-e-impresiones": "Publicidad e impresiones",
+    "servicios": "Servicios",
+    "comercio": "Comercio",
+    "medio-de-comunicacion": "Medio de comunicación",
+    "belleza": "Belleza"
   },
   "ciudades": {
     "asuncion": "Asunción",
     "hernandarias": "Hernandarias",
+    "lambare": "Lambaré",
     "san-lorenzo": "San Lorenzo"
   },
   "combinadas": {
@@ -180,6 +186,17 @@ const PAGINAS_GENERADAS = {
       "ciudad": {
         "nombre": "Asunción",
         "ruta": "ciudades/asuncion/"
+      },
+      "combinada": null
+    },
+    "pisapisuela-manualidades": {
+      "rubro": {
+        "nombre": "Artesanía",
+        "ruta": "rubros/artesania/"
+      },
+      "ciudad": {
+        "nombre": "Lambaré",
+        "ruta": "ciudades/lambare/"
       },
       "combinada": null
     }
