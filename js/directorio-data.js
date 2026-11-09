@@ -159,7 +159,7 @@ const DIRECTORIO_DATA = [
     {nombre: "Frío Sabor", rubro: "Gastronomía", red: "Instagram", usuario: "frio_sabor_py"},
     {nombre: "Minerva Clothing", rubro: "Moda y diseño", red: "Instagram", usuario: "minervaclothing.py"},
     {nombre: "The Outcome Studio", rubro: "Servicios", red: "Instagram", usuario: "theoutcomestudio"},
-    {nombre: "Happier", rubro: "Gastronomía", red: "Instagram", usuario: "happierpy"},
+    {nombre: "Happier", rubro: "Gatronomía", red: "Instagram", usuario: "happierpy"},
     {nombre: "Creaciones Danis", rubro: "Servicios", red: "Instagram", usuario: "creacionesdanis"},
     {nombre: "Proyack", rubro: "Moda y diseño", red: "Instagram", usuario: "proyack"},
     {nombre: "CLOTI | Bikinis & More", rubro: "Moda y diseño", red: "Instagram", usuario: "cloti.py"},
@@ -187,7 +187,10 @@ const DIRECTORIO_DATA = [
     {nombre: "Renta Paraguay", rubro: "Servicios", red: "Instagram", usuario: "rentaparaguay"},
     {nombre: "Tiny Cher Paraguay", rubro: "Moda y diseño", red: "Instagram", usuario: "tinycher.py"},
     {nombre: "Mimados Pet", rubro: "Servicios", red: "Instagram", usuario: "mima2_petshop"},
-    {nombre: "F-Tech", rubro: "Comercio", red: "Instagram", usuario: "f_techpy "}
+    {nombre: "F-Tech", rubro: "Comercio", red: "Instagram", usuario: "f_techpy "},
+    {nombre: "SSC Consulting", rubro: "Servicios", red: "Instagram", usuario: "sscpy"},
+    {nombre: "E_T Producciones", rubro: "Servicios", red: "Instagram", usuario: "et_producciones"}
+
 
     // PENDIENTE (el usuario figura «por verificar» en la planilla): descomentá la línea cuando se confirme
     // {nombre: "Encantada Chic", rubro: "Moda y diseño", red: "Instagram", usuario: "encantadachic"},
