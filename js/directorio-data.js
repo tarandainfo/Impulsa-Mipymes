@@ -159,7 +159,7 @@ const DIRECTORIO_DATA = [
     {nombre: "Frío Sabor", rubro: "Gastronomía", red: "Instagram", usuario: "frio_sabor_py"},
     {nombre: "Minerva Clothing", rubro: "Moda y diseño", red: "Instagram", usuario: "minervaclothing.py"},
     {nombre: "The Outcome Studio", rubro: "Servicios", red: "Instagram", usuario: "theoutcomestudio"},
-    {nombre: "Happier", rubro: "Gatronomía", red: "Instagram", usuario: "happierpy"},
+    {nombre: "Happier", rubro: "Gastronomía", red: "Instagram", usuario: "happierpy"},
     {nombre: "Creaciones Danis", rubro: "Servicios", red: "Instagram", usuario: "creacionesdanis"},
     {nombre: "Proyack", rubro: "Moda y diseño", red: "Instagram", usuario: "proyack"},
     {nombre: "CLOTI | Bikinis & More", rubro: "Moda y diseño", red: "Instagram", usuario: "cloti.py"},
