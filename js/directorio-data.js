@@ -200,7 +200,8 @@ const DIRECTORIO_DATA = [
     {nombre: "Montse Novedades Py", rubro: "Comercio", red: "Instagram", usuario: "novedades.montse.py"},
     {nombre: "Bonobonoya", rubro: "Comercio", red: "Instagram", usuario: "bonobonoyapy"},
     {nombre: "La Onda Fit - Protein Bar", rubro: "Gastronomía", red: "Instagram", usuario: "laondafitpy"},
-    {nombre: "JapoPrint", rubro: "Servicios", red: "Instagram", usuario: "japoprint"}
+    {nombre: "JapoPrint", rubro: "Servicios", red: "Instagram", usuario: "japoprint"},
+    {nombre: "Yoga Domi", rubro: "Gym y atletismo", red: "Instagram", usuario: "yoga.domi"}
 
 
     // PENDIENTE (el usuario figura «por verificar» en la planilla): descomentá la línea cuando se confirme
