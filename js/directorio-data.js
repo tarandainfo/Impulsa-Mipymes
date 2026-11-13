@@ -201,7 +201,7 @@ const DIRECTORIO_DATA = [
     {nombre: "Bonobonoya", rubro: "Comercio", red: "Instagram", usuario: "bonobonoyapy"},
     {nombre: "La Onda Fit - Protein Bar", rubro: "Gastronomía", red: "Instagram", usuario: "laondafitpy"},
     {nombre: "JapoPrint", rubro: "Servicios", red: "Instagram", usuario: "japoprint"},
-    {nombre: "Yoga Domi", rubro: "Gym y atletismo", red: "Instagram", usuario: "yoga.domi"}
+    {nombre: "Yoga Domi", rubro: "Gym y atletismo", red: "Instagram", usuario: "yoga.domi"},
     {nombre: "La Grada", rubro: "Moda y diseño", red: "Instagram", usuario: "lagradapy"}
 
 
