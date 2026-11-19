@@ -207,7 +207,8 @@ const DIRECTORIO_DATA = [
     {nombre: "Gimnasios SCS", rubro: "Gym y atletismo", red: "Instagram", usuario: "scsgimnasios"},
     {nombre: "TUJUGUI • ATELIER DE CERÁMICA", rubro: "Artesanía", red: "Instagram", usuario: "tujugui_ceramicas"},
     {nombre: "Urban Lingerie", rubro: "Moda y diseño", red: "Instagram", usuario: "lingerieurban"},
-    {nombre: "Estilo con ysa - Tu tienda plus size", rubro: "Moda y diseño", red: "Instagram", usuario: "estiloconysa_prendascasules"}
+    {nombre: "Estilo con ysa - Tu tienda plus size", rubro: "Moda y diseño", red: "Instagram", usuario: "estiloconysa_prendascasules"},
+    {nombre: "Benzo Café", rubro: "Gastronomía", red: "Instagram", usuario: "benzocafe.py"}
 
 
     // PENDIENTE (el usuario figura «por verificar» en la planilla): descomentá la línea cuando se confirme
