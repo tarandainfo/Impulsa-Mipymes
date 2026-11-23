@@ -93,6 +93,46 @@ const MIPYMES_DATA = [
     },
 
     {
+        nombre: "ISLA MEDIC SPA S.R.L.",
+        categoria: "Servicios",
+        verificada: true,
+
+        descripcion:
+            "Empresa especializada en la comercialización de equipos médicos y de rehabilitación, con soluciones para hogares, clínicas y hospitales.",
+
+        descripcionLarga: [
+            "ISLA MEDIC SPA S.R.L. es una empresa paraguaya fundada en 2012 por David Amarilla, con el propósito de acercar equipos médicos y de rehabilitación de calidad a las familias y profesionales de la salud de todo el país. Su catálogo cuenta con más de 350 productos de marcas reconocidas como Dellamed, Beurer, Globus y Air Cell, ofreciendo soluciones para el cuidado de la salud, la recuperación y el bienestar integral.",
+            "Lo que comenzó como un pequeño showroom en Asunción hoy cuenta con tres sucursales, servicio técnico propio y un equipo dedicado a brindar atención personalizada. Además de la comercialización, la empresa ofrece soluciones integrales en equipamiento médico y busca consolidarse como referente nacional en la venta y alquiler de estos equipos, manteniendo su compromiso con la calidad, la innovación y la mejora de la calidad de vida de las personas."
+        ],
+
+        ubicacion: "Asunción, Paraguay",
+
+        whatsapp: "595981493873",
+
+        instagram: "https://www.instagram.com/isla.medic/",
+
+        productoImagen:
+            "./assets/img/isla-medic/principal.jpeg",
+
+        perfilImagen:
+            "./assets/img/isla-medic/perfil.jpg",
+
+        fotosCarrusel: [
+            "./assets/img/isla-medic/principal.jpeg",
+            "./assets/img/isla-medic/foto-2.jpeg",
+            "./assets/img/isla-medic/foto-3.jpeg",
+            "./assets/img/isla-medic/foto-4.jpeg",
+            "./assets/img/isla-medic/foto-5.jpeg"
+        ],
+
+        promocion:
+            "Consultá por los servicios disponibles.",
+
+        notaPeriodistica: ""
+
+    },
+
+    {
         nombre: "Pisapisuela Manualidades",
         categoria: "Artesanía",
         verificada: true,
