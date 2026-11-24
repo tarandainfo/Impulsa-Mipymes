@@ -21,13 +21,13 @@
 const BANNERS_DATA = [
 
     {
-        marca: "MARCA",
-        imagen: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=800&q=80",
+        marca: "Tigo Business",
+        imagen: "./assets/img/banner-tigo/banner-1.png",
         colorClase: "banner-image",
-        etiqueta: "BENEFICIO",
-        titulo: "Soluciones para tu negocio",
-        texto: "Descubrí beneficios exclusivos para tu emprendimiento.",
-        link: "#"
+        etiqueta: "",
+        titulo: "Tigo Business",
+        texto: "¡Conectá tu negocio con la fibra 600 Mbps a un precio pensado para vos!",
+        link: "https://www.tigo.com.py/medianas/form/internet"
     },
 
     {
