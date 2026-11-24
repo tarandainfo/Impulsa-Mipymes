@@ -110,7 +110,13 @@
 
     function urlFinal(anuncio, slot) {
 
-        const link = anuncio.link || "#";
+        let link = anuncio.link || "#";
+
+        // El enlace "Anunciá acá" se arma en ads-data.js, que se carga ANTES que config.js (donde está el
+        // WhatsApp de Infonegocios), así que puede quedar sin número ("https://wa.me/?text=..."). Acá se completa.
+        if (link.indexOf("https://wa.me/?") === 0 && typeof INFONEGOCIOS_CONFIG !== "undefined" && INFONEGOCIOS_CONFIG.whatsapp) {
+            link = "https://wa.me/" + INFONEGOCIOS_CONFIG.whatsapp + "?" + link.slice("https://wa.me/?".length);
+        }
 
         if (!CONFIG.utm) return link;
 
@@ -246,12 +252,22 @@
 
     }
 
+    // ¿Este espacio se puede mostrar? Si ADS_CONFIG.espacios es una lista con nombres,
+    // solo se muestran esos; si no está o está vacía, se muestran todos.
+    function permitido(slot) {
+
+        const lista = CONFIG.espacios;
+
+        return !Array.isArray(lista) || lista.length === 0 || lista.indexOf(slot) >= 0;
+
+    }
+
     // Llena un espacio publicitario (un <aside data-ad-slot="...">)
     function llenarEspacio(contenedor) {
 
         const slot = contenedor.dataset.adSlot;
 
-        if (!CONFIG.activos) {
+        if (!CONFIG.activos || !permitido(slot)) {
             contenedor.hidden = true;
             return;
         }
@@ -292,7 +308,7 @@
             e.remove();
         });
 
-        if (!CONFIG.activos) return;
+        if (!CONFIG.activos || !permitido("en-lista")) return;
 
         const tarjetas = listaEl.querySelectorAll(".mipyme-card");
 

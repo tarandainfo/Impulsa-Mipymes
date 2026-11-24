@@ -256,7 +256,7 @@ Hay 7 espacios publicitarios. Todo se maneja desde **`js/ads-data.js`** (ahí es
 
 - **Fechas:** un banner fuera de fecha deja de mostrarse solo. Si un espacio se queda sin banners vigentes, desaparece (no deja un hueco).
 - **Rotación:** si en un espacio hay varios banners vigentes, se elige uno al azar cada vez que alguien entra (`peso` para que uno aparezca más que otro).
-- **Pausar:** `activo: false` en un banner; o `ADS_CONFIG.activos = false` para sacar toda la publicidad.
+- **Pausar:** `activo: false` en un banner; o `ADS_CONFIG.activos = false` para sacar toda la publicidad (y `ADS_CONFIG.espacios` para elegir cuáles espacios se muestran).
 - **Avisos propios:** hoy los espacios muestran avisos de ejemplo que invitan a anunciar y llevan al WhatsApp de Infonegocios (`assets/ads/demo-*.gif`). Se reemplazan por los de cada anunciante cuando los haya.
 - **Accesibilidad:** si cargás `fijo` / `fijoMovil` (una imagen quieta), la ven las personas con "reducir movimiento" activado.
 - **Medición:** los enlaces llevan solos `utm_source`, `utm_medium=banner`, `utm_campaign` (el anunciante) y `utm_content` (el espacio), para que el anunciante vea las visitas en su Analytics. Si el sitio tiene Google Analytics, cada banner informa `ad_impression` y `ad_click` con el espacio y el anunciante, para armar informes.
@@ -408,10 +408,13 @@ Al desplegarse desde esos enlaces, la web baja hasta ella. El botón **"Plegar l
 
 ---
 
-## Publicidad apagada por ahora
+## Publicidad: hoy solo el espacio de arriba
 
-Los banners publicitarios (los 7 espacios) están **apagados**: en `js/ads-data.js`, `ADS_CONFIG.activos` está en `false`. Siguen visibles los banners de **"Empresas que apoyan a las Mipymes"**, que son otra cosa (se cargan en `js/banners-data.js`).
+En `js/ads-data.js`, `ADS_CONFIG.activos` está en `true` y `ADS_CONFIG.espacios` en `["tope"]`: **se muestra solo el espacio de arriba de todo** (el que está sobre el menú, en todas las páginas). Los otros 6 espacios no aparecen ni reservan lugar. Los banners de **"Empresas que apoyan a las Mipymes"** son otra cosa (se cargan en `js/banners-data.js`).
 
-- **Para volver a mostrar la publicidad**, cambiá `activos: false` por `activos: true` en `js/ads-data.js`, y volvé a correr `node tools/generar-seo.js`. Los banners que ya estaban cargados vuelven.
-- Con la publicidad apagada **ni siquiera se reserva su espacio**, así la página no "salta" al cargar. Esto lo hace un pequeño código en la cabecera de `index.html` y `ficha.html` (y de las páginas fijas que arma el generador).
+- **Medida del espacio de arriba:** GIF de **970 × 90 px** (PC) y, opcional, otro de **320 × 50 px** (celular, campo `imagenMovil`). Hasta 150 KB cada uno. Se guardan en `assets/ads/` y se cargan en el bloque `"tope"` de `js/ads-data.js`.
+- **Para mostrar otros espacios**, sumá su nombre a la lista: `espacios: ["tope", "despues-hero"]`. Con `espacios: []` se muestran todos.
+- **Para sacar toda la publicidad**, cambiá `activos: true` por `activos: false`.
+- Después de cambiar la configuración, corré `node tools/generar-seo.js`.
+- Los espacios que no se muestran **ni siquiera reservan su lugar**, así la página no "salta" al cargar. Esto lo hace un pequeño código en la cabecera de `index.html` y `ficha.html` (y de las páginas fijas que arma el generador).
 

@@ -72,6 +72,10 @@
 //    sus impresiones ("ad_impression") y sus clics ("ad_click"),
 //    con el espacio y el anunciante, para armar el informe.
 //
+//  • Para elegir QUÉ espacios se muestran: ADS_CONFIG.espacios
+//    (por ejemplo ["tope"] muestra solo el de arriba de todo; []
+//    muestra todos). Los espacios que no se muestran ni se reservan.
+//
 //  • Para sacar TODA la publicidad de golpe:
 //    ADS_CONFIG.activos = false
 // ==========================================
@@ -79,8 +83,13 @@
 const ADS_CONFIG = {
 
     // true = se muestran los banners. false = no se muestra ninguno (ni se reserva su espacio).
-    // POR AHORA APAGADOS. Para volver a mostrarlos, cambiá  false  por  true.
-    activos: false,
+    activos: true,
+
+    // Qué espacios se muestran. Los demás no aparecen ni reservan lugar.
+    //   ["tope"]  = solo la franja de arriba de todo (hoy)
+    //   []        = todos los espacios
+    // Los nombres de los espacios están en la tabla de arriba.
+    espacios: ["tope"],
 
     // true = agrega utm_source / utm_medium / utm_campaign / utm_content
     // a los enlaces de los anunciantes (no a los de WhatsApp).
