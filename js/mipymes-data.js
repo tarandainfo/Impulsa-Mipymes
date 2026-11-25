@@ -101,8 +101,10 @@ const MIPYMES_DATA = [
             "Empresa especializada en la comercialización de equipos médicos y de rehabilitación, con soluciones para hogares, clínicas y hospitales.",
 
         descripcionLarga: [
-            "ISLA MEDIC SPA S.R.L. es una empresa paraguaya fundada en 2012 por David Amarilla, con el propósito de acercar equipos médicos y de rehabilitación de calidad a las familias y profesionales de la salud de todo el país. Su catálogo cuenta con más de 350 productos de marcas reconocidas como Dellamed, Beurer, Globus y Air Cell, ofreciendo soluciones para el cuidado de la salud, la recuperación y el bienestar integral.",
-            "Lo que comenzó como un pequeño showroom en Asunción hoy cuenta con tres sucursales, servicio técnico propio y un equipo dedicado a brindar atención personalizada. Además de la comercialización, la empresa ofrece soluciones integrales en equipamiento médico y busca consolidarse como referente nacional en la venta y alquiler de estos equipos, manteniendo su compromiso con la calidad, la innovación y la mejora de la calidad de vida de las personas."
+            "ISLA MEDIC S.R.L. es una empresa paraguaya fundada en 2012 por Mariela Isla, con el propósito de brindar soluciones integrales para la salud, rehabilitación y bienestar. Actualmente, dispone de 1.300 productos en stock y otros 1.100 bajo pedido, representando marcas internacionales como Dellamed, Beurer, Foshan entre otros. ",
+            "Desde sus inicios, la empresa ha evolucionado hasta consolidar tres sucursales, Asuncion, Fernando de la Mora y Luque,  servicio técnico propio, venta y alquiler de equipos médicos, atención especializada y cobertura nacional.",
+            "Su crecimiento y profesionalización cuentan con el acompañamiento estratégico del Dr. Ing. David Amarilla, MBA, Máster en Finanzas, Doctor en Administración y coach certificado por John Maxwell, como mentor y asesor empresarial, impulsando la innovación, la transformación digital y la mejora continua.",
+            "Isla Medic busca consolidarse como referente nacional del sector, reafirmando su compromiso con la excelencia y la calidad de vida de las personas."
         ],
 
         ubicacion: "Asunción, Paraguay",
